@@ -1,0 +1,31 @@
+Parameter:   
+
+  Trip Lengths (auto, bicycle)
+
+
+Expectation:
+
+  Best Fit by normal distribution (naive assumption)
+
+
+Why:
+
+The individual picks a distance to travel, drawn from a uniform distribution and maximum distance according to mode velocity.
+
+They then pick another distance to travel, also drawn from uniform.   
+This second trip is independent from the first, and drawn from the same uniform distribution.
+
+This process repeats.
+
+Since these trips are i.i.d., the mean should be distributed normally.
+
+
+
+Measured:
+
+  Initially using built-in fitting tools of R or other high-level software.
+
+
+Result, why/why not agree with expectation?
+
+

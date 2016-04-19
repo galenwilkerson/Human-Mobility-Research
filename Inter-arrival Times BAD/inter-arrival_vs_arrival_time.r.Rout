@@ -1,0 +1,91 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # load data
+> 
+> # sort by arrival times
+> 
+> # calculate inter-arrival times
+> 
+> # plot histogram
+> 
+> #####################################################
+> rm(list = ls())
+> 
+> load("./tripdata.Rdata")
+> 
+> trips.ordered <- trips[order(as.POSIXlt(trips$timestamp.arrival)),]
+> 
+> # INTER-ARRIVAL TIMES
+> d1 <- diff(as.POSIXlt(trips.ordered$timestamp.arrival))
+> 
+> color.index <- 1
+> 
+> # plot inter-arrival times vs. arrival times
+> inter.arrival.time <- c(0, d1)
+> 
+> arrival.time <- as.POSIXlt(trips.ordered$timestamp.arrival)
+> plot(arrival.time, inter.arrival.time,  main = "All Modes : Inter-Arrival Times vs Arrival Times", col=color.index)
+> 
+> ################### FOR EACH MODE ################                                       
+> 
+> trip.modes <- unique(trips$mode)
+> 
+> # remove last
+> trip.modes <- trip.modes[-length(trip.modes)]
+> 
+> color.index <- 2
+> for (trip.mode in trip.modes) {
++ 
++   print(trip.mode)
++   
++   # get subset
++   mode.trips <- subset(trips.ordered, mode == trip.mode)
++   print(dim(mode.trips))
++ 
++   # INTER-ARRIVAL TIMES
++   d1 <- diff(as.POSIXlt(trips.ordered$timestamp.arrival))
++ 
++   # plot inter-arrival times vs. arrival times
++   inter.arrival.time <- c(0, d1)
++ 
++   arrival.time <- as.POSIXlt(trips.ordered$timestamp.arrival)
++   plot(arrival.time, inter.arrival.time,  main = paste(trip.mode, ": Inter-Arrival Times vs Arrival Times"), col=color.index)
++ 
++   color.index <- color.index + 1
++ }
+[1] "MIV (Fahrer)"
+[1] 75497     4
+[1] "zu Fu"
+[1] 44300     4
+[1] "MIV (Mitfahrer)"
+[1] 29861     4
+[1] "PV"
+[1] 15473     4
+[1] "Fahrrad"
+[1] 19018     4
+> 
+> legend("topright", legend = trip.modes, pch = 1, col=1:length(trip.modes) + 1)
+> 
+> proc.time()
+   user  system elapsed 
+ 40.294  18.637  70.949 

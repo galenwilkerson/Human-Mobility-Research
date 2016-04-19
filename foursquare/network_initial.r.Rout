@@ -1,0 +1,115 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # get to know the data
+> 
+> # load data, plot some statistics
+> 
+> 
+> rm(list = ls())
+> 
+> #######################
+> 
+> library(ggplot2)
+> library(igraph)
+> 
+> #######################
+> 
+> data.dir <- "/home/username/Dropbox/Active_Projects/Mobility_Article/Data/umn_foursquare_datasets/"
+> #data.dir <- "umn_foursquare_datasets/"
+> figures.dir <- "figures/"
+> data.names <- c("checkins","ratings","socialgraph","users","venues")
+> 
+> #######################
+> 
+> index <- 3
+> #filename <- paste(data.dir,data.names[index],".RData", sep="")
+> #filename
+> #load(filename)
+> my.data <- read.csv(paste(data.dir,data.names[index],".head.dat", sep=""), sep="|")
+> my.data <- my.data[-1,]
+> 
+> #######################
+> 
+> # create graph from edges
+> 
+> # since undirected, remove even edges
+> #odd.indices <- seq(1,dim(my.data)[1], by = 2)
+> #edge.data <- subset(my.data, my.data[1] == odd.indices)
+> 
+> # convert to numeric
+> # edge.list <- c(my.data$first_user_id, my.data$second.user.id)
+> 
+> edge.list <- c(as.numeric(as.character(my.data$first_user_id)), as.numeric(as.character(my.data$second_user_id)))
+> 
+> social.network <- graph(edge.list, directed=FALSE)
+> 
+> 
+> #######################  BASIC MEASURES
+> 
+> degree.dist <- degree.distribution(social.network)
+> cdf.degree.dist <- degree.distribution(social.network, cumulative = TRUE)
+> plot(degree.dist, log = "xy")
+Warning message:
+In xy.coords(x, y, xlabel, ylabel, log) :
+  5326 y values <= 0 omitted from logarithmic plot
+> plot(cdf.degree.dist, log = "xy")
+> 
+> 
+> 
+> between.ness <- betweenness(social.network)
+> plot(between.ness, log = "xy")
+Warning message:
+In xy.coords(x, y, xlabel, ylabel, log) :
+  4503 y values <= 0 omitted from logarithmic plot
+> 
+> 
+> 
+> clustering <- cluster.distribution(social.network)
+> plot(clustering)
+> 
+> 
+> 
+> assort <- assortativity.degree(social.network)
+> assort
+[1] -0.4485699
+> 
+> 
+> pr <- page.rank(social.network)$vector
+> plot(pr, log = "xy")
+> 
+> 
+> 
+> 
+> plot(social.network)
+> 
+> #qplot(x = first_user_id, y = second_user_id, data = my.data)
+> #ggsave(file=paste(figures.dir, "network_", data.names[index], ".pdf", sep=""))
+> 
+> #######################
+> 
+> 
+> rm(list = ls())
+> 
+> proc.time()
+   user  system elapsed 
+ 75.332   1.128  76.724 

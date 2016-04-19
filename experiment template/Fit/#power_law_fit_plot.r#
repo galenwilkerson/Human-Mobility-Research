@@ -1,0 +1,19 @@
+# for each mode
+
+# calculate the waiting times, check against existing values
+
+# run as: NOT IN HOME DIRECTORY, INSTEAD USE /mnt/share/<directory>
+#
+# > nohup nice --adjustment=+19 R CMD BATCH <program.r> &
+# then:
+# > ionice -c3 -p<pid>
+#
+# clear all variables
+rm(list = ls())
+
+# base directory
+base.data.dir <- "../Data/"
+base.figures.dir <- "../Figures/"
+
+# load trip data
+load(paste(base.data.dir,"merged_trips.RData", sep=""))

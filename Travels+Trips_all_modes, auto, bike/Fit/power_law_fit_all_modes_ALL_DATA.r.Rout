@@ -1,0 +1,363 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: i686-pc-linux-gnu (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> #  plot CDFs for:
+> 
+> # - trips only,
+> # - trips and travel together, for:
+> #   -  all modes
+> #   -  automobile
+> #   -  bicycle
+> 
+> ##################
+> 
+> # run as: (NOT IN HOME DIRECTORY, INSTEAD USE /mnt/share/<directory>
+> #
+> # > nohup nice --adjustment=+19 R CMD BATCH <program.r> &
+> # then:
+> # > ionice -c3 -p<pid>
+> #
+> # clear all variables
+> rm(list = ls())
+> 
+> # to load STATA files
+> library(foreign)
+> 
+> # plotting
+> library("ggplot2")
+> 
+> # plfit code
+> source("plfit.r")
+Loading required package: splines
+Loading required package: stats4
+
+Attaching package: ‘VGAM’
+
+The following object(s) are masked from ‘package:stats4’:
+
+    coef
+
+The following object(s) are masked from ‘package:splines’:
+
+    bs, ns
+
+The following object(s) are masked from ‘package:stats’:
+
+    case.names, coef, coefficients, dfbeta, df.residual, fitted,
+    fitted.values, formula, hatvalues, poly, residuals, variable.names,
+    weights
+
+The following object(s) are masked from ‘package:base’:
+
+    identity, scale.default
+
+> source("plpva.r")
+> 
+> # base directory
+> base.data.dir <- "../Data/"
+> 
+> # load travel data
+> travel.trips <- read.dta(paste(base.data.dir, "MiD2008_PUF_Reisen.dta", sep=""))
+> 
+> # load trip data
+> load(paste(base.data.dir,"merged_trips.RData", sep=""))
+> 
+> 
+> puf.max.travel.length <- 20000
+> 
+> puf.max.trip.length <- 950
+> 
+> x.interval <- 1
+> 
+> breaks.vector <- seq(0,puf.max.travel.length, by=x.interval)
+> 
+> # remove last entry of breaks vector (for size matching with y values)
+> x.values <- breaks.vector[-1]
+> 
+> x.vals.log10.scale <- log10(x.values)
+> 
+> 
+> color.plot <- c("black","red", "orange", "yellow", "green", "blue", "purple")
+> color.index <- 1
+> 
+> 
+> #############################  PREPARATION for ALL_MODES
+> 
+> # separate trips into hvm mode
+> 
+> # get uniq list of modes
+> travel.modes <- as.vector(unique(travel.trips$hvm_r))
+> trip.modes <- as.vector(unique(mergedtrips$hvm))
+> 
+> # add "all modes" to modes
+> travel.modes <- c("all_modes", travel.modes)
+> trip.modes <- c("all_modes", trip.modes)
+> 
+> print(travel.modes)
+ [1] "all_modes"     "Auto"          "Flugzeug"      "Bahn"         
+ [5] "Schiff"        "Reisebus"      "anderes"       "Fahrrad"      
+ [9] "wei\xdf nicht" "verweigert"   
+> print(trip.modes)
+[1] "all_modes"       "MIV (Fahrer)"    "zu Fu"           "MIV (Mitfahrer)"
+[5] "PV"              "Fahrrad"         "keine Angabe"   
+> 
+> current.mode <- "all_modes"
+> 
+> 
+> # subset reisen
+> puf.travel.lengths <- subset(travel.trips, p1016 <= puf.max.travel.length & p1016 > 0, select=c(p1016))[,1]
+> puf.travel.lengths <- na.omit(puf.travel.lengths)
+> 
+> # subset trips
+> puf.trip.lengths <- subset(mergedtrips, wegkm.k <= puf.max.trip.length & wegkm.k > 0, select=c(wegkm.k))[,1]
+> puf.trip.lengths <- na.omit(puf.trip.lengths)
+> 
+> trip.and.travel.trip.lengths <- c(puf.trip.lengths, puf.travel.lengths)
+> 
+> # fit travels and trips
+> ## find xmin, alpha
+> print("fitting")
+[1] "fitting"
+> params <- plfit(trip.and.travel.trip.lengths)
+> 
+> num.trips <- length(trip.and.travel.trip.lengths)
+> x.min <- as.numeric(params[1])
+> alpha <- as.numeric(params[2])
+> 
+> print(num.trips)
+[1] 226299
+> print(x.min)
+[1] 1.81
+> print(alpha)
+[1] 1.445857
+> 
+> summary(trip.and.travel.trip.lengths)
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+    0.05     1.47     4.75   124.30    19.95 20000.00 
+> 
+> 
+> 
+> ###############  EMPIRICAL CCDF ################
+> 
+> ######### TRIPS ONLY #########
+> 
+> # get cdf
+> 
+> puf.cdf <- ecdf(puf.trip.lengths)
+> cdf <- puf.cdf(x.values)
+> ccdf <- 1 - puf.cdf(x.values)
+> 
+> ccdf.log10.scale <- log10(ccdf)
+> 
+> # new plot or use old plot
+> plot(x.vals.log10.scale,
++      ccdf.log10.scale,
++      type = "s",
++      col=color.plot[color.index],
++      main="CCDF of trip length \n for trips; trip & travel merged")
+> 
+> 
+> ###### TRIPS AND TRAVEL #####
+> 
+> # get cdf
+> 
+> puf.cdf <- ecdf(trip.and.travel.trip.lengths)
+> cdf <- puf.cdf(x.values)
+> ccdf <- 1 - puf.cdf(x.values)
+> 
+> ccdf.log10.scale <- log10(ccdf)
+> 
+> # new plot or use old plot
+> lines(x.vals.log10.scale,
++      ccdf.log10.scale,
++      type = "s",
++      lty = 2,
++      col=color.plot[color.index])
+> 
+> 
+> color.index <- color.index + 1
+> 
+> 
+> ######## #######################  PREPARATION for Auto driving
+> 
+> 
+> travel.mode <- travel.modes[2]
+> trip.mode <- trip.modes[2]
+> 
+> travel.mode
+[1] "Auto"
+> trip.mode
+[1] "MIV (Fahrer)"
+> 
+> # subset reisen
+> puf.travel.lengths <- subset(travel.trips, hvm_r == travel.mode & p1016 <= puf.max.travel.length & p1016 > 0, select=c(p1016))[,1]
+> 
+> puf.travel.lengths <- na.omit(puf.travel.lengths)
+> 
+> # subset trips
+> 
+> puf.trip.lengths <- subset(mergedtrips, hvm == trip.mode & wegkm.k <= puf.max.trip.length & wegkm.k > 0, select=c(wegkm.k))[,1]
+> 
+> puf.trip.lengths <- na.omit(puf.trip.lengths)
+> 
+> trip.and.travel.trip.lengths <- c(puf.trip.lengths, puf.travel.lengths)
+> 
+> summary(puf.travel.lengths)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    1.0   200.0   300.0   387.5   500.0 10000.0 
+> summary(puf.trip.lengths)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.10    2.38    5.70   14.05   14.25  950.00 
+> summary(trip.and.travel.trip.lengths)
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+    0.10     2.85     8.82    90.56    38.00 10000.00 
+> ###############  EMPIRICAL CCDF ################
+> 
+> 
+> 
+> ######### TRIPS ONLY #########
+> 
+> # get cdf
+> 
+> puf.cdf <- ecdf(puf.trip.lengths)
+> cdf <- puf.cdf(x.values)
+> ccdf <- 1 - puf.cdf(x.values)
+> 
+> ccdf.log10.scale <- log10(ccdf)
+> 
+> # new plot or use old plot
+> points(x.vals.log10.scale,
++        ccdf.log10.scale,
++        type = "s",
++        col=color.plot[color.index])
+> 
+> 
+> ###### TRIPS AND TRAVEL #####
+> 
+> # get cdf
+> 
+> puf.cdf <- ecdf(trip.and.travel.trip.lengths)
+> cdf <- puf.cdf(x.values)
+> ccdf <- 1 - puf.cdf(x.values)
+> 
+> ccdf.log10.scale <- log10(ccdf)
+> 
+> # new plot or use old plot
+> points(x.vals.log10.scale,
++        ccdf.log10.scale,
++        type = "s",
++        lty = 2,
++        col=color.plot[color.index])
+> 
+> 
+> 
+> 
+> 
+> color.index <- color.index + 1
+> 
+> 
+> 
+> ######## #######################  PREPARATION for bicycling
+> 
+> 
+> travel.mode <- travel.modes[8]
+> trip.mode <- trip.modes[6]
+> 
+> travel.mode
+[1] "Fahrrad"
+> trip.mode
+[1] "Fahrrad"
+> 
+> # subset reisen
+> puf.travel.lengths <- subset(travel.trips, hvm_r == travel.mode & p1016 <= puf.max.travel.length & p1016 > 0, select=c(p1016))[,1]
+> 
+> puf.travel.lengths <- na.omit(puf.travel.lengths)
+> 
+> # subset trips
+> puf.trip.lengths <- subset(mergedtrips, hvm == trip.mode & wegkm.k <= puf.max.trip.length & wegkm.k > 0, select=c(wegkm.k))[,1]
+> puf.trip.lengths <- na.omit(puf.trip.lengths)
+> 
+> trip.and.travel.trip.lengths <- c(puf.trip.lengths, puf.travel.lengths)
+> 
+> summary(puf.travel.lengths)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      1      25      70     154     250     700 
+> summary(puf.trip.lengths)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.100   0.980   1.860   3.224   2.940 196.000 
+> summary(trip.and.travel.trip.lengths)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.100   0.980   1.960   3.782   2.940 700.000 
+> 
+> ###############  EMPIRICAL CCDF ################
+> 
+> 
+> 
+> ######### TRIPS ONLY #########
+> 
+> # get cdf
+> 
+> puf.cdf <- ecdf(puf.trip.lengths)
+> cdf <- puf.cdf(x.values)
+> ccdf <- 1 - puf.cdf(x.values)
+> 
+> ccdf.log10.scale <- log10(ccdf)
+> 
+> # new plot or use old plot
+> points(x.vals.log10.scale,
++        ccdf.log10.scale,
++        type = "s",
++        col=color.plot[color.index])
+> 
+> 
+> ###### TRIPS AND TRAVEL #####
+> 
+> # get cdf
+> 
+> puf.cdf <- ecdf(trip.and.travel.trip.lengths)
+> cdf <- puf.cdf(x.values)
+> ccdf <- 1 - puf.cdf(x.values)
+> 
+> ccdf.log10.scale <- log10(ccdf)
+> 
+> # new plot or use old plot
+> points(x.vals.log10.scale,
++        ccdf.log10.scale,
++        type = "s",
++        lty = 2,
++        col=color.plot[color.index])
+> 
+> 
+> 
+> color.index <- color.index + 1
+> 
+> 
+> legend(0,-3,c("all modes", "auto", "bicycle"),lty=c(1), col=color.plot)
+> legend(0,-4,c("trip only", "trip & travel"),lty=c(1,2), col="black")
+> 
+> 
+> 
+> rm(list = ls())
+> 
+> proc.time()
+   user  system elapsed 
+ 35.382   2.692  38.581 

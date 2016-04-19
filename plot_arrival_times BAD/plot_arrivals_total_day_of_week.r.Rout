@@ -1,0 +1,263 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # load data
+> 
+> 
+> # calculate arrivals per day
+> 
+> ##########################################################################
+> 
+> rm(list = ls())
+> library(ggplot2)
+> 
+> load("./tripdata.Rdata")
+> 
+> trip.modes <- as.character(unique(trips$mode))
+> 
+> #remove last element (no response for 'mode')
+> trip.modes <- trip.modes[-length(trip.modes)]
+> 
+> ####################################  
+> 
+> #subset data by date
+> start.date <- as.POSIXlt("2008-04-01 00:00:00") 
+> end.date <- as.POSIXlt("2008-12-31 00:00:00")
+> trips <- subset(trips, timestamp.arrival >= start.date & timestamp.arrival <= end.date)
+> 
+> 
+> breaks.interval <- "day of week"
+> 
+> 
+> dev.new(width=14, height=7)
+dev.new(): using pdf(file="Rplots8.pdf")
+> 
+> 
+> # change timestamp to date.time
+> trips$timestamp.arrival <- as.POSIXlt(trips$timestamp.arrival)
+> 
+> df.time.unclassed <- data.frame(unclass(as.POSIXlt(trips$timestamp.arrival)))
+> 
+> #%h1 <- hist(df.time.unclassed$wday, breaks = 6)
+> 
+> #%plot(h1,   border = "black", xlab="Day", ylab="Number of Arrivals",  main=paste("Arrivals:", breaks.interval))
+> 
+> 
+> c <- ggplot(df.time.unclassed, aes(factor(wday)))
+> c + geom_bar()  + opts(title=paste("Arrivals: (all modes)", breaks.interval), axis.text.x=theme_text(angle=45, hjust = 1))
+'opts' is deprecated. Use 'theme' instead. (Deprecated; last used in version 0.9.1)
+theme_text is deprecated. Use 'element_text' instead. (Deprecated; last used in version 0.9.1)
+Setting the plot title with opts(title="...") is deprecated.
+ Use labs(title="...") or ggtitle("...") instead. (Deprecated; last used in version 0.9.1)
+> 
+> 
+> #c <- ggplot(mergedtrips, aes(factor(stichtag)))
+> #c + geom_bar()  + opts(title = " trip: day of week", axis.text.x=theme_text(angle=45, hjust = 1))
+> 
+> 
+> #######################################################
+> 
+> #breaks.interval <- "day of week"
+> 
+> 
+> 
+> 
+> colors <- c(2:(length(trip.modes)+1))
+> 
+> index = 1
+> dev.new(width=14, height=7)
+dev.new(): using pdf(file="Rplots9.pdf")
+> 
+> 
+> trip.mode <- trip.modes[index]
+> 
+> #subset data by mode
+> 
+> mode.trips <- subset(trips, mode == trip.mode)
+> 
+> # change timestamp to date.time
+> mode.trips$timestamp.arrival <- as.POSIXlt(mode.trips$timestamp.arrival)
+> 
+> df.time.unclassed <- data.frame(unclass(as.POSIXlt(mode.trips$timestamp.arrival)))
+> 
+> ## h1 <- hist(df.time.unclassed$wday, breaks = 7, plot = F)
+> ## plot(h1,   border = colors[index], xlab="Day", ylab="Number of Arrivals",  main=paste("Arrivals:", breaks.interval))
+> 
+> c <- ggplot(df.time.unclassed, aes(factor(wday)))
+> c + geom_bar()  + opts(title=paste("Arrivals:", trip.mode, breaks.interval), axis.text.x=theme_text(angle=45, hjust = 1))
+'opts' is deprecated. Use 'theme' instead. (Deprecated; last used in version 0.9.1)
+theme_text is deprecated. Use 'element_text' instead. (Deprecated; last used in version 0.9.1)
+Setting the plot title with opts(title="...") is deprecated.
+ Use labs(title="...") or ggtitle("...") instead. (Deprecated; last used in version 0.9.1)
+> 
+> 
+> 
+> 
+> #################
+> 
+> 
+> index <- 2
+> 
+>   dev.new(width=14, height=7)
+dev.new(): using pdf(file="Rplots10.pdf")
+> 
+>   trip.mode <- trip.modes[index]
+> 
+>                                         #subset data by mode
+> 
+>   mode.trips <- subset(trips, mode == trip.mode)
+> 
+>                                         # change timestamp to date.time
+>   mode.trips$timestamp.arrival <- as.POSIXlt(mode.trips$timestamp.arrival)
+> 
+>   df.time.unclassed <- data.frame(unclass(as.POSIXlt(mode.trips$timestamp.arrival)))
+> 
+>   ## h1 <- hist(df.time.unclassed$wday, breaks = 7, plot = F)
+>   ## plot(h1,   border = colors[index], xlab="Day", ylab="Number of Arrivals",  main=paste("Arrivals:", breaks.interval))
+> 
+>   c <- ggplot(df.time.unclassed, aes(factor(wday)))
+>   c + geom_bar()  + opts(title=paste("Arrivals:", trip.mode, breaks.interval), axis.text.x=theme_text(angle=45, hjust = 1))
+'opts' is deprecated. Use 'theme' instead. (Deprecated; last used in version 0.9.1)
+theme_text is deprecated. Use 'element_text' instead. (Deprecated; last used in version 0.9.1)
+Setting the plot title with opts(title="...") is deprecated.
+ Use labs(title="...") or ggtitle("...") instead. (Deprecated; last used in version 0.9.1)
+> 
+> 
+> 
+> 
+> index <- 3
+> 
+>   dev.new(width=14, height=7)
+dev.new(): using pdf(file="Rplots11.pdf")
+> 
+>   trip.mode <- trip.modes[index]
+> 
+>                                         #subset data by mode
+> 
+>   mode.trips <- subset(trips, mode == trip.mode)
+> 
+>                                         # change timestamp to date.time
+>   mode.trips$timestamp.arrival <- as.POSIXlt(mode.trips$timestamp.arrival)
+> 
+>   df.time.unclassed <- data.frame(unclass(as.POSIXlt(mode.trips$timestamp.arrival)))
+> 
+>   ## h1 <- hist(df.time.unclassed$wday, breaks = 7, plot = F)
+>   ## plot(h1,   border = colors[index], xlab="Day", ylab="Number of Arrivals",  main=paste("Arrivals:", breaks.interval))
+> 
+>   c <- ggplot(df.time.unclassed, aes(factor(wday)))
+>   c + geom_bar()  + opts(title=paste("Arrivals:", trip.mode, breaks.interval), axis.text.x=theme_text(angle=45, hjust = 1))
+'opts' is deprecated. Use 'theme' instead. (Deprecated; last used in version 0.9.1)
+theme_text is deprecated. Use 'element_text' instead. (Deprecated; last used in version 0.9.1)
+Setting the plot title with opts(title="...") is deprecated.
+ Use labs(title="...") or ggtitle("...") instead. (Deprecated; last used in version 0.9.1)
+> 
+> 
+> 
+> index <- 4
+> 
+>   dev.new(width=14, height=7)
+dev.new(): using pdf(file="Rplots12.pdf")
+> 
+>   trip.mode <- trip.modes[index]
+> 
+>                                         #subset data by mode
+> 
+>   mode.trips <- subset(trips, mode == trip.mode)
+> 
+>                                         # change timestamp to date.time
+>   mode.trips$timestamp.arrival <- as.POSIXlt(mode.trips$timestamp.arrival)
+> 
+>   df.time.unclassed <- data.frame(unclass(as.POSIXlt(mode.trips$timestamp.arrival)))
+> 
+>   ## h1 <- hist(df.time.unclassed$wday, breaks = 7, plot = F)
+>   ## plot(h1,   border = colors[index], xlab="Day", ylab="Number of Arrivals",  main=paste("Arrivals:", breaks.interval))
+> 
+>   c <- ggplot(df.time.unclassed, aes(factor(wday)))
+>   c + geom_bar()  + opts(title=paste("Arrivals:", trip.mode, breaks.interval), axis.text.x=theme_text(angle=45, hjust = 1))
+'opts' is deprecated. Use 'theme' instead. (Deprecated; last used in version 0.9.1)
+theme_text is deprecated. Use 'element_text' instead. (Deprecated; last used in version 0.9.1)
+Setting the plot title with opts(title="...") is deprecated.
+ Use labs(title="...") or ggtitle("...") instead. (Deprecated; last used in version 0.9.1)
+> 
+> 
+> index <- 5
+> 
+>   dev.new(width=14, height=7)
+dev.new(): using pdf(file="Rplots13.pdf")
+> 
+>   trip.mode <- trip.modes[index]
+> 
+>                                         #subset data by mode
+> 
+>   mode.trips <- subset(trips, mode == trip.mode)
+> 
+>                                         # change timestamp to date.time
+>   mode.trips$timestamp.arrival <- as.POSIXlt(mode.trips$timestamp.arrival)
+> 
+>   df.time.unclassed <- data.frame(unclass(as.POSIXlt(mode.trips$timestamp.arrival)))
+> 
+>   ## h1 <- hist(df.time.unclassed$wday, breaks = 7, plot = F)
+>   ## plot(h1,   border = colors[index], xlab="Day", ylab="Number of Arrivals",  main=paste("Arrivals:", breaks.interval))
+> 
+>   c <- ggplot(df.time.unclassed, aes(factor(wday)))
+>   c + geom_bar()  + opts(title=paste("Arrivals:", trip.mode, breaks.interval), axis.text.x=theme_text(angle=45, hjust = 1))
+'opts' is deprecated. Use 'theme' instead. (Deprecated; last used in version 0.9.1)
+theme_text is deprecated. Use 'element_text' instead. (Deprecated; last used in version 0.9.1)
+Setting the plot title with opts(title="...") is deprecated.
+ Use labs(title="...") or ggtitle("...") instead. (Deprecated; last used in version 0.9.1)
+> 
+> 
+> ## for (index in 2:length(trip.modes)) {
+> 
+> 
+> ##   dev.new(width=14, height=7)
+> 
+> ##   trip.mode <- trip.modes[index]
+> 
+> ##                                         #subset data by mode
+> 
+> ##   mode.trips <- subset(trips, mode == trip.mode)
+> 
+> ##                                         # change timestamp to date.time
+> ##   mode.trips$timestamp.arrival <- as.POSIXlt(mode.trips$timestamp.arrival)
+> 
+> ##   df.time.unclassed <- data.frame(unclass(as.POSIXlt(mode.trips$timestamp.arrival)))
+> 
+> ##   ## h1 <- hist(df.time.unclassed$wday, breaks = 7, plot = F)
+> ##   ## plot(h1,   border = colors[index], xlab="Day", ylab="Number of Arrivals",  main=paste("Arrivals:", breaks.interval))
+> 
+> ##   c <- ggplot(df.time.unclassed, aes(factor(wday)))
+> ##   c + geom_bar()  + opts(title=paste("Arrivals:", trip.mode, breaks.interval), axis.text.x=theme_text(angle=45, hjust = 1))
+> 
+> ## }
+> 
+> 
+> #legend("topright",  legend = trip.modes, pch = 1, col = colors)
+> 
+> 
+> 
+> 
+> rm(list = ls())
+> 
+> proc.time()
+   user  system elapsed 
+ 17.389   0.712  18.227 

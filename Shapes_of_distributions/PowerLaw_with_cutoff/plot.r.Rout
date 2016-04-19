@@ -1,0 +1,48 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # power law with cutoff
+> 
+> # generate some exponentials
+> exps <- rexp(20000, rate = 10)
+> 
+> xmin <- 100
+> alpha <- 2.5
+> 
+> # get p, probability of accepting
+> ps <- (exps/xmin)^(-alpha)
+> 
+> rs <- runif(20000)
+> 
+> x <- c()
+> 
+> i <- 1
+> while(length(x) < 10000) {
++   
++   if (rs[i] < ps[i])
++     append(x, exps[i])
++ 
++   i <- i + 1
++ }
+Error in if (rs[i] < ps[i]) append(x, exps[i]) : 
+  missing value where TRUE/FALSE needed
+Execution halted

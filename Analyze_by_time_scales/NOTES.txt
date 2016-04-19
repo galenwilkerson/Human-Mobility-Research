@@ -1,0 +1,107 @@
+Research Programme:
+
+0:  Goal:
+
+ To understand how three phenomena are modeled by random processes:
+   - number of trips & inter-event time
+   - trip length
+   - trip duration
+
+ To understand the effect of categorical variables, particularly transportation mode.
+
+
+
+I. Questions:
+
+- When are various measure distributions 'stationary'?
+
+    - I.e. when are they not a function of absolute time?
+
+    - Is this well-answered by auto-correlation at different time scales?
+    - Do wavelets contribute to this answer?
+
+- How do the measures look when they are stationary?
+
+- Are the measures well-modeled by Poisson processes? (H0)
+    (i.e. is inter-event time well-fit by exponential?)
+
+    - If not, by what are they best modeled? (H_A)
+      (It may be that event frequency is well-modeled by one process, while trip length, trip duration are well-modeled by another.)
+
+- Can we see how the measures vary _for different modes_ during the various stationary periods?
+
+  
+
+
+II. For each time scale:
+
+- month
+- week
+- day
+- hour
+
+Divide the time-scale into several (~5) sub-periods
+
+
+
+
+III. Plot and Fit the following in each of the sub-periods (just use all_modes) 
+
+- number of trip beginnings: mean/period SD/period (histogram of number of trips in each period)
+- event auto-correlation:  lags at scale
+- inter-event time distribution:  linear pdf, cdf of inter-event time
+- trip length: log-log ccdf of trip length
+- trip duration:  log-log ccdf
+
+
+
+
+IV. Exact Procedure
+
+*** Two important scales are day and hour. ***
+
+Day:  Due to day-of-week effects.
+
+We are interested in day-of-week, so we want to divide the data into several sections this way.
+
+- pdf of trips/day for each day of week
+- auto-correlation of events: lags at day scale to reveal cycles
+- inter-event time PDF, CDF for each day of week
+- trip length log-log CCDF for each day of week
+- trip duration log-log CCDF for each day of week
+- fit all above curves
+
+Hour:  Due to the daily variation (night vs. day)
+
+We are interested in hour-of-day, so we divide the data this way.
+
+- pdf of trips/hour for each fifth of day by hours (24/5 ~ 5 hours)
+- auto-correlation of events: lags at hour scale to reveal cycles
+- inter-event time PDF, CDF for each fifth of day
+- trip length log-log CCDF for each fifth of day
+- trip duration log-log CCDF for each fifth of day
+- fit all above curves
+
+
+Week (and Month):  Due to the apparent variance of number of samples over the entire period.
+
+For now, we will just look at week instead of month, since they aren't that different in magnitude.
+- pdf of trips/week for each of sub-periods
+- auto-correlation of events: lags at week scale
+- inter-event time linear PDF, CDF for each fifth of entire period (not week-of-month for now)
+- trip length log-log CCDF for each fifth of total period
+- trip duration log-log CCDF for each fifth of total period
+- fit all above curves
+
+
+
+
+V.  Further questions:
+
+- Ask same questions as above by categorical variable rather than time periods.  (i.e. stationarity over categories)
+
+- Can non-stationary components (i.e. periodic/cyclic signal components) be filtered out to reveal stationary components?
+  For example, using moving average.
+
+- Can the relation between trip length and trip duration (and perhaps event frequency and inter-event time) be described by diffusion?
+

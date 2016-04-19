@@ -1,0 +1,30 @@
+Parameter:   
+
+  Trip Lengths (auto, bicycle)
+
+
+Expectation:
+
+  Best Fit by truncated exponential power law (aka power law with exp. cutoff)
+
+
+Why:
+
+  Some kind of inverse scaling law guiding trip lengths - most trips short, near home/work, fewer and fewer occasional long trips to far away destinations.  I expect that there are dependencies between modes, since they may both be a function of city diameter, population, fuel price, infrastructure, and other factors.  This may also have to do with the fractal distribution of origins and destinations (see Michael Batty book.)
+
+It may plausibly be postulated that a spatial Yule process is at work, as individuals explore nearby areas first, occasionally exploring further.  As these explorations and habituations are superimposed over time, this could account for a power law distribution below truncation.
+
+Truncated due to finiteness of system (country, urban area), as well as limits of auto and bicycling radius, and periodicity/finiteness of daily travel time (Marchetti's constant).  Physicists often use "exponential" as the default truncation distribution, also due to Poisson processes, which assumes independent and constant average rate of events.  This is not a robust assumption, since it is coupled with a power law that has perhaps infinite variance and non-determinant average rate (i.e. chaotic/extreme).    However, the rate of ending trips may be independent and have a somewhat constant average rate, which is where truncation occurs.
+
+
+
+
+
+Measured:
+
+  Initially using built-in fitting tools of R or other high-level software.
+
+
+Result, why/why not agree with expectation?
+
+

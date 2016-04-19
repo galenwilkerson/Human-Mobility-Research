@@ -1,0 +1,211 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # for each mode
+> 
+> # get and plot several synthetic data sets (from plpva)
+> # also plot actual empirical data
+> 
+> # and best fit function
+> 
+> ### # save sythetic data set (NOT NOW)
+> 
+> 
+> # also save X_Dmax and Dmax for each synthetic data set, as well as size of synthetic data
+> 
+> # plot Dmax vs. iteration (synthetic set)
+> 
+> # p(Dmax)
+> # p(X_Dmax)
+> 
+> # scatterplot (X_Dmax, Dmax)
+> 
+> ###############################
+> 
+> #
+> # run as: NOT IN HOME DIRECTORY, INSTEAD USE /mnt/share/<directory>
+> #
+> # > nohup nice --adjustment=+19 R CMD BATCH <program.r> &
+> # then:
+> # > ionice -c3 -p<pid>
+> #
+> # clear all variables
+> rm(list = ls())
+> 
+> # plotting
+> library("ggplot2")
+> 
+> # plfit code
+> source("plfit.r")
+Loading required package: splines
+Loading required package: stats4
+
+Attaching package: ‘VGAM’
+
+The following object(s) are masked from ‘package:stats4’:
+
+    coef
+
+The following object(s) are masked from ‘package:splines’:
+
+    bs, ns
+
+The following object(s) are masked from ‘package:stats’:
+
+    case.names, coef, coefficients, dfbeta, df.residual, fitted,
+    fitted.values, formula, hatvalues, poly, residuals, variable.names,
+    weights
+
+The following object(s) are masked from ‘package:base’:
+
+    identity, scale.default
+
+Loading required package: R.oo
+Loading required package: R.methodsS3
+R.methodsS3 v1.4.2 (2012-06-22) successfully loaded. See ?R.methodsS3 for help.
+R.oo v1.13.0 (2013-03-08) successfully loaded. See ?R.oo for help.
+
+Attaching package: ‘R.oo’
+
+The following object(s) are masked from ‘package:methods’:
+
+    getClasses, getMethods
+
+The following object(s) are masked from ‘package:base’:
+
+    attach, detach, gc, load, save
+
+R.matlab v1.6.3 (2013-01-17) successfully loaded. See ?R.matlab for help.
+
+Attaching package: ‘R.matlab’
+
+The following object(s) are masked from ‘package:base’:
+
+    getOption, isOpen
+
+> source("plpva.r")
+> source("synthdata.r")
+> 
+> # base directory
+> base.data.dir <- "../Data/"
+> base.figures.dir <- "../Figures/"
+> 
+> # number of synthetic sets to use (very slow, so not much more than 100!!)
+> num.synth.sets <- 100
+> 
+> # load trip data
+> load(paste(base.data.dir,"merged_trips.RData", sep=""))
+> 
+> # separate trips into hvm mode
+> 
+> # get uniq list of modes
+> trip.modes <- as.vector(unique(mergedtrips$hvm))
+> 
+> # add "all modes" to modes
+> trip.modes <- c("all_modes", trip.modes)
+> 
+> print(trip.modes)
+[1] "all_modes"       "MIV (Fahrer)"    "zu Fu"           "MIV (Mitfahrer)"
+[5] "PV"              "Fahrrad"         "keine Angabe"   
+> 
+> #for (trip.mode in trip.modes) {
+> trip.mode <- trip.modes[3]
+> 
+>   print(trip.mode)
+[1] "zu Fu"
+> 
+> ############# PREPARATION ############
+> 
+>   puf.max.trip.length <- 950
+> 
+>   ifelse(trip.mode == "all_modes",
++          puf.trip.lengths <- subset(mergedtrips, wegkm.k <= puf.max.trip.length & wegkm.k > 0, select=c(wegkm.k))[,1],
++          puf.trip.lengths <- subset(mergedtrips, hvm == trip.mode & wegkm.k <= puf.max.trip.length & wegkm.k > 0, select=c(wegkm.k))[,1])
+[1] 1.96
+> 
+>   puf.trip.lengths <- na.omit(puf.trip.lengths)
+> 
+>   data.size <- length(puf.trip.lengths)
+> 
+>   print("number of trips")
+[1] "number of trips"
+>   print(data.size)
+[1] 44023
+> 
+>   x.interval <- .1
+> 
+>   breaks.vector <- seq(0,puf.max.trip.length, by=x.interval)
+> 
+> # remove first entry of breaks vector (for size matching with y values, and to avoid 'zero' problems)
+>   x.values <- breaks.vector[-1]
+>   log10.xvals <- log10(x.values)
+> 
+>   ## ## # find xmin, alpha
+>   print("fitting")
+[1] "fitting"
+>   params <- plfit(puf.trip.lengths)
+> 
+>   num.trips <- length(puf.trip.lengths)
+>   x.min <- as.numeric(params[1])
+>   alpha <- as.numeric(params[2])
+> 
+>   num.trips
+[1] 44023
+>   x.min
+[1] 6.37
+>   alpha
+[1] 3.672879
+> 
+> #################  Draw vertical line at xmin ###############
+> 
+>   outfile <- paste(base.figures.dir,"ccdf_",trip.mode,".pdf", sep="")
+>   
+>   pdf(outfile)
+> 
+>   plot(c(log10(x.min), log10(x.min)),
++        c(-5, 0),
++        type="l",
++        lty=3,main=paste("CCDF ", trip.mode),
++ #     xlim=c(1.5,3),  # zoom in
++        xlim=c(0,3), # zoom out
++ #     xlim=c(log10(x.min),3),  # start at xmin
++ #     ylim=c(-5,-1), # zoom in
++        ylim=c(-5,0), # zoom out
++        xlab= expression(log[10](r)),
++        ylab= expression(log[10](p(r))))
+> 
+> # label xmin location
+>   text(log10(x.min), -5, substitute(log(x[min]) == xminval, list(xminval =  round(log10(x.min), digits=2))))
+> 
+> 
+> #################### plot the synthetic D values ####################
+> 
+> # BELOW AND ABOVE XMIN (FROM SOURCE CODE)
+> 
+>   synth.results <- synthdata(puf.trip.lengths, x.min, num.synth.sets = num.synth.sets)
+[1] "synthdata"
+[1] "Power-law Distribution, parameter error calculation"
+[1] "Warning: This can be a slow calculation; please be patient."
+[1] " n = 44023 xmin = 6.36999988555908 - reps = 1000 real"
+[1] "1 0"
+[1] "B is"
+[1] 1

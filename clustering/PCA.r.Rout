@@ -1,0 +1,65 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> 
+> # find principle components using all categories
+> 
+> 
+> ##############
+> 
+> # load data
+> 
+> # convert categorical variables to numeric
+> 
+> # run PCA on all columns of data
+> 
+> ##############
+> 
+> 
+> rm(list = ls())
+> 
+> #plotting
+> library("ggplot2")
+> library(cluster)
+> 
+> # plfit code
+> #source("plfit.r")
+> 
+> 
+> ##############
+> 
+> 
+> data.dir = "/home/username/Dropbox/Active_Projects/Mobility_Article/Data/"
+> figures.dir = "./Figures/"
+> 
+> load(paste(data.dir, "trips.Rdata", sep=""))
+> 
+> ##############
+> 
+> 
+> 
+> my.trips <- data.frame(as.numeric(trips$sgtypd), as.numeric(trips$bland), as.numeric(trips$polgk), as.numeric(trips$rtypd7), as.numeric(trips$hwzweck), as.numeric(trips$hvm), as.numeric(trips$stichtag), as.numeric(trips$st.stdg), trips$wegkm.k, trips$wegmin.k)
+> 
+> pca <- prcomp(my.trips, scale = T)
+> biplot(pca)
+> 
+> proc.time()
+   user  system elapsed 
+ 25.401   0.620  26.219 

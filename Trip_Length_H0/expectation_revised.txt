@@ -1,0 +1,114 @@
+**** Parameter:   
+
+  Trip Lengths (km) for auto, bicycle
+
+
+**** Expectation:
+
+  Best Fit by normal distribution (H0: naive assumption)
+
+  The auto trips should have a significantly longer mean than trips using bicycle.
+
+
+**** Why:
+
+The individual picks a distance to travel, drawn from a uniform distribution and maximum distance according to mode velocity.
+
+They then pick another distance to travel, also drawn from uniform.   
+This second trip is independent from the first, and drawn from the same uniform distribution.
+
+This process repeats.
+
+Since these trips are i.i.d., the mean should be distributed normally.
+
+
+
+**** Measured:
+
+  Initially using built-in fitting tools of R or other high-level software.
+
+
+**** Result, why/why not agree with expectation?
+
+
+Trip lengths were NOT normally distributed.  
+
+This was shown by the Q-Q plots, which were highly skewed, and by the trip length plots, which were highly non-normal, as well as fitting results (below).
+
+
+It is unlikely that trips of different lengths are chosen with a uniform distribution.
+
+It is more likely that trips to inelastic destinations are chosen, and that other trips originate from those locations (home, work) due to 
+a variety of factors (friendships, density of destinations, proximity, infrastructure networks, finite time, and many others).
+
+Density of destinations probably plays a key role, and this density is very non-linear.
+
+Also, it is unlikely that all trip lengths are independent.  
+For example, if I have a common commute from home to work, then trips of that length will appear with a certain frequency.
+
+
+As expected, the mean trip length for auto was significantly longer than for bicycle.
+
+
+---------------------------------------
+
+[1] "MIV (Fahrer)"
+[1] "number of trips"
+[1] 83571
+[1] "Trip length summary"
+[1] 1512.139
+
+
+Fitting of the distribution ' norm ' by maximum likelihood 
+Parameters : 
+     estimate Std. Error
+mean 14.04743 0.12543062
+sd   36.26030 0.08869283
+Loglikelihood:  -418662.5   AIC:  837328.9   BIC:  837347.6 
+Correlation matrix:
+             mean           sd
+mean 1.000000e+00 2.428307e-07
+sd   2.428307e-07 1.000000e+00
+
+Goodness-of-fit statistics
+                               1-mle-norm
+Kolmogorov-Smirnov statistic    0.3502493
+Cramer-von Mises statistic   3177.3327542
+Anderson-Darling statistic            Inf
+
+Goodness-of-fit criteria
+                               1-mle-norm
+Aikake's Information Criterion   837328.9
+Bayesian Information Criterion   837347.6
+
+
+
+------------
+
+[1] "Fahrrad"
+[1] "number of trips"
+[1] 19133
+[1] "Trip length summary"
+[1] 52.83181
+Fitting of the distribution ' norm ' by maximum likelihood 
+Parameters : 
+     estimate Std. Error
+mean 3.224468 0.04709433
+sd   6.514186 0.03330071
+Loglikelihood:  -63003.45   AIC:  126010.9   BIC:  126026.6 
+Correlation matrix:
+             mean           sd
+mean 1.000000e+00 4.279013e-09
+sd   4.279013e-09 1.000000e+00
+
+Goodness-of-fit statistics
+                              1-mle-norm
+Kolmogorov-Smirnov statistic   0.3157415
+Cramer-von Mises statistic   631.8788632
+Anderson-Darling statistic           Inf
+
+Goodness-of-fit criteria
+                               1-mle-norm
+Aikake's Information Criterion   126010.9
+Bayesian Information Criterion   126026.6
+There were 50 or more warnings (use warnings() to see the first 50)

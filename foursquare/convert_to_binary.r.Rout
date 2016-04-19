@@ -1,0 +1,38 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # load data, convert to .RData, save
+> 
+> data.dir <- "umn_foursquare_datasets/"
+> filenames <- c("checkins","ratings","socialgraph","users","venues")
+> 
+> for (index in 1:length(filenames)) {
++   my.data <- read.csv(paste(data.dir,filenames[index],".dat", sep=""), sep="|")
++   my.data <- my.data[-1,]
++   save(my.data, file = paste(data.dir,filenames[index],".RData", sep=""), sep="|")
++ }
+> 
+> 
+> 
+> proc.time()
+    user   system  elapsed 
+1332.843   17.265 1360.121 

@@ -1,0 +1,86 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> 
+> library(VGAM)
+Loading required package: splines
+Loading required package: stats4
+
+Attaching package: ‘VGAM’
+
+The following object(s) are masked from ‘package:stats4’:
+
+    coef
+
+The following object(s) are masked from ‘package:splines’:
+
+    bs, ns
+
+The following object(s) are masked from ‘package:stats’:
+
+    case.names, coef, coefficients, dfbeta, df.residual, fitted,
+    fitted.values, formula, hatvalues, poly, residuals, variable.names,
+    weights
+
+The following object(s) are masked from ‘package:base’:
+
+    identity, scale.default
+
+> library(MASS)
+
+Attaching package: ‘MASS’
+
+The following object(s) are masked from ‘package:VGAM’:
+
+    huber
+
+> library(fitdistrplus)
+Loading required package: survival
+> 
+> ############## WEIBULL #############
+> 
+> # generate weibull data
+> x <- rweibull(10000,1, 0.5)
+> 
+> # normalize
+> x <- x/mean(x)
+> 
+> summary(x)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.00014 0.28600 0.69550 1.00000 1.38100 8.67900 
+> 
+> histo <- hist(x, main="weibull")
+> 
+> 
+> log10.breaks <- log10(histo$breaks)
+> log10.density <- log10(histo$density)
+> plot(log10.breaks[-1], log10.density, type = "s", main="log-log weibull")
+> 
+> ccdf <- 1 - ecdf(x)(histo$breaks[-1])
+> plot(log10.breaks[-1], log10(ccdf), type = "s", main="log-log weibull CDF")
+> 
+> # fit to pareto
+> fP <- fitdist(x, "pareto", start=c(shape=1, scale=1), lower=1, upper=Inf)
+Error in mledist(data, distname, start, fix.arg, ...) : 
+  'start' must specify names which are arguments to 'distr'
+Calls: fitdist -> mledist
+Execution halted

@@ -1,0 +1,172 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # load data
+> 
+> 
+> # calculate arrivals per day
+> 
+> ##########################################################################
+> 
+> rm(list = ls())
+> 
+> load("./tripdata.Rdata")
+> 
+> trip.modes <- as.character(unique(trips$mode))
+> 
+> #remove last element (no response for 'mode')
+> trip.modes <- trip.modes[-length(trip.modes)]
+> 
+> 
+> ################# ALL MODES: plot arrivals at daily intervals ########################
+> 
+> dev.new(width=14, height=7)
+> 
+> breaks.interval <- "days"
+> 
+> #trip.mode <- trip.modes[1]
+> 
+>  #subset data by mode
+>  # mode.trips <- subset(trips, mode == trip.mode)
+> 
+> mode.trips <- trips
+> 
+>   # change timestamp to date.time
+> mode.trips$timestamp.arrival <- as.POSIXlt(mode.trips$timestamp.arrival)
+> 
+>   # sort by timestamp
+>   #mode.trips.ordered <- mode.trips[order(as.POSIXlt(mode.trips$timestamp.arrival)),]
+> df.time.unclassed <- data.frame(mode.trips, unclass(as.POSIXlt(mode.trips$timestamp.arrival)))
+> 
+> # use only weekdays
+> df.time.unclassed <- subset(df.time.unclassed, wday > 0 & wday < 6)
+> 
+>   # bin by day
+>   my.table <- table(cut(df.time.unclassed$timestamp.arrival, breaks = breaks.interval))
+> 
+>   # bin by day
+> #  my.table <- table(cut(mode.trips$timestamp.arrival, breaks = breaks.interval))
+> 
+>   print(length(my.table))
+[1] 418
+> 
+> #  plot(my.table, type = "s", col = "black", xlab="Date", ylab="Number of Arrivals", main=paste("Arrivals (all modes) ", breaks.interval))
+> 
+> acf(my.table, main = "all modes")
+> 
+> ################# EACH MODE: plot arrivals at daily intervals ########################
+> 
+> index = 1
+> colors <- c(2:(length(trip.modes)+1))
+> 
+> dev.new(width=14, height=7)
+dev.new(): using pdf(file="Rplots1.pdf")
+> 
+> breaks.interval <- "days"
+> 
+> trip.mode <- trip.modes[1]
+> 
+>  #subset data by mode
+>   mode.trips <- subset(trips, mode == trip.mode)
+>  
+>   # change timestamp to date.time
+> mode.trips$timestamp.arrival <- as.POSIXlt(mode.trips$timestamp.arrival)
+> 
+>   # sort by timestamp
+>   #mode.trips.ordered <- mode.trips[order(as.POSIXlt(mode.trips$timestamp.arrival)),]
+> df.time.unclassed <- data.frame(mode.trips, unclass(as.POSIXlt(mode.trips$timestamp.arrival)))
+> 
+> # use only weekdays
+> df.time.unclassed <- subset(df.time.unclassed, wday > 0 & wday < 6)
+> 
+>   # bin by day
+>   my.table <- table(cut(df.time.unclassed$timestamp.arrival, breaks = breaks.interval))
+> 
+>   # bin by day
+> #  my.table <- table(cut(mode.trips$timestamp.arrival, breaks = breaks.interval))
+> 
+>   print(length(my.table))
+[1] 418
+> 
+> #  plot(my.table, type = "s", col = "black", xlab="Date", ylab="Number of Arrivals", main=paste("Arrivals (all modes) ", breaks.interval))
+> 
+> #acf(my.table, main = "all modes")
+> 
+>   acf(my.table, main = trip.mode)
+> 
+>   index <- index + 1
+> 
+> #################################################################################3
+> 
+> 
+> 
+> 
+> trip.modes.abbrev <- trip.modes[-1]
+> 
+> for (trip.mode in trip.modes.abbrev) {
++ 
++ #trip.mode <- trip.modes[5]
++ 
++ #subset data by mode
++   mode.trips <- subset(trips, mode == trip.mode)
++  
++   # change timestamp to date.time
++ mode.trips$timestamp.arrival <- as.POSIXlt(mode.trips$timestamp.arrival)
++ 
++   # sort by timestamp
++   #mode.trips.ordered <- mode.trips[order(as.POSIXlt(mode.trips$timestamp.arrival)),]
++ df.time.unclassed <- data.frame(mode.trips, unclass(as.POSIXlt(mode.trips$timestamp.arrival)))
++ 
++ # use only weekdays
++ df.time.unclassed <- subset(df.time.unclassed, wday > 0 & wday < 6)
++ 
++   # bin by day
++   my.table <- table(cut(df.time.unclassed$timestamp.arrival, breaks = breaks.interval))
++ 
++   # bin by day
++ #  my.table <- table(cut(mode.trips$timestamp.arrival, breaks = breaks.interval))
++ 
++   print(length(my.table))
++ 
++ #  plot(my.table, type = "s", col = "black", xlab="Date", ylab="Number of Arrivals", main=paste("Arrivals (all modes) ", breaks.interval))
++ 
++ #acf(my.table, main = "all modes")
++ 
++   acf(my.table, main = trip.mode)
++ 
++   index <- index + 1
++ 
++ }
+[1] 418
+[1] 418
+[1] 418
+[1] 418
+> 
+> 
+> 
+> 
+> 
+> rm(list = ls())
+> 
+> proc.time()
+   user  system elapsed 
+  9.964   1.916  11.897 

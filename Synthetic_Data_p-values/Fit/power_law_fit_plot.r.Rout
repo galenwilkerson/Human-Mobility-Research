@@ -1,0 +1,665 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # for each mode
+> 
+> # get and plot several synthetic data sets (from plpva)
+> 
+> # also plot actual empirical data
+> 
+> # save sets, run C++ code for plfit -approximate
+> # plot p-value distribution results
+> 
+> #
+> # run as: NOT IN HOME DIRECTORY, INSTEAD USE /mnt/share/<directory>
+> #
+> # > nohup nice --adjustment=+19 R CMD BATCH <program.r> &
+> # then:
+> # > ionice -c3 -p<pid>
+> #
+> # clear all variables
+> rm(list = ls())
+> 
+> # plotting
+> library("ggplot2")
+> 
+> # plfit code
+> source("plfit.r")
+Loading required package: splines
+Loading required package: stats4
+
+Attaching package: ‘VGAM’
+
+The following object(s) are masked from ‘package:stats4’:
+
+    coef
+
+The following object(s) are masked from ‘package:splines’:
+
+    bs, ns
+
+The following object(s) are masked from ‘package:stats’:
+
+    case.names, coef, coefficients, dfbeta, df.residual, fitted,
+    fitted.values, formula, hatvalues, poly, residuals, variable.names,
+    weights
+
+The following object(s) are masked from ‘package:base’:
+
+    identity, scale.default
+
+Loading required package: R.oo
+Loading required package: R.methodsS3
+R.methodsS3 v1.4.2 (2012-06-22) successfully loaded. See ?R.methodsS3 for help.
+R.oo v1.13.0 (2013-03-08) successfully loaded. See ?R.oo for help.
+
+Attaching package: ‘R.oo’
+
+The following object(s) are masked from ‘package:methods’:
+
+    getClasses, getMethods
+
+The following object(s) are masked from ‘package:base’:
+
+    attach, detach, gc, load, save
+
+R.matlab v1.6.3 (2013-01-17) successfully loaded. See ?R.matlab for help.
+
+Attaching package: ‘R.matlab’
+
+The following object(s) are masked from ‘package:base’:
+
+    getOption, isOpen
+
+> source("plpva.r")
+> source("synthdata.r")
+> 
+> # base directory
+> base.data.dir <- "../Data/"
+> base.figures.dir <- "../Figures/"
+> 
+> # load trip data
+> load(paste(base.data.dir,"merged_trips.RData", sep=""))
+> 
+> # separate trips into hvm mode
+> 
+> # get uniq list of modes
+> trip.modes <- as.vector(unique(mergedtrips$hvm))
+> 
+> # add "all modes" to modes
+> trip.modes <- c("all_modes", trip.modes)
+> 
+> print(trip.modes)
+[1] "all_modes"       "MIV (Fahrer)"    "zu Fu"           "MIV (Mitfahrer)"
+[5] "PV"              "Fahrrad"         "keine Angabe"   
+> 
+> for (trip.mode in trip.modes) {
++ #trip.mode <- trip.modes[3]
++ 
++ print(trip.mode)
++ 
++ ############# PREPARATION ############
++ 
++ puf.max.trip.length <- 950
++ 
++ ifelse(trip.mode == "all_modes",
++        puf.trip.lengths <- subset(mergedtrips, wegkm.k <= puf.max.trip.length & wegkm.k > 0, select=c(wegkm.k))[,1],
++        puf.trip.lengths <- subset(mergedtrips, hvm == trip.mode & wegkm.k <= puf.max.trip.length & wegkm.k > 0, select=c(wegkm.k))[,1])
++ 
++ puf.trip.lengths <- na.omit(puf.trip.lengths)
++ 
++ data.size <- length(puf.trip.lengths)
++ 
++ x.interval <- .1
++ 
++ breaks.vector <- seq(0,puf.max.trip.length, by=x.interval)
++ 
++ # remove first entry of breaks vector (for size matching with y values, and to avoid 'zero' problems)
++ x.values <- breaks.vector[-1]
++ log10.xvals <- log10(x.values)
++ 
++ ## ## # find xmin, alpha
++ print("fitting")
++ params <- plfit(puf.trip.lengths)
++ 
++ num.trips <- length(puf.trip.lengths)
++ x.min <- as.numeric(params[1])
++ alpha <- as.numeric(params[2])
++ 
++ num.trips
++ x.min
++ alpha
++ 
++ 
++ #################  Draw vertical line at xmin
++ 
++ outfile <- paste(base.figures.dir,"ccdf_",trip.mode,".pdf", sep="")
++   
++ pdf(outfile)
++ 
++ plot(c(log10(x.min), log10(x.min)),
++      c(-5, 0),
++      type="l",
++      lty=3,main=paste("CCDF ", trip.mode),
++ #     xlim=c(1.5,3),  # zoom in
++      xlim=c(0,3), # zoom out
++ #     xlim=c(log10(x.min),3),  # start at xmin
++ #     ylim=c(-5,-1), # zoom in
++      ylim=c(-5,0), # zoom out
++      xlab= expression(log[10](r)),
++      ylab= expression(log[10](p(r))))
++ 
++ # label xmin location
++ text(log10(x.min), -5, substitute(log(x[min]) == xminval, list(xminval =  round(log10(x.min), digits=2))))
++ 
++ ############ PLOT CCDF OF SYNTHETIC DATA FROM R CODE ##########
++ 
++ # BELOW AND ABOVE XMIN (FROM SOURCE CODE)
++ 
++ synth.sets <- synthdata(puf.trip.lengths, x.min, num.synth.sets = 100)
++ 
++ print(length(synth.sets))
++ 
++ 
++ synth.set.index <- 1
++ results <- list()
++ 
++ synth.fit.results.file <- paste(base.data.dir, "synth_results/",trip.mode, "_synth_fit_results.csv", sep="")
++ 
++ for (synth.set in synth.sets) {
++ 
++   
++   synth.trip.lengths <- unlist(synth.set)
++ 
++ 
++ 
++   # remove values greater than puf.max.trip.length
++   synth.trip.lengths <- subset(synth.trip.lengths,
++                                synth.trip.lengths <= puf.max.trip.length & synth.trip.lengths > 0)
++ 
++ 
++   # save to file
++   
++   # remove special chars from mode name
++   trip.mode.stripped <- gsub("[[:punct:]]", "", trip.mode)
++   trip.mode.stripped <- gsub(" ", "", trip.mode.stripped)
++ 
++   tempfile <-  paste(base.data.dir,"synth_sets/synth_set_",synth.set.index,"_",trip.mode.stripped,"_trip_lengths.csv", sep="")
++   write.table(synth.trip.lengths, file=tempfile, row.name=F, col.names=F)
++   
++   logfile <-  paste(base.data.dir,"synth_sets/synth_set_",synth.set.index,"_",trip.mode.stripped,"_trip_lengths.out", sep="")
++   
++   # run plfit to get approximate p-value output
++     
++   command <- paste("nice --adjustment=+19 ./plfit -b -p approximate ", tempfile, " >>", synth.fit.results.file, " 2> ", logfile, sep="")
++   ## #command <- paste("nohup nice --adjustment=+19 ./plfit -b -p exact ", tempfile, " > ", outfile, " 2> ", logfile, "&", sep="")
++ 
++   print(command)
++   
++   result <- system(command)
++ 
++   print("result is:")
++   print(result)
++ 
++   # keep results, add to list
++   results[[synth.set.index]] <- result
++   
++     
++   cdf.synth <- ecdf(synth.trip.lengths)
++ 
++   ccdf <- 1 - cdf.synth(x.values)
++ 
++ 
++   log10.ccdf <- log10(ccdf)
++ 
++ 
++ 
++ # just try plotting CCDF
++   points(log10.xvals,
++          log10.ccdf,
++          type="l",
++          col="grey")
++ 
++ 
++   synth.set.index <- synth.set.index + 1
++ }
++ 
++ # keep synth fit results
++ 
++ #write.table(results, file = synth.fit.results.file, row.name=F, col.names=F)
++ 
++ 
++ 
++ ############  EMPIRICAL CCDF ################
++ 
++ cdf.puf <- ecdf(puf.trip.lengths)
++ ccdf <- 1 - cdf.puf(x.values)
++ 
++ log10.xvals <- log10(x.values)
++ log10.ccdf <- log10(ccdf)
++ 
++ #plot(log10.xvals,
++ lines(log10.xvals,
++       log10.ccdf,
++       lwd=1.5)
++ 
++ 
++ ############### PLOT CCDF OF BEST FIT FUNCTION ###############
++ 
++ # using vector of x.values, compute P(X > x) as vector
++ 
++ # P(x) = ((x/x_min)^(1-alpha))
++ P.X <- ((x.values/x.min)^(1-alpha))
++ 
++ cdf.at.xmin <- cdf.puf(x.min)
++ ccdf.at.xmin <- 1 - cdf.at.xmin
++ ccdf.at.xmin
++ 
++ log.ccdf.at.xmin <- log10(ccdf.at.xmin)
++ log.ccdf.at.xmin
++ 
++ # plot CCDF
++ log10.x.vals <- log10(x.values) 
++ log10.P.X <- log10(P.X) + log.ccdf.at.xmin
++ 
++ lines(log10.x.vals,
++       log10.P.X,
++       type = "l",
++       lty = 2,
++       lwd = 1.5,
++       col="red")
++ 
++ # label alpha on fit line
++ text(log10(x.min) - .3, log.ccdf.at.xmin, substitute(alpha == alphval, list(alphval = round(alpha, digits = 2))))
++ 
++ label1 <- paste("xmin = ", round(x.min,digits=2), " alpha = ", round(alpha,digits=2))
++ legend.labels <- c(label1, "100 synthetic cdfs","empirical cdf")
++ 
++ legend.colors <- c("red", "grey", "black")
++ legend("topright",legend.labels ,lty=c(2,1,1), lwd=2, col=legend.colors, cex = .75, inset = .01)
++ 
++ dev.off()
++ 
++ }
+[1] "all_modes"
+[1] "fitting"
+[1] "Power-law Distribution, parameter error calculation"
+[1] "Warning: This can be a slow calculation; please be patient."
+[1] " n = 191610 xmin = 33.8400001525879 - reps = 1000 real"
+[1] "B is"
+[1] 1
+[1] "B is"
+[1] 2
+[1] "B is"
+[1] 3
+[1] "B is"
+[1] 4
+[1] "B is"
+[1] 5
+[1] "B is"
+[1] 6
+[1] "B is"
+[1] 7
+[1] "B is"
+[1] 8
+[1] "B is"
+[1] 9
+[1] "B is"
+[1] 10
+[1] "B is"
+[1] 11
+[1] "B is"
+[1] 12
+[1] "B is"
+[1] 13
+[1] "B is"
+[1] 14
+[1] "B is"
+[1] 15
+[1] "B is"
+[1] 16
+[1] "B is"
+[1] 17
+[1] "B is"
+[1] 18
+[1] "B is"
+[1] 19
+[1] "B is"
+[1] 20
+[1] "B is"
+[1] 21
+[1] "B is"
+[1] 22
+[1] "B is"
+[1] 23
+[1] "B is"
+[1] 24
+[1] "B is"
+[1] 25
+[1] "B is"
+[1] 26
+[1] "B is"
+[1] 27
+[1] "B is"
+[1] 28
+[1] "B is"
+[1] 29
+[1] "B is"
+[1] 30
+[1] "B is"
+[1] 31
+[1] "B is"
+[1] 32
+[1] "B is"
+[1] 33
+[1] "B is"
+[1] 34
+[1] "B is"
+[1] 35
+[1] "B is"
+[1] 36
+[1] "B is"
+[1] 37
+[1] "B is"
+[1] 38
+[1] "B is"
+[1] 39
+[1] "B is"
+[1] 40
+[1] "B is"
+[1] 41
+[1] "B is"
+[1] 42
+[1] "B is"
+[1] 43
+[1] "B is"
+[1] 44
+[1] "B is"
+[1] 45
+[1] "B is"
+[1] 46
+[1] "B is"
+[1] 47
+[1] "B is"
+[1] 48
+[1] "B is"
+[1] 49
+[1] "B is"
+[1] 50
+[1] "B is"
+[1] 51
+[1] "B is"
+[1] 52
+[1] "B is"
+[1] 53
+[1] "B is"
+[1] 54
+[1] "B is"
+[1] 55
+[1] "B is"
+[1] 56
+[1] "B is"
+[1] 57
+[1] "B is"
+[1] 58
+[1] "B is"
+[1] 59
+[1] "B is"
+[1] 60
+[1] "B is"
+[1] 61
+[1] "B is"
+[1] 62
+[1] "B is"
+[1] 63
+[1] "B is"
+[1] 64
+[1] "B is"
+[1] 65
+[1] "B is"
+[1] 66
+[1] "B is"
+[1] 67
+[1] "B is"
+[1] 68
+[1] "B is"
+[1] 69
+[1] "B is"
+[1] 70
+[1] "B is"
+[1] 71
+[1] "B is"
+[1] 72
+[1] "B is"
+[1] 73
+[1] "B is"
+[1] 74
+[1] "B is"
+[1] 75
+[1] "B is"
+[1] 76
+[1] "B is"
+[1] 77
+[1] "B is"
+[1] 78
+[1] "B is"
+[1] 79
+[1] "B is"
+[1] 80
+[1] "B is"
+[1] 81
+[1] "B is"
+[1] 82
+[1] "B is"
+[1] 83
+[1] "B is"
+[1] 84
+[1] "B is"
+[1] 85
+[1] "B is"
+[1] 86
+[1] "B is"
+[1] 87
+[1] "B is"
+[1] 88
+[1] "B is"
+[1] 89
+[1] "B is"
+[1] 90
+[1] "B is"
+[1] 91
+[1] "B is"
+[1] 92
+[1] "B is"
+[1] 93
+[1] "B is"
+[1] 94
+[1] "B is"
+[1] 95
+[1] "B is"
+[1] 96
+[1] "B is"
+[1] 97
+[1] "B is"
+[1] 98
+[1] "B is"
+[1] 99
+[1] "B is"
+[1] 100
+[1] "returning "
+[1] 100
+[1] " data sets."
+[1] 100
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_1_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_1_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_2_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_2_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_3_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_3_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_4_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_4_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_5_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_5_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_6_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_6_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_7_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_7_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_8_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_8_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_9_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_9_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_10_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_10_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_11_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_11_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_12_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_12_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_13_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_13_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_14_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_14_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_15_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_15_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_16_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_16_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_17_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_17_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_18_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_18_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_19_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_19_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_20_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_20_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_21_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_21_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_22_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_22_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_23_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_23_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_24_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_24_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_25_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_25_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_26_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_26_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_27_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_27_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_28_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_28_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_29_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_29_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_30_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_30_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_31_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_31_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_32_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_32_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_33_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_33_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_34_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_34_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_35_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_35_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_36_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_36_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_37_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_37_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_38_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_38_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_39_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_39_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_40_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_40_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_41_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_41_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_42_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_42_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_43_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_43_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_44_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_44_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_45_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_45_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_46_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_46_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_47_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_47_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_48_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_48_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_49_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_49_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_50_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_50_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_51_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_51_allmodes_trip_lengths.out"
+[1] "result is:"
+[1] 0
+[1] "nice --adjustment=+19 ./plfit -b -p approximate ../Data/synth_sets/synth_set_52_allmodes_trip_lengths.csv >>../Data/synth_results/all_modes_synth_fit_results.csv 2> ../Data/synth_sets/synth_set_52_allmodes_trip_lengths.out"

@@ -1,0 +1,109 @@
+- Phenomenon to investigate
+
+Commuting trip length by time scale
+
+
+- Time Scale:
+
+Hourly
+
+
+- Process:
+
+Moving with higher priority during morning and early evening hours, not as periodic, more random during holiday times and weekends.  More activity by working-age people.  Longer trips by those with cars in suburbs near larger cities.   More long trips by those with middle to high incomes.  More trips on 'good' weather days.
+
+- Influences:
+
+source of input:  wsource
+
+type of person:  int_typ9
+
+month: stich_m
+
+day of week:  stichtag
+
+season:  saison
+
+start_hour:  st_std
+
+end_hour:  en_std
+
+purpose of trip:  w04
+
+main purpose:  hwzweck
+
+point of trip start:  w01
+
+goal destination of trip: w13
+
+Zielpunkt bei Einkaufs-, Erledigungs-,
+Freizeitwegen: w044
+
+main mode (diff): hvm_diff
+
+main mode:  hvm
+
+own auto:  w062
+
+number of passengers:  w07
+
+trip length (km):  wegkm_k
+
+trip duration (min):  wegmin_k
+
+trip_co2:  co2weg
+
+fuel usage (only autos):  kraftweg
+
+income: hheink
+
+economic status: oek_stat
+
+house hold type: hhtyp
+
+gender:  hp_sex
+
+age:  hp_alter
+
+activity:  hp_besch
+
+license: hp_pkwfs
+
+life-phase:  lebensph
+
+mode-usersegment: ov_seg
+
+weather:  s03
+
+private car available: s04
+
+normal day:  s01
+
+bundesland:  bland
+
+east-west:  westost
+
+kreis type:  ktyp
+
+city and community type:  sgtypd
+
+
+-------  not directly available in data -------
+
+
+city density
+
+fuel price
+
+road network
+
+terrain
+
+culture
+
+
+- Bias:
+
+bias trips toward commute length during commuting hours, months
+
+depending on region, bias toward commute distances

@@ -1,0 +1,38 @@
+Stationarity
+
+
+
+Stationary - the distribution of arrivals seens from time t does not depend on t:
+
+E(F{t_n, y_n}) = E[F({t_n - t, y_n})]
+
+[source: Stochastic Networks and Queues]
+
+
+
+i.e. the distribution is independent of time.
+
+-----
+
+"truly stationary" - all moments remain the same over time
+
+"weakly stationary" - constant mean and ACF 
+
+How to test stationarity statistically?
+
+- parametric - "runs test"
+
+- non-parametric - autocorrelation function dies off extremely slowly
+
+
+[source: "stationarity/nonstationarity identification", Masliah]
+
+
+-----
+To do:
+
+- generate sample data
+
+- Use KPSS test (R)
+
+

@@ -1,0 +1,86 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # load data
+> 
+> 
+> # calculate arrivals per day
+> 
+> ##########################################################################
+> 
+> rm(list = ls())
+> library(wavelets)
+> #library(xts)
+> 
+> load("./decomposed_trips_minutes.Rdata")
+> 
+> trip.modes <- as.character(unique(trips.detailed$mode))
+> 
+> #remove last element (no response for 'mode')
+> trip.modes <- trip.modes[-length(trip.modes)]
+> 
+> 
+> 
+> ################ FOR ALL MODES ################################
+> 
+> dev.new(width=10, height=10)
+> #plot(my.table, type = "s")
+> 
+> # take discrete transform of trips by time
+> time.series <- as.data.frame(my.table)
+> 
+> myts <- as.ts(time.series$Freq)
+> dwt1 <- dwt(myts)
+> plot(dwt1, main = "Discrete Wavelet Transform, All Modes")
+> 
+> ############################ FOR EACH MODE ###################################
+> 
+> breaks.interval = "mins"
+> 
+> for (index in 1:length(trip.modes)) {
++ 
++ 
++   #subset data by mode and day
++   
++   trip.mode <- trip.modes[index]
++ 
++ 	print(trip.mode)
++ 
++   mode.trips <- subset(trips.detailed, mode == trip.mode)
++ 
++   	print(length(mode.trips))
++ 
++   my.table <- table(cut(mode.trips$timestamp.arrival, breaks = breaks.interval))
++   
++  time.series <- as.data.frame(my.table)
++ 
++   myts <- as.numeric(as.ts(time.series$Freq))
++   dwt1 <- dwt(myts)
++   plot(dwt1, main = paste("Discrete Wavelet Transform, ", trip.mode))
++ }
+[1] "MIV (Fahrer)"
+[1] 13
+[1] "zu Fu"
+[1] 13
+[1] "MIV (Mitfahrer)"
+[1] 13
+[1] "PV"
+[1] 13
+Terminated

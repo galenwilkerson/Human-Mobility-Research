@@ -1,0 +1,128 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: i686-pc-linux-gnu (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> 
+> # load data
+> 
+> # subset by categorical variable(s)
+> 
+> # remove error/special values
+> 
+> # plot event density at different time scales over different time ranges
+> 
+> # examples:
+> # trips/day within subset of time period (time series)
+> # trips/day summed over all weeks within time period (histogram)
+> 
+> # trips/month within subset time range
+> # trips/month summed over all years within time period
+> 
+> 
+> 
+> ########################################################
+> 
+> rm(list = ls())
+> library(ggplot2)
+> library(scales)
+> 
+> 
+> ########################################################
+> 
+> 
+> # subset events by time period, return data frame within time period (inclusive)
+> # times are POSIXlt
+> subset.events.time.period <- function(events, time.column.name, start.time, end.time) {
++ 
++   
++   subset.events <- subset(events, events[,time.column.name] >= start.time & events[,time.column.name] <= end.time)
++    
++   
++   return(subset.events)
++ }
+> 
+> 
+> # subset events by category, return list of subset data frames
+> subset.events.category <- function(events, subset.category, categories) {
++ 
++   subsets <- list()
++ 
++   i <- 1
++ 
++   for (cat in categories) {
++     
++     # get rows by category
++     category.events <- subset(events, events[,subset.category] == cat)
++     subsets[[i]] <- category.events
++     i <- i + 1
++   }
++ 
++    return(subsets)
++ }
+> 
+> 
+> # get frequency of events by time scale
+> # return data frame with timestamp and frequency columns
+> get.frequency.by.timescale <- function(events, time.stamp.column.name, timescale) {
++ 
++   event.table <- table(cut(events[,time.stamp.column.name], breaks = timescale))
++   event.frequency <- data.frame(event.table)
++   colnames(event.frequency) <- c("timestamp", "frequency")
++   
++   return(event.frequency)
++ }
+> 
+> 
+> 
+> # return data frame with original events and 'unclassed' timestamp information
+> get.unclassed.data.frame.with.timescale <- function(events, time.stamp.column.name) {
++ 
++   # break apart timestamp into components
++   df.unclassed <- data.frame(events, unclass(as.POSIXlt(events[,time.stamp.column.name])))
++  # h <- hist(df.unclassed[,timescale.name], plot = F)
++       
++   return(df.unclassed)
++ }
+> 
+> ############################################################################
+> 
+> # PLOT LONGER TIME SCALES
+> 
+> 
+> data.dir = "/home/username/Dropbox/Active_Projects/Mobility_Article/Data/"
+> figures.dir = "./Figures/"
+> 
+> load(paste(data.dir, "trips.Rdata", sep=""))
+> 
+> 
+> # get events within time range
+> start.time <- as.POSIXlt("2008-04-01 00:00:00 CEST")
+> end.time <- as.POSIXlt("2008-12-31 23:59:59 CEST")
+> events.within.period <- subset.events.time.period(trips, time.column.name = "timestamp.event", start.time = start.time, end.time = end.time)
+Error in events[, time.column.name] >= start.time : 
+  comparison of these types is not implemented
+Calls: subset.events.time.period -> subset -> subset.data.frame -> eval -> eval
+In addition: Warning messages:
+1: In eval(expr, envir, enclos) :
+  Incompatible methods ("Ops.factor", "Ops.POSIXt") for ">="
+2: In events[, time.column.name] >= start.time :
+  longer object length is not a multiple of shorter object length
+Execution halted

@@ -1,0 +1,2065 @@
+city;area;population
+Berlin, Stadt;891.7;3375222
+Hamburg, Freie und Hansestadt;755.3;1734272
+München, Landeshauptstadt;310.7;1388308
+Köln, Stadt;405.16;1024373
+Frankfurt am Main, Stadt;248.31;687775
+Stuttgart, Landeshauptstadt;207.35;597939
+Düsseldorf, Stadt;217.41;593682
+Dortmund, Stadt;280.71;572087
+Essen, Stadt;210.3;566862
+Bremen, Stadt;325.42;546451
+Dresden, Stadt;328.31;525105
+Leipzig, Stadt;297.39;520838
+Hannover, Landeshauptstadt;204.15;514137
+Nürnberg;186.37;495121
+Duisburg, Stadt;232.8;486816
+Bochum, Stadt;145.66;362213
+Wuppertal, Stadt;168.39;342885
+Bielefeld, Stadt;258.82;328314
+Bonn, Stadt;141.09;309869
+Münster, Stadt;302.96;296599
+Karlsruhe, Stadt;173.46;296033
+Mannheim, Universitätsstadt;144.96;294627
+Augsburg;146.84;272699
+Wiesbaden, Landeshauptstadt;203.93;272636
+Gelsenkirchen, Stadt;104.94;257607
+Mönchengladbach, Stadt;170.45;255087
+Braunschweig, Stadt;192.17;245798
+Chemnitz, Stadt;220.86;241210
+Aachen, Stadt;160.85;240086
+Kiel, Landeshauptstadt;118.65;239866
+Halle (Saale), Stadt;135.01;231440
+Magdeburg, Landeshauptstadt;201;229924
+Krefeld, Stadt;137.75;222026
+Freiburg im Breisgau, Stadt;153.06;218043
+Lübeck, Hansestadt;214.21;211713
+Oberhausen, Stadt;77.1;210005
+Erfurt, Stadt;269.15;203485
+Rostock, Hansestadt;181.27;202887
+Mainz, Stadt;97.74;202756
+Kassel, documenta-Stadt;106.78;192874
+Hagen, Stadt der FernUniversität;160.35;186243
+Saarbrücken, Landeshauptstadt;167.09;176996
+Hamm, Stadt;226.43;176440
+Mülheim an der Ruhr, Stadt;91.28;166654
+Ludwigshafen am Rhein, Stadt;77.55;160179
+Leverkusen, Stadt;78.87;159926
+Potsdam, Stadt;187.66;159456
+Oldenburg (Oldenburg), Stadt;102.99;158658
+Osnabrück, Stadt;119.8;155625
+Solingen, Klingenstadt;89.55;155316
+Herne, Stadt;51.42;154563
+Neuss, Stadt;99.53;151486
+Heidelberg, Stadt;108.83;150335
+Darmstadt, Wissenschaftsstadt;122.09;147925
+Paderborn, Stadt;179.6;143575
+Regensburg;80.7;138296
+Ingolstadt;133.37;127886
+Würzburg;87.63;124577
+Wolfsburg, Stadt;204.05;121758
+Fürth;63.35;118358
+Ulm, Universitätsstadt;118.69;117977
+Heilbronn, Stadt;99.88;117531
+Offenbach am Main, Stadt;44.89;116945
+Göttingen, Stadt;116.89;116650
+Bottrop, Stadt;100.61;116498
+Pforzheim, Stadt;98;116425
+Recklinghausen, Stadt;66.43;115385
+Reutlingen, Stadt;87.06;110681
+Koblenz, Stadt;105.12;109779
+Remscheid, Stadt;74.52;109352
+Bergisch Gladbach, Stadt;83.09;109138
+Bremerhaven, Stadt;93.82;108323
+Jena, Stadt;114.48;106915
+Trier, Stadt;117.13;106544
+Erlangen;76.95;105412
+Moers, Stadt;67.68;103504
+Cottbus, Stadt;164.29;99913
+Siegen, Universitätsstadt;114.69;99261
+Hildesheim, Stadt;92.18;99224
+Salzgitter, Stadt;223.92;98095
+Kaiserslautern, Stadt;139.73;97112
+Witten, Stadt;72.37;96136
+Gera, Stadt;151.92;95384
+Gütersloh, Stadt;112.02;94973
+Iserlohn, Stadt;125.49;93799
+Zwickau, Stadt;102.55;92227
+Schwerin, Landeshauptstadt;130.53;91264
+Hanau, Brüder-Grimm-Stadt;76.49;88834
+Düren, Stadt;85;88768
+Esslingen am Neckar, Stadt;46.42;88295
+Ludwigsburg, Stadt;43.35;88200
+Ratingen, Stadt;88.74;86821
+Lünen, Stadt;59.2;84798
+Dessau-Roßlau, Stadt;244.74;84606
+Tübingen, Universitätsstadt;108.12;84496
+Marl, Stadt;87.66;84055
+Flensburg, Stadt;56.74;83462
+Villingen-Schwenningen, Stadt;165.48;80923
+Velbert, Stadt;74.9;80902
+Minden, Stadt;101.12;79853
+Worms, Stadt;108.73;79727
+Konstanz, Universitätsstadt;54.11;79645
+Neumünster, Stadt;71.63;76951
+Gießen, Universitätsstadt;72.56;76680
+Wilhelmshaven, Stadt;106.91;76545
+Dorsten, Stadt;171.2;76030
+Viersen, Stadt;91.08;74952
+Norderstedt, Stadt;58.1;74574
+Castrop-Rauxel, Stadt;51.67;74123
+Gladbeck, Stadt;35.91;74002
+Arnsberg, Stadt;193.72;73897
+Detmold, Stadt;129.39;73602
+Delmenhorst, Stadt;62.36;73588
+Lüdenscheid, Stadt;87.02;73336
+Rheine, Stadt;145;73285
+Troisdorf, Stadt;62.2;72784
+Marburg, Universitätsstadt;123.92;72433
+Bayreuth;66.91;71482
+Brandenburg an der Havel, Stadt;228.84;71149
+Bocholt, Stadt;119.4;71080
+Lüneburg, Hansestadt;70.34;71009
+Bamberg;54.62;70863
+Celle, Stadt;175.04;68613
+Aschaffenburg;62.47;67681
+Dinslaken, Stadt;47.66;67379
+Aalen, Stadt;146.63;66590
+Lippstadt, Stadt;113.68;66100
+Landshut;65.81;65322
+Herford, Stadt;79.16;65113
+Fulda, Stadt;104.04;64779
+Kempten (Allgäu);87435;63.28
+Plauen, Stadt;102.11;64115
+Neuwied, Stadt;86.5;64102
+Kerpen, Kolpingstadt;113.92;63650
+Neubrandenburg, Stadt;85.66;63509
+Weimar, Stadt;84.19;63236
+Dormagen, Stadt;85.49;62379
+Grevenbroich, Stadt;102.51;61530
+Herten, Stadt;37.33;61001
+Sindelfingen, Stadt;50.85;60795
+Wesel, Stadt;122.56;60241
+Rüsselsheim, Stadt;58.29;60229
+Rosenheim;37.22;59935
+Garbsen, Stadt;79.31;59674
+Bergheim, Stadt;96.34;59297
+Unna, Stadt;88.53;59015
+Frankfurt (Oder), Stadt;147.64;58537
+Schwäbisch Gmünd, Stadt;113.78;58293
+Stralsund, Hansestadt;54.08;57357
+Friedrichshafen, Stadt;69.93;57333
+Offenburg, Stadt;78.38;57328
+Langenfeld (Rheinland), Stadt;41.15;56993
+Hürth, Stadt;51.22;56435
+Hameln, Stadt;102.33;56281
+Stolberg (Rhld.), Kupferstadt;98.5;56089
+Greifswald, Hansestadt;50.74;55771
+Euskirchen, Stadt;139.49;55502
+Göppingen, Stadt;59.23;55378
+Eschweiler, Stadt;75.88;54775
+Hilden, Stadt;25.95;54736
+Meerbusch, Stadt;64.39;54592
+Hattingen, Stadt;71.4;54286
+Görlitz, Stadt;67.24;54114
+Sankt Augustin, Stadt;34.22;54109
+Neu-Ulm, GKSt;80.96;53888
+Menden (Sauerland), Stadt;86.1;53876
+Pulheim, Stadt;72.15;53080
+Baden-Baden, Stadt;140.21;52585
+Nordhorn, Stadt;149.68;52380
+Waiblingen, Stadt;42.76;52302
+Neustadt an der Weinstraße, Stadt;117.1;52268
+Bad Salzuflen, Stadt;100.05;52180
+Bad Homburg v. d. Höhe, Stadt;51.16;52108
+Schweinfurt;35.7;52098
+Ahlen, Stadt;123.13;51877
+Lingen (Ems), Stadt;176.13;51832
+Wolfenbüttel, Stadt;78.51;51546
+Langenhagen, Stadt;71.86;51533
+Wetzlar, Stadt;75.67;51063
+Willich, Stadt;67.77;50663
+Frechen, Stadt;45.1;50607
+Ibbenbüren, Stadt;108.87;50560
+Speyer, Stadt;42.6;49764
+Emden, Stadt;112.35;49751
+Gummersbach, Stadt;95.42;49722
+Erftstadt, Stadt;119.89;49164
+Passau;69.57;49038
+Ravensburg, Stadt;92.05;48915
+Cuxhaven, Stadt;161.91;48657
+Bergkamen, Stadt;44.84;48534
+Peine, Stadt;119.65;48414
+Bad Oeynhausen, Stadt;64.83;48354
+Lörrach, Stadt;39.42;48160
+Kleve, Stadt;97.76;47826
+Elmshorn, Stadt;21.37;47490
+Frankenthal (Pfalz), Stadt;43.76;47035
+Wittenberg, Lutherstadt;240.34;46930
+Rheda-Wiedenbrück, Stadt;86.72;46858
+Rastatt, Stadt;59.02;46819
+Soest, Stadt;85.81;46685
+Herzogenrath, Stadt;33.4;46478
+Schwerte, Hansestadt an der Ruhr;56.2;46376
+Bornheim, Stadt;82.69;46365
+Alsdorf, Stadt;31.67;46326
+Heidenheim an der Brenz, Stadt;107.1;46137
+Dülmen, Stadt;184.83;46071
+Melle, Stadt;253.99;46035
+Böblingen, Stadt;39.04;45805
+Neunkirchen, Kreisstadt;75.1;45722
+Gronau (Westf.), Stadt;78.82;45590
+Hennef (Sieg), Stadt;105.89;45455
+Singen (Hohentwiel), Stadt;61.77;45355
+Freising, GKSt;88.6;45227
+Stade, Hansestadt;110.04;45218
+Bünde, Stadt;59.3;45189
+Leonberg, Stadt;48.74;45108
+Straubing;67.58;45099
+Dachau, GKSt;34.96;44822
+Oberursel (Taunus), Stadt;45.37;44500
+Hof;58.03;44461
+Filderstadt, Stadt;38.55;44375
+Gotha, Stadt;69.52;44371
+Fellbach, Stadt;27.7;43986
+Albstadt, Stadt;134.41;43980
+Brühl, Stadt;36.12;43875
+Erkrath, Stadt;26.88;43786
+Landau in der Pfalz, Stadt;82.96;43641
+Kamen, Stadt;40.93;43496
+Bad Kreuznach, Stadt;46.1;43454
+Neustadt am Rübenberge, Stadt;357.51;43324
+Lahr/Schwarzwald, Stadt;69.86;43315
+Weinheim, Stadt;58.11;43315
+Erkelenz, Stadt;117.34;42901
+Rodgau, Stadt;65.04;42895
+Lehrte, Stadt;127.06;42668
+Wismar, Hansestadt;41.75;42433
+Bruchsal, Stadt;93.01;42427
+Kaarst, Stadt;37.4;42156
+Bietigheim-Bissingen, Stadt;31.29;41961
+Nordhausen, Stadt;105.32;41926
+Bitterfeld-Wolfen, Stadt;87.44;41816
+Eisenach, Stadt;103.84;41744
+Pinneberg, Stadt;21.54;41726
+Weiden i.d.OPf.;92637;70.54
+Oranienburg, Stadt;161.89;41621
+Amberg;50.14;41578
+Kaufbeuren;40.03;41570
+Memmingen;70.14;41551
+Borken, Stadt;152.97;41455
+Nettetal, Stadt;83.86;41438
+Rottenburg am Neckar, Stadt;142.27;41402
+Homburg, Kreisstadt;82.65;41357
+Gifhorn, Stadt;104.87;41331
+Coburg;48.29;41022
+Heinsberg, Stadt;92.21;40913
+Falkensee, Stadt;43.3;40905
+Lemgo, Stadt;100.85;40808
+Wunstorf, Stadt;125.68;40628
+Aurich, Stadt;197.22;40604
+Halberstadt, Stadt;142.98;40526
+Goslar, Stadt;92.57;40455
+Stendal, Hansestadt;268.02;40281
+Pirmasens, Stadt;61.37;40267
+Monheim am Rhein, Stadt;23.05;40205
+Freiberg, Stadt;48.36;40083
+Königswinter, Stadt;76.17;39908
+Dreieich, Stadt;53.3;39760
+Bautzen, Stadt;66.62;39743
+Weißenfels, Stadt;113.55;39717
+Buxtehude, Stadt;76.5;39685
+Ansbach;99.91;39684
+Nürtingen, Stadt;46.9;39480
+Löhne, Stadt;59.51;39479
+Bensheim, Stadt;57.83;39395
+Laatzen, Stadt;34.06;39328
+Kirchheim unter Teck, Stadt;40.47;39264
+Schwabach;40.82;39137
+Siegburg, Stadt;23.46;39103
+Eberswalde, Stadt;93.41;38960
+Ettlingen, Stadt;56.74;38866
+Freital, Stadt;40.53;38757
+Völklingen, Stadt;67.07;38659
+Hückelhoven, Stadt;61.27;38593
+Ahaus, Stadt;151.24;38578
+Hofheim am Taunus, Kreisstadt;57.38;38363
+Neumarkt i.d.OPf., GKSt;79.01;38355
+Schorndorf, Stadt;56.83;38281
+Germering, GKSt;21.61;38227
+Pirna, Stadt;53.02;37668
+Mettmann, Stadt;42.56;37564
+Würselen, Stadt;34.39;37421
+Buchholz in der Nordheide, Stadt;74.64;37321
+Haltern am See, Stadt;158.5;37246
+Leinfelden-Echterdingen, Stadt;29.89;37224
+Schwäbisch Hall, Stadt;104.23;37096
+Kamp-Lintfort, Stadt;63.14;37093
+Warendorf, Stadt;176.88;37006
+Niederkassel, Stadt;35.79;36734
+Voerde (Niederrhein), Stadt;53.49;36729
+Ostfildern, Stadt;22.81;36573
+St. Ingbert, Stadt;49.96;36394
+Maintal, Stadt;32.4;36254
+Beckum, Stadt;111.46;36062
+Bernau bei Berlin, Stadt;103.72;36020
+Suhl, Stadt;102.71;35967
+Papenburg, Stadt;118.41;35719
+Coesfeld, Stadt;141.36;35693
+Langen (Hessen), Stadt;29.12;35644
+Hemer, Stadt;67.66;35487
+Emsdetten, Stadt;72.06;35448
+Neu-Isenburg, Stadt;24.31;35428
+Porta Westfalica, Stadt;105.22;35347
+Hoyerswerda, Stadt;95.06;35019
+Wesseling, Stadt;23.37;34973
+Greven, Stadt;140.26;34924
+Kempen, Stadt;68.81;34825
+Sinsheim, Stadt;127.01;34791
+Wermelskirchen, Stadt;74.8;34679
+Lage, Stadt;76.04;34636
+Datteln, Stadt;66.09;34507
+Backnang, Stadt;39.4;34491
+Bernburg (Saale), Stadt;113.46;34481
+Erding, St;54.61;34402
+Saarlouis, Kreisstadt;43.27;34319
+Fürstenfeldbruck, GKSt;32.52;34137
+Zweibrücken, Stadt;70.64;34064
+Kehl, Stadt;75.07;33991
+Königs Wusterhausen, Stadt;95.84;33975
+Meppen, Stadt;188.34;33963
+Leer (Ostfriesland), Stadt;70.29;33851
+Wernigerode, Stadt;170.17;33710
+Limburg a.d. Lahn, Kreisstadt;45.15;33619
+Merseburg, Stadt;53.75;33520
+Altenburg, Stadt;45.6;33343
+Uelzen, Stadt;135.85;33338
+Steinfurt, Stadt;111.67;33327
+Radebeul, Stadt;26.06;33279
+Mühlhausen/Thüringen, Stadt;86.35;33235
+Balingen, Stadt;90.34;33213
+Tuttlingen, Stadt;90.49;33177
+Barsinghausen, Stadt;102.67;33090
+Cloppenburg, Stadt;70.63;33084
+Geldern, Stadt;96.96;33009
+Winsen (Luhe), Stadt;109.58;32968
+Goch, Stadt;115.43;32894
+Viernheim, Stadt;48.4;32851
+Mörfelden-Walldorf, Stadt;44.16;32822
+Naumburg (Saale), Stadt;129.89;32816
+Dietzenbach, Kreisstadt;21.67;32477
+Crailsheim, Stadt;109.08;32417
+Seelze, Stadt;54.04;32206
+Korschenbroich, Stadt;55.26;32193
+Jülich, Stadt;90.39;32044
+Rheinfelden (Baden), Stadt;62.84;31926
+Schönebeck (Elbe), Stadt;85.83;31870
+Georgsmarienhütte, Stadt;55.44;31765
+Riesa, Stadt;58.83;31760
+Kornwestheim, Stadt;14.65;31732
+Wedel, Stadt;33.82;31725
+Deggendorf, GKSt;77.2;31699
+Bad Vilbel, Stadt;25.68;31649
+Lampertheim, Stadt;72.28;31358
+Ahrensburg, Stadt;35.3;31292
+Biberach an der Riß, Stadt;72.16;31157
+Gevelsberg, Stadt;26.29;31080
+Schwedt/Oder, Stadt;203.71;31042
+Itzehoe, Stadt;28.03;30956
+Fürstenwalde/Spree, Stadt;70.53;30885
+Kreuztal, Stadt;71.07;30827
+Vechta, Stadt;87.76;30770
+Rheinberg, Stadt;75.24;30684
+Bad Nauheim, Stadt;32.54;30668
+Forchheim, GKSt;44.43;30621
+Nienburg (Weser), Stadt;64.45;30570
+Delbrück, Stadt;157.28;30542
+Oer-Erkenschwick, Stadt;38.67;30503
+Werl, Stadt;76.35;30455
+Meschede, Kreis- und  Hochschulstadt;218.5;30358
+Neuruppin, Stadt;303.34;30162
+Herrenberg, Stadt;65.71;30118
+Radolfzell am Bodensee, Stadt;58.57;30109
+Bramsche, Stadt;183.34;30098
+Osterholz-Scharmbeck, Stadt;146.91;30052
+Emmerich am Rhein, Stadt;80.4;30038
+Ennepetal, Stadt der Kluterthöhle;57.43;29931
+Haan, Stadt;24.19;29848
+Höxter, Stadt;158.16;29812
+Merzig, Kreisstadt;108.81;29777
+Achim, Stadt;68.01;29680
+Zeitz, Stadt;87.16;29639
+Werne, Stadt;76.08;29578
+Lohmar, Stadt;65.62;29550
+Tönisvorst, Stadt;44.33;29322
+Geesthacht, Stadt;33.19;29098
+Burgdorf, Stadt;112.35;29094
+Andernach, Stadt;53.24;29071
+Oelde, Stadt;102.77;28983
+Weil am Rhein, Stadt;19.47;28935
+Waltrop, Stadt;47;28926
+Northeim, Stadt;145.67;28843
+Grimma, Stadt;217.69;28819
+Bad Hersfeld, Kreisstadt;73.83;28772
+Friedberg, St;81.27;28731
+Güstrow, Stadt;70.86;28586
+Rietberg, Stadt;110.31;28583
+Bühl, Stadt;73.2;28572
+Taunusstein, Stadt;67.03;28535
+Gaggenau, Stadt;65.05;28530
+Idar-Oberstein, Stadt;91.54;28459
+Springe, Stadt;159.81;28389
+Neuburg a.d.Donau, GKSt;81.3;28274
+Sangerhausen, Stadt;207.63;28189
+Bretten, Stadt;71.11;28177
+Sundern (Sauerland), Stadt;193.27;28165
+Schwelm, Stadt;20.5;28139
+Aschersleben, Stadt;156.2;28131
+Vaihingen an der Enz, Stadt;73.42;28022
+Kelkheim (Taunus), Stadt;30.65;27982
+Landsberg am Lech, GKSt;57.9;27841
+Schwandorf, GKSt;123.78;27802
+Wegberg, Stadt;84.34;27745
+Wetter (Ruhr), Stadt;31.47;27725
+Kevelaer, Stadt;100.65;27565
+Rösrath, Stadt;38.8;27561
+Friedberg (Hessen), Kreisstadt;50.17;27537
+Rendsburg, Stadt;23.73;27446
+Leichlingen (Rheinland), Stadt;37.26;27437
+Baunatal, Stadt;38.27;27417
+Eisenhüttenstadt, Stadt;63.41;27410
+Staßfurt, Stadt;146.68;27358
+Winnenden, Stadt;28.05;27287
+Mühlheim am Main, Stadt;20.67;27206
+Quedlinburg, Stadt;141.85;27179
+Königsbrunn, St;18.4;27177
+Meißen, Stadt;30.9;27098
+Köthen (Anhalt), Stadt;78.43;27079
+Neukirchen-Vluyn, Stadt;43.5;26924
+Bad Neuenahr-Ahrweiler, Stadt;63.4;26919
+Overath, Stadt;68.88;26809
+Mechernich, Stadt;136.46;26776
+Rheinbach, Stadt;69.72;26639
+Verden (Aller), Stadt;71.59;26626
+Rödermark, Stadt;29.99;26449
+Nordenham, Stadt;87.21;26448
+Baesweiler, Stadt;27.77;26445
+Geilenkirchen, Stadt;83.2;26420
+Wangen im Allgäu, Stadt;101.29;26398
+Kulmbach, GKSt;92.78;26352
+Reinbek, Stadt;31.23;26347
+Schloß Holte-Stukenbrock, Stadt;67.52;26329
+Hamminkeln, Stadt;164.54;26284
+Zittau, Stadt;66.74;26206
+Geislingen an der Steige, Stadt;75.83;26182
+Unterschleißheim, St;14.93;26155
+Lennestadt, Stadt;135.59;26139
+Emmendingen, Stadt;33.79;26122
+Ilmenau, Stadt;62.64;26070
+Griesheim, Stadt;21.55;26027
+Weinstadt, Stadt;31.71;25998
+St. Wendel, Kreisstadt;113.54;25977
+Plettenberg, Stadt;96.76;25968
+Lauf a.d.Pegnitz, St;59.81;25912
+Neckarsulm, Stadt;24.94;25754
+Hennigsdorf, Stadt;31.3;25704
+Selm, Stadt;60.34;25697
+Zirndorf, St;28.77;25686
+Petershagen, Stadt;211.94;25662
+Brilon, Stadt;229.16;25644
+Strausberg, Stadt;67.78;25594
+Leimen, Stadt;20.64;25581
+Warstein, Stadt;158.03;25504
+Heiligenhaus, Stadt;27.52;25502
+Olching, St;29.92;25486
+Lübbecke, Stadt;65.04;25467
+Rinteln, Stadt;109.06;25325
+Saalfeld/Saale, Stadt;48.75;25278
+Wiehl, Stadt;53.26;25266
+Sprockhövel, Stadt;47.8;25230
+Hattersheim am Main, Stadt;15.81;25155
+Schmallenberg, Stadt;303.1;25149
+Delitzsch, Stadt;85.63;25148
+Wiesloch, Stadt;30.26;25135
+Lohne (Oldenburg), Stadt;90.79;25105
+Einbeck, Stadt;165.99;25080
+Senftenberg, Stadt;126.97;25061
+Heppenheim (Bergstraße), Kreisstadt;52.14;24968
+Hohen Neuendorf, Stadt;48.1;24905
+Verl, Stadt;71.37;24892
+Norden, Stadt;106.32;24873
+Bad Honnef, Stadt;48.17;24832
+Mühlacker, Stadt;54.32;24798
+Olpe, Stadt;85.88;24663
+Salzkotten, Stadt;109.8;24627
+Ehingen (Donau), Stadt;178.37;24595
+Espelkamp, Stadt;84.21;24592
+Friedrichsdorf, Stadt;30.16;24570
+Lindau (Bodensee), GKSt;33.04;24454
+Achern, Stadt;65.24;24449
+Bad Oldesloe, Stadt;52.6;24448
+Rottweil, Stadt;71.76;24440
+Attendorn, Hansestadt;97.95;24399
+Limbach-Oberfrohna, Stadt;50.17;24385
+Eisleben, Lutherstadt;143.86;24384
+Salzwedel, Hansestadt;304.57;24381
+Horb am Neckar, Stadt;119.83;24292
+Rathenow, Stadt;112.43;24253
+Ingelheim am Rhein, Stadt;49.86;24235
+Roth, St;96.35;24170
+Bingen am Rhein, Stadt;37.73;24077
+Übach-Palenberg, Stadt;26.12;24052
+Pfaffenhofen a.d.Ilm, St;92.64;24049
+Ditzingen, Stadt;30.39;24048
+Weiterstadt, Stadt;34.4;24042
+Butzbach, Friedrich-Ludwig-Weidig-Stadt;106.6;24019
+Remseck am Neckar, Stadt;22.82;23992
+Groß-Gerau, Stadt;54.48;23941
+Markkleeberg, Stadt;31.35;23869
+Harsewinkel, Stadt;100.59;23862
+Obertshausen, Stadt;13.62;23859
+Ludwigsfelde, Stadt;109.32;23852
+Pfungstadt, Stadt;42.53;23838
+Dillenburg, Stadt;83.89;23749
+Hann. Münden, Stadt;121.12;23738
+Syke, Stadt;127.93;23669
+Schleswig, Stadt;24.3;23665
+Varel, Stadt;113.54;23640
+Ellwangen (Jagst), Stadt;127.4;23622
+Idstein, Stadt;79.7;23592
+Meckenheim, Stadt;34.84;23574
+Arnstadt, Stadt;55.29;23571
+Lüdinghausen, Stadt;140.54;23569
+Werder (Havel), Stadt;116.14;23506
+Weingarten, Stadt;12.17;23470
+Teltow, Stadt;21.54;23449
+Stutensee, Stadt;45.68;23414
+Warburg, Hansestadt;168.84;23391
+Walsrode, Stadt;270.72;23377
+Korbach, Kreisstadt;123.98;23367
+Glauchau, Stadt;51.49;23355
+Ronnenberg, Stadt;37.78;23339
+Gardelegen, Hansestadt;632.43;23237
+Geretsried, St;24.59;23219
+Netphen, Stadt;137.39;23185
+Sehnde, Stadt;103.33;23060
+Haren (Ems), Stadt;208.77;22949
+Bedburg, Stadt;80.33;22930
+Helmstedt, Stadt;46.97;22924
+Mosbach, Stadt;62.23;22913
+Burg, Stadt;164.05;22814
+Rudolstadt, Stadt;55.39;22811
+Herdecke, Stadt;22.4;22754
+Spremberg, Stadt;180.38;22618
+Waldshut-Tiengen, Stadt;77.98;22574
+Herzogenaurach, St;47.62;22554
+Osterode am Harz, Stadt;102.47;22532
+Starnberg, St;61.84;22497
+Wertheim, Stadt;138.63;22473
+Öhringen, Stadt;67.78;22471
+Vreden, Stadt;135.83;22395
+Bad Mergentheim, Stadt;129.97;22287
+Calw, Stadt;59.88;22275
+Freudenstadt, Stadt;87.58;22253
+Zerbst/Anhalt, Stadt;467.76;22242
+Radevormwald, Stadt auf der Höhe;53.86;22236
+Sondershausen, Stadt;200.81;22177
+Husum, Stadt;25.81;22092
+Westerstede, Stadt;179.23;21927
+Gelnhausen, Barbarossast., Krst.;45.19;21912
+Bad Harzburg, Stadt;65.42;21904
+Überlingen, Stadt;58.67;21886
+Lengerich, Stadt;90.79;21867
+Apolda, Stadt;46.17;21820
+Riedstadt, Stadt;73.76;21800
+Eckernförde, Stadt;18.39;21791
+Leutkirch im Allgäu, Stadt;174.96;21785
+Sonneberg, Stadt;45.44;21737
+Waldkraiburg, St;21.55;21663
+Stadthagen, Stadt;60.27;21595
+Senden, St;25.22;21586
+Greiz, Stadt;76.3;21580
+Büren, Stadt;170.99;21577
+Karben, Stadt;43.94;21442
+Wipperfürth, Hansestadt;118.3;21392
+Werdau, Stadt;65.59;21338
+Sonthofen, St;46.6;21318
+Weilheim i.OB, St;55.49;21308
+Rees, Stadt;109.86;21300
+Xanten, Stadt;72.43;21273
+Neusäß, St;25.21;21265
+Halle (Westf.), Stadt;69.7;21228
+Bad Soden am Taunus, Stadt;12.55;21223
+Schwetzingen, Stadt;21.52;21194
+Metzingen, Stadt;34.58;21129
+Friesoythe, Stadt;247.1;21110
+Gersthofen, St;34.01;21106
+Bad Kissingen, GKSt;69.94;21102
+Soltau, Stadt;203.24;21094
+Donaueschingen, Stadt;104.62;21088
+Waren (Müritz), Stadt;158.39;21074
+Rotenburg (Wümme), Stadt;99;21072
+Waldkirch, Stadt;48.47;21048
+Nagold, Stadt;63.09;21044
+Duderstadt, Stadt;95.62;21040
+Wülfrath, Stadt;32.27;21040
+Blieskastel, Stadt;108.24;21022
+Büdingen, Stadt;122.88;21014
+Döbeln, Stadt;39.47;20899
+Heide, Stadt;31.97;20894
+Hockenheim, Stadt;34.84;20874
+Blankenburg (Harz), Stadt;148.9;20852
+Groß-Umstadt, Stadt;86.84;20836
+Meiningen, Stadt;59.46;20826
+Annaberg-Buchholz, Stadt;28.11;20826
+Versmold, Stadt;85.57;20817
+Meinerzhagen, Stadt;115.66;20814
+Elsdorf, Stadt;66.17;20781
+Eppingen, Stadt;88.59;20769
+Stadtallendorf, Stadt;78.29;20764
+Schramberg, Stadt;80.7;20701
+Fröndenberg/Ruhr, Stadt;56.21;20698
+Coswig, Stadt;25.85;20630
+Geseke, Stadt;97.88;20588
+Eschborn, Stadt;12.13;20486
+Wittmund, Stadt;210.12;20414
+Kitzingen, GKSt;47;20405
+Herborn, Stadt;63.8;20392
+Aichach, St;92.87;20354
+Burgwedel, Stadt;151.96;20333
+Neustrelitz, Stadt;138.14;20322
+Enger, Widukindstadt;41.24;20285
+Seligenstadt, Stadt;30.85;20254
+Schortens, Stadt;68.68;20234
+Bruchköbel, Stadt;29.69;20214
+Puchheim, St;12.23;20201
+Dillingen/ Saar, Stadt;22.07;20199
+Traunreut, St;45.06;20172
+Luckenwalde, Stadt;46.46;20154
+Bad Rappenau, Stadt;73.55;20142
+Holzminden, Stadt;88.24;20131
+Marsberg, Stadt;182.22;20110
+Lichtenfels, St;122.28;20080
+Oschersleben (Bode), Stadt;188.91;20079
+Stadtlohn, Stadt;79.25;20069
+Germersheim, Stadt;21.72;20019
+Quickborn, Stadt;43.17;19986
+Waghäusel, Stadt;42.84;19981
+Flörsheim am Main, Stadt;22.95;19976
+Laupheim, Stadt;61.78;19951
+Nidderau, Stadt;46.73;19949
+Kaltenkirchen, Stadt;23.1;19904
+Rheinstetten, Stadt;32.29;19824
+Eislingen/Fils, Stadt;16.41;19760
+Oberkirch, Stadt;69.13;19689
+Zülpich, Stadt;101.03;19689
+Crimmitschau, Stadt;61.04;19622
+Hörstel, Stadt;107.54;19610
+Seesen, Stadt;102.19;19564
+Ennigerloh, Stadt;125.56;19558
+Bad Waldsee, Stadt;108.54;19542
+Günzburg, GKSt;55.41;19534
+Bad Schwartau, Stadt;18.39;19522
+Haiger, Stadt;106.67;19495
+Bad Berleburg, Stadt;275.52;19472
+Schmalkalden, Kurort, Stadt;98.35;19463
+Lebach, Stadt;64.15;19456
+Sulzbach-Rosenberg, St;53.12;19425
+Borna, Stadt;62.36;19424
+Mössingen, Stadt;50.05;19414
+Eschwege, Kreisstadt;63.27;19393
+Forst (Lausitz), Stadt;109.92;19312
+Auerbach/Vogtl., Stadt;55.38;19300
+Nördlingen, GKSt;68.1;19268
+Sömmerda, Stadt;80.72;19215
+Alfeld (Leine), Stadt;72.86;19138
+Reichenbach im Vogtland, Stadt;29.73;19087
+Ochtrup, Stadt;105.63;19077
+Rhede, Stadt;78.9;19052
+Prenzlau, Stadt;142.23;19045
+Vlotho, Stadt;76.93;19035
+Gerlingen, Stadt;17.01;19034
+Schifferstadt, Stadt;28.05;19011
+Bad Pyrmont, Stadt;61.96;19008
+Giengen an der Brenz, Stadt;44.07;18997
+Bückeburg, Stadt;68.84;18977
+Alzenau, St;59.32;18952
+Waldbröl, Stadt;63.32;18947
+Bergneustadt, Stadt;37.89;18897
+Telgte, Stadt;90.84;18879
+Wildeshausen, Stadt;89.49;18866
+Püttlingen, Stadt;23.93;18848
+Schopfheim, Stadt;67.98;18829
+Torgau, Stadt;90.35;18793
+Traunstein, GKSt;48.55;18785
+Schneverdingen, Stadt;234.59;18696
+Hechingen, Stadt;66.44;18674
+Mayen, Stadt;58.12;18625
+Bremervörde, Stadt;150.18;18615
+Leinefelde-Worbis, Stadt;96.57;18544
+Großenhain, Stadt;130.22;18537
+Korntal-Münchingen, Stadt;20.71;18466
+Mölln, Stadt;25.05;18458
+Schenefeld, Stadt;9.99;18448
+Hemmingen, Stadt;31.58;18445
+Bad Driburg, Stadt;115.3;18431
+Langen, Stadt;121.99;18395
+Haldensleben, Stadt;137.71;18361
+Weil der Stadt, Stadt;43.14;18356
+Sarstedt, Stadt;42.94;18353
+Werdohl, Stadt;33.38;18310
+Müllheim, Stadt;57.92;18286
+Bad Friedrichshall, Stadt;24.7;18274
+Donauwörth, GKSt;77.04;18269
+Hessisch Oldendorf, Stadt;120.31;18267
+Wittlich, Stadt;49.64;18255
+Heusenstamm, Stadt;19.03;18232
+Bad Dürkheim, Stadt;102.67;18222
+Tettnang, Stadt;71.22;18216
+Schwalmstadt, Stadt;84.74;18195
+Thale, Stadt;137.65;18131
+Vellmar, Stadt;13.97;18131
+Dingolfing, St;44.01;18129
+Burscheid, Stadt;27.33;18120
+Dillingen a.d.Donau, GKSt;75.58;18111
+Radeberg, Stadt;29.74;18080
+Marktoberdorf, St;95.23;18039
+Guben, Stadt;43.81;17971
+Freudenberg, Stadt;54.6;17953
+Bad Tölz, St;30.8;17946
+Bexbach, Stadt;31.08;17908
+Kronberg im Taunus, Stadt;18.62;17907
+Altena, Stadt;44.42;17869
+Frankenberg (Eder), Stadt;124.88;17866
+Kolbermoor, St;19.84;17844
+Schwarzenberg/Erzgeb., Stadt;46.33;17743
+Marienberg, Stadt;133.47;17716
+Weißenburg i.Bay., GKSt;97.57;17689
+Bad Langensalza, Stadt;123.11;17683
+Glinde, Stadt;11.22;17668
+Buchen (Odenwald), Stadt;138.99;17614
+Uetersen, Stadt;11.43;17598
+Lahnstein, Stadt;37.56;17590
+Burghausen, St;19.81;17584
+Wolfratshausen, St;9.13;17580
+Pohlheim, Stadt;38;17550
+Konz, Stadt;44.54;17550
+Weißwasser/O.L., Stadt;63.3;17541
+Pfullingen, Stadt;30.13;17540
+Alzey, Stadt;35.21;17509
+Sachsenheim, Stadt;57.92;17490
+Wittenberge, Stadt;50.44;17476
+Zossen, Stadt;179.59;17465
+Bad Münder am Deister, Stadt;107.69;17415
+Bad Münstereifel, Stadt;150.83;17395
+Wörth am Rhein, Stadt;131.64;17378
+Zeulenroda-Triebes, Stadt;134.72;17347
+Bad Aibling, St;41.41;17316
+Mühldorf a.Inn, St;29.42;17296
+Sinzig, Stadt;41.02;17205
+Horn-Bad Meinberg, Stadt;90.15;17182
+Parchim, Stadt;106.83;17174
+Marktredwitz, GKSt;49.53;17147
+Oberasbach, St;12.1;17141
+Wassenberg, Stadt;42.43;17101
+Bad Reichenhall, GKSt;41.92;17101
+Bad Saulgau, Stadt;97.33;17080
+Bad Krozingen, Stadt;35.66;17070
+Renningen, Stadt;31.14;17011
+Moosburg a.d.Isar, St;43.85;16971
+Kronach, St;66.99;16967
+Gescher, Stadt;80.84;16889
+Aue, Stadt;20.94;16879
+Schkeuditz, Stadt;81.16;16877
+Hochheim am Main, Stadt;19.43;16793
+Nidda, Stadt;118.35;16758
+Brakel, Stadt;173.92;16722
+Finsterwalde, Stadt;76.93;16677
+Oerlinghausen, Stadt;32.69;16654
+Illertissen, St;36.39;16647
+Eltville am Rhein, Stadt;46.77;16647
+Eutin, Stadt;41.4;16636
+Bad Wildungen, Stadt;120.08;16628
+Bad Segeberg, Stadt;18.87;16581
+Bendorf, Stadt;24.07;16538
+Wurzen, Stadt;68.79;16521
+Nauen, Stadt;266.59;16491
+Cham, St;80.67;16480
+Bobingen, St;50.28;16471
+Damme, Stadt;104.38;16397
+Sulzbach/ Saar, Stadt;16.12;16393
+Michelstadt, Stadt;86.98;16389
+Halver, Stadt;77.24;16300
+Lübbenau/Spreewald, Stadt;138.8;16276
+Reinheim, Stadt;27.7;16254
+Bad Säckingen, Stadt;25.34;16240
+Garching b.München, St;28.17;16219
+Heilbad Heiligenstadt, Stadt;61.57;16188
+Gunzenhausen, St;82.73;16171
+Schlüchtern, Stadt;113.31;16167
+Kirchhain, Stadt;90.93;16145
+Kierspe, Stadt;71.91;16139
+Alsfeld, Stadt;129.69;16117
+Penzberg, St;25.72;16092
+Templin, Stadt;377.08;16063
+Heidenau, Stadt;11.07;16051
+Schrobenhausen, St;75.26;16029
+Königstein im Taunus, Stadt;25.07;16008
+Wadern, Stadt;110.97;15983
+Diepholz, Stadt;104.48;15981
+Freilassing, St;14.82;15970
+Stockach, Stadt;69.75;15970
+Vilshofen an der Donau, St;86.33;15926
+Remagen, Stadt;33.16;15887
+Hünfeld, Konrad-Zuse-Stadt;119.77;15789
+Erwitte, Stadt;89.41;15679
+Löbau, Stadt;78.74;15638
+Bad Salzungen, Stadt;39.06;15631
+Lauchhammer, Stadt;88.44;15624
+Wendlingen am Neckar, Stadt;12.15;15606
+Königslutter am Elm, Stadt;130.61;15603
+Babenhausen, Stadt;66.87;15588
+Straelen, Stadt;74.04;15578
+Kelheim, St;76.76;15555
+Bürstadt, Stadt;34.46;15551
+Weener, Stadt;81.24;15550
+Eilenburg, Stadt;46.8;15539
+Preetz, Stadt;14.4;15528
+Bargteheide, Stadt;15.83;15528
+Sigmaringen, Stadt;92.84;15517
+Blomberg, Stadt;99.1;15509
+Rahden, Stadt;137.48;15509
+Freiberg am Neckar, Stadt;13.14;15508
+Bassum, Stadt;168.57;15442
+Kamenz, Stadt;53.15;15432
+Bad Arolsen, Stadt;126.37;15407
+Marbach am Neckar, Stadt;18.06;15298
+Neustadt b.Coburg, GKSt;61.9;15279
+Boppard, Stadt;75.27;15240
+Meerane, Stadt;19.76;15226
+Landsberg, Stadt;125.38;15220
+Hohenstein-Ernstthal, Stadt;18.33;15208
+Hilchenbach, Stadt;81.12;15189
+Selb, GKSt;62.37;15160
+Lohr a.Main, St;90.43;15143
+Hückeswagen, Schloss-Stadt;50.53;15139
+Mittweida, Stadt;41.29;15135
+Drensteinfurt, Stadt;106.6;15122
+Bad Neustadt a.d.Saale, St;36.9;15120
+Altdorf b.Nürnberg, St;48.63;15111
+Trossingen, Stadt;24.2;15108
+Bad Lippspringe, Stadt;51.01;15091
+Bad Bentheim, Stadt;100;15063
+Schwarzenbek, Stadt;11.56;15060
+Ribnitz-Damgarten, Stadt;122.48;15058
+Neustadt in Holstein, Stadt;19.74;15030
+Brackenheim, Stadt;45.75;15009
+Brake (Unterweser), Stadt;38.18;14983
+Hofgeismar, Stadt;86.39;14967
+Ebersbach an der Fils, Stadt;26.27;14961
+Pocking, St;68.88;14956
+Witzenhausen, Stadt;126.69;14840
+Eppelheim, Stadt;5.7;14829
+Karlstadt, St;98.18;14821
+Oschatz, Stadt;55.31;14814
+Schwalbach am Taunus, Stadt;6.47;14812
+Markranstädt, Stadt;58.27;14810
+Genthin, Stadt;230.73;14808
+Hettstedt, Stadt;36.93;14800
+Olsberg, Stadt;118;14786
+Munster, Stadt;193.41;14768
+Raunheim, Stadt;12.61;14766
+Sandersdorf-Brehna, Stadt;81.78;14760
+Ottweiler, Stadt;45.52;14729
+Künzelsau, Stadt;75.17;14709
+Wittstock/Dosse, Stadt;417.21;14708
+Dieburg, Stadt;23.08;14690
+Spenge, Stadt;40.35;14681
+Frankenberg/Sa., Stadt;65.56;14676
+Ober-Ramstadt, Stadt;41.88;14672
+Neu-Anspach, Stadt;36.14;14642
+Schriesheim, Stadt;31.62;14623
+Walldorf, Stadt;19.91;14578
+Wanzleben-Börde, Stadt;188.07;14561
+Uslar, Stadt;113.41;14518
+Füssen, St;43.5;14512
+Bad Wörishofen, St;57.8;14455
+Lauda-Königshofen, Stadt;94.47;14433
+Schneeberg, Stadt;23.35;14432
+Stadtbergen, St;11.49;14419
+Kraichtal, Stadt;80.56;14416
+Fritzlar, Dom- und Kaiserstadt;88.78;14390
+Jessen (Elster), Stadt;352;14376
+Gehrden, Stadt;43.1;14356
+Eberbach, Stadt;81.17;14340
+Südliches Anhalt, Stadt;191.54;14300
+Taucha, Stadt;33.13;14291
+Markgröningen, Stadt;28.18;14261
+Mindelheim, St;56.43;14223
+Breisach am Rhein, Stadt;54.61;14218
+Langenau, Stadt;75;14216
+Mainburg, St;61.59;14215
+Bad Wurzach, Stadt;182.26;14167
+Dorfen, St;99.56;14052
+Bad Laasphe, Stadt;135.95;14039
+Leuna, Stadt;87.71;13981
+Sassenberg, Stadt;78.08;13943
+Homberg (Efze), Kreisstadt;99.99;13934
+Bad Camberg, Stadt;54.63;13912
+Immenstadt i.Allgäu, St;81.43;13903
+Münsingen, Stadt;116.99;13893
+Uhingen, Stadt;24.79;13875
+Pattensen, Stadt;67.06;13834
+Jever, Stadt;42.12;13826
+Lübben (Spreewald), Stadt;119.91;13815
+Kelsterbach, Stadt;15.38;13810
+Gernsbach, Stadt;82.09;13757
+Kalkar, Stadt;88.2;13727
+Oebisfelde-Weferlingen, Stadt;249.3;13714
+Ratzeburg, Stadt;30.29;13691
+Oberndorf am Neckar, Stadt;55.93;13691
+Angermünde, Stadt;322.63;13687
+Biedenkopf, Stadt;90.33;13662
+Zeven, Stadt;73.93;13659
+Grünberg, Stadt;89.24;13657
+Bebra, Stadt;93.64;13651
+Bergen auf Rügen, Stadt;51.42;13651
+Stein, St;19.51;13643
+Aßlar, Stadt;43.57;13632
+Bad Bramstedt, Stadt;24.15;13596
+Wilsdruff, Stadt;81.69;13550
+Beverungen, Stadt;98.09;13548
+Murrhardt, Stadt;71.13;13545
+Plochingen, Stadt;10.65;13543
+Langenselbold, Stadt;26.26;13491
+Erbach, Kreisstadt;61.53;13485
+Zehdenick, Stadt;221.58;13471
+Usingen, Stadt;55.83;13464
+Schwentinental, Stadt;17.82;13464
+Bitburg, Stadt;47.53;13446
+Rotenburg a. d. Fulda, Stadt;79.83;13439
+Pegnitz, St;100;13427
+Bad Soden-Salmünster, Stadt;58.6;13365
+Schwabmünchen, St;55.52;13321
+Solms, Stadt;34.05;13316
+Melsungen, Stadt;63.1;13293
+Ebersbach-Neugersdorf, Stadt;20.42;13272
+Eppstein, Stadt;24.21;13266
+Möckern, Stadt;523.87;13247
+Bad Salzdetfurth, Stadt;67.11;13229
+Weißenhorn, St;53.71;13228
+Herzberg am Harz, Stadt;71.88;13227
+Erlensee, Stadt;18.59;13188
+Isny im Allgäu, Stadt;85.37;13186
+Höchstadt a.d.Aisch, St;70.87;13162
+Hilpoltstein, St;89.71;13148
+Eichstätt, GKSt;47.78;13146
+Lauterbach (Hessen), Kreisstadt;102;13127
+Lich, Stadt;77.63;13091
+Haßfurt, St;52.68;13090
+Neckargemünd, Stadt;26.15;13078
+Neutraubling, St;9.75;13060
+Rödental, St;49.98;13059
+Erbach, Stadt;63.29;13055
+Markdorf, Stadt;40.91;13013
+Lorsch, Karolingerstadt;25.24;12991
+Velen, Stadt;70.75;12987
+Pfullendorf, Stadt;90.56;12978
+Neustadt i. Sa., Stadt;83.05;12976
+Eggenfelden, St;44.34;12971
+Löningen, Stadt;143.23;12949
+Neustadt a.d.Donau, St;93.56;12942
+Grafing b.München, St;29.58;12935
+Anklam, Stadt;56.58;12930
+Abensberg, St;60.29;12922
+Winterberg, Stadt;147.95;12918
+Vöhringen, St;23.69;12916
+Schleiden, Stadt;121.67;12892
+Herbrechtingen, Stadt;58.63;12876
+St. Georgen im Schwarzwald, Stadt;59.85;12857
+Sendenhorst, Stadt;96.95;12853
+Grünstadt, Stadt;18.09;12853
+Asperg, Stadt;5.8;12849
+Steinheim, Stadt;75.69;12848
+Wiesmoor, Stadt;82.96;12790
+Clausthal-Zellerfeld, Bergstadt;33.96;12772
+Brunsbüttel, Stadt;65.24;12758
+Quakenbrück, Stadt;17.95;12746
+Bergen, Stadt;163.83;12708
+Wolfhagen, Stadt;111.95;12677
+Borken (Hessen), Stadt;82.3;12674
+Wehr, Stadt;35.68;12671
+Tauberbischofsheim, Stadt;69.32;12666
+Weilburg, Stadt;57.5;12663
+Landau a.d.Isar, St;84.41;12630
+Östringen, Stadt;53.23;12610
+Linnich, Stadt;65.43;12594
+Preußisch Oldendorf, Stadt;68.75;12593
+Dinklage, Stadt;72.65;12563
+Tornesch, Stadt;20.61;12560
+Sulingen, Stadt;110.65;12549
+Gräfenhainichen, Stadt;158.93;12528
+Altötting, St;23.08;12521
+Treuchtlingen, St;103.42;12496
+Bad Freienwalde (Oder), Stadt;131.11;12491
+Wolgast, Stadt;61.53;12486
+Hungen, Stadt;86.74;12473
+Philippsburg, Stadt;50.56;12463
+Bad Dürrheim, Stadt;62.09;12449
+Coswig (Anhalt), Stadt;295.74;12446
+Montabaur, Stadt;33.76;12444
+Plattling, St;35.87;12401
+Haselünne, Stadt;159.31;12390
+Burglengenfeld, St;93.26;12383
+Fehmarn, Stadt;185.48;12369
+Krumbach (Schwaben), St;44.63;12351
+Neustadt a.d.Aisch, St;61.23;12351
+Schüttorf, Stadt;19.44;12342
+Spaichingen, Stadt;18.5;12312
+Ettenheim, Stadt;48.9;12288
+Pößneck, Stadt;24.44;12272
+Wächtersbach, Stadt;50.79;12269
+Holzgerlingen, Stadt;13.38;12268
+Wasserburg a.Inn, St;18.8;12257
+Lichtenstein/Sa., Stadt;15.48;12178
+Linden, Stadt;22.77;12172
+Twistringen, Stadt;114.23;12166
+Pritzwalk, Stadt;165.62;12164
+Burladingen, Stadt;123.33;12151
+Hersbruck, St;22.91;12150
+Jüterbog, Stadt;175.64;12142
+Olfen, Stadt;52.43;12134
+Hadamar, Stadt;40.99;12131
+Bad Wünnenberg, Stadt;161.3;12112
+Gladenbach, Stadt;72.28;12106
+Buchloe, St;36.17;12076
+Rosbach v. d. Höhe, Stadt;45.33;12066
+Feuchtwangen, St;137.24;12063
+Perleberg, Stadt;137.83;12059
+Neuenrade, Stadt;54.1;12011
+Ludwigslust, Stadt;78.3;11998
+Gaildorf, Stadt;62.57;11974
+Monschau, Stadt;94.62;11967
+Bad Windsheim, St;78.25;11955
+Pfarrkirchen, St;52.35;11952
+Steinheim an der Murr, Stadt;23.18;11937
+Hessisch Lichtenau, Stadt;105.87;11910
+Wernau (Neckar), Stadt;10.9;11877
+Langelsheim, Stadt;48.76;11876
+Hemsbach, Stadt;12.86;11865
+Bad Dürrenberg, Stadt;36.15;11844
+Bad Urach, Stadt;55.45;11828
+Bopfingen, Stadt;76.98;11810
+Röthenbach a.d.Pegnitz, St;14.29;11788
+Drolshagen, Stadt;67.11;11787
+Besigheim, Stadt;16.83;11787
+Sulz am Neckar, Stadt;87.6;11767
+Schongau, St;21.34;11719
+Hildburghausen, Stadt;72.92;11695
+Titisee-Neustadt, Stadt;89.66;11693
+Bischofswerda, Stadt;46.26;11685
+Beelitz, Stadt;180.11;11684
+Neuenburg am Rhein, Stadt;44.12;11668
+Blaubeuren, Stadt;79.15;11642
+Hauzenberg, St;82.82;11630
+Geisenheim, Stadt;40.35;11612
+Velten, Stadt;23.34;11569
+Balve, Stadt;74.81;11566
+Demmin, Hansestadt;81.61;11542
+Osterwieck, Stadt;212.88;11538
+Braunsbedra, Stadt;74.3;11513
+Wolmirstedt, Stadt;54.29;11509
+Wittingen, Stadt;225.09;11489
+Oestrich-Winkel, Stadt;59.53;11481
+Stollberg/Erzgeb., Stadt;38.83;11465
+Billerbeck, Stadt;91.36;11460
+Schmölln, Stadt;41.6;11457
+Erkner, Stadt;16.59;11438
+Bad Doberan, Stadt;32.76;11427
+Roding, St;113.69;11412
+Ebersberg, St;40.84;11380
+Tangerhütte, Stadt;294.75;11379
+Schöningen, Stadt;35.36;11377
+Querfurt, Stadt;155.26;11357
+Weinsberg, Stadt;22.22;11349
+Oelsnitz/Erzgeb., Stadt;26.27;11339
+Osterhofen, St;111.19;11334
+Oberharz am Brocken, Stadt;271.51;11333
+Hagenow, Stadt;67.47;11324
+Flöha, Stadt;27.72;11301
+Dinkelsbühl, GKSt;75.17;11287
+Werther (Westf.), Stadt;35.42;11264
+Ladenburg, Stadt;19;11238
+Walldürn, Stadt;105.88;11230
+Vilsbiburg, St;68.86;11184
+Hammelburg, St;128.88;11151
+Lauenburg/ Elbe, Stadt;9.54;11150
+Bad Belzig, Stadt;234.84;11119
+Glückstadt, Stadt;22.76;11099
+Rheinau, Stadt;73.51;11082
+Trostberg, St;51.55;11059
+Welzheim, Stadt;37.99;11045
+Burgstädt, Stadt;25.84;11043
+Miesbach, St;32.43;11027
+Ochsenfurt, St;63.57;10997
+Zwönitz, Stadt;52.86;10983
+Oelsnitz/Vogtl., Stadt;53.63;10950
+Rothenburg ob der Tauber, GKSt;41.68;10898
+Lindenberg i.Allgäu, St;11.85;10891
+Schwaigern, Stadt;49.48;10856
+Zella-Mehlis, Stadt;28.09;10855
+Mülheim-Kärlich, Stadt;16.34;10848
+Laichingen, Stadt;69.84;10830
+Isselburg, Stadt;42.8;10819
+Bad Lauterberg im Harz, Stadt;41.55;10813
+Marktheidenfeld, St;35.7;10763
+Gommern, Stadt;159.98;10761
+Diez, Stadt;12.41;10759
+Donzdorf, Stadt;39.82;10750
+Braunfels, Stadt;47.29;10741
+Lauffen am Neckar, Stadt;22.63;10726
+Eisenberg, Stadt;24.85;10694
+Meuselwitz, Stadt;53.47;10690
+Regen, St;65.12;10684
+Bad Fallingbostel, Stadt;63.49;10682
+Felsberg, Stadt;83.28;10674
+Maxhütte-Haidhof, St;34.7;10622
+Grevesmühlen, Stadt;52.34;10621
+Gengenbach, Stadt;61.91;10606
+Pasewalk, Stadt;54.99;10594
+Haigerloch, Stadt;76.45;10572
+Lauingen (Donau), St;44.38;10565
+Vienenburg, Stadt;71.14;10556
+Lorch, Stadt;34.28;10541
+Frohburg, Stadt;108.06;10531
+Lichtenau, Stadt;192.57;10528
+Bad Iburg, Stadt;36.5;10528
+Tangermünde, Stadt;89.87;10495
+Steinau an der Straße, Brüder-Grimm-Stadt;104.87;10485
+Rüthen, Stadt;158.15;10448
+Bad Schwalbach, Kreisstadt;40.27;10428
+Wilkau-Haßlau, Stadt;12.71;10397
+Münchberg, St;68.79;10368
+Osterburg (Altmark), Hansestadt;229.74;10364
+Klötze, Stadt;278.29;10359
+Langenzenn, St;46.33;10339
+Bad Nenndorf, Stadt;23.21;10334
+Gemünden a.Main, St;75.1;10333
+Kemberg, Stadt;235.14;10333
+Wettin-Löbejün, Stadt;127.03;10315
+Waltershausen, Stadt;30.79;10287
+Waldkirchen, St;80.04;10273
+Friedrichsthal, Stadt;9.07;10259
+Bad Staffelstein, St;99.4;10254
+Schotten, Stadt;133.56;10220
+Steinbach (Taunus), Stadt;4.4;10186
+Altensteig, Stadt;53.22;10181
+Boizenburg/ Elbe, Stadt;47.25;10169
+Herbolzheim, Stadt;35.47;10152
+Rehburg-Loccum, Stadt;99.94;10151
+Geisenfeld, St;88.3;10138
+Rutesheim, Stadt;16.22;10104
+Sebnitz, Stadt;88.09;10093
+Hohenmölsen, Stadt;75.31;10089
+Meßstetten, Stadt;76.82;10078
+Brand-Erbisdorf, Stadt;46.24;10076
+Riedlingen, Stadt;64.96;10045
+Dassel, Stadt;113.03;10025
+Visselhövede, Stadt;158.87;10023
+Engen, Stadt;70.54;10014
+Betzdorf, Stadt;9.57;10008
+Dippoldiswalde, Stadt;63.37;10004
+Erlenbach a.Main, St;16.33;9998
+Lügde, Stadt der Osterräder;88.64;9990
+Grimmen, Stadt;50.29;9965
+Bad Gandersheim, Stadt;90.48;9963
+Büdelsdorf, Stadt;6.48;9961
+Blumberg, Stadt;98.69;9961
+Barmstedt, Stadt;17.17;9943
+Bockenem, Stadt;109.5;9926
+Gernsheim, Schöfferstadt;40.11;9911
+Nideggen, Stadt;65.06;9864
+Mengen, Stadt;49.8;9850
+Lollar, Stadt;21.87;9822
+Zschopau, Stadt;22.88;9814
+Rüdesheim am Rhein, Stadt;51.44;9788
+Neuenhaus, Stadt;31.33;9773
+Bogen, St;49.75;9767
+Luckau, Stadt;206.59;9738
+Niesky, Stadt;53.59;9732
+Wildberg, Stadt;56.68;9725
+Süßen, Stadt;12.79;9700
+Oldenburg in Holstein, Stadt;39.68;9698
+Niebüll, Stadt;30.63;9683
+Laubach, Stadt;97.02;9645
+Heubach, Stadt;25.81;9645
+Aulendorf, Stadt;52.36;9641
+Bad Liebenwerda, Stadt;138.43;9626
+Aichtal, Stadt;23.64;9614
+Weilheim an der Teck, Stadt;26.51;9609
+Neuenstadt am Kocher, Stadt;41.19;9584
+Raguhn-Jeßnitz, Stadt;97.12;9581
+Runkel, Stadt;43.72;9577
+Zörbig, Stadt;113.68;9572
+Simbach a.Inn, St;47.31;9571
+Zahna-Elster, Stadt;148.49;9557
+Schlitz, Stadt;142.09;9553
+Bad Wildbad, Stadt;105.27;9542
+Bleckede, Stadt;140.49;9515
+Sassnitz, Stadt;47.08;9498
+Kenzingen, Stadt;36.93;9467
+Ilsenburg (Harz), Stadt;62.97;9442
+Olbernhau, Stadt;70.43;9439
+Lüchow (Wendland), Stadt;89.09;9417
+Mansfeld, Stadt;143.79;9411
+Bad König, Stadt;46.73;9398
+Penig, Stadt;63.32;9375
+Rehau, St;80.33;9374
+Dissen am Teutoburger Wald, Stadt;31.9;9374
+Wunsiedel, St;54.88;9371
+Burgau, St;25.93;9361
+Obernkirchen, Stadt;32.48;9359
+Brandis, Stadt;34.81;9357
+Calbe (Saale), Stadt;56.66;9348
+Herzberg (Elster), Stadt;148.49;9345
+Wahlstedt, Stadt;15.75;9295
+Gudensberg, Stadt;46.5;9264
+Zwiesel, St;41.17;9264
+Niddatal, Stadt;40.26;9258
+Höhr-Grenzhausen, Stadt;15.89;9250
+Furtwangen im Schwarzwald, Stadt;82.57;9240
+Bad Orb, Stadt;47.78;9240
+Kyritz, Stadt;156.12;9236
+Trebbin, Stadt;125.58;9212
+Nieder-Olm, Stadt;11.23;9210
+Miltenberg, St;60.18;9182
+Mücheln (Geiseltal), Stadt;98.59;9172
+Töging a.Inn, St;13.65;9171
+Eisenberg (Pfalz), Stadt;18.73;9162
+Lößnitz, Stadt;30.53;9142
+Fürstenau, Stadt;78.62;9137
+Heilsbronn, St;62.25;9089
+Heiligenhafen, Stadt;18.32;9084
+Endingen am Kaiserstuhl, Stadt;26.71;9070
+Tirschenreuth, St;103.93;9065
+Bad Lauchstädt, Goethestadt;85.36;9050
+Elsfleth, Stadt;115.15;9033
+Bad Ems, Stadt;15.36;9023
+Großräschen, Stadt;81.31;9010
+Borgentreich, Orgelstadt;138.94;9002
+Furth im Wald, St;67.04;9001
+Lauta, Stadt;41.88;8992
+Colditz, Stadt;83.75;8980
+Breckerfeld, Hansestadt;58.78;8942
+Wetter (Hessen), Stadt;104.56;8941
+Ueckermünde, Stadt;84.64;8940
+Barby, Stadt;152.72;8938
+Barntrup, Stadt;59.46;8918
+Storkow (Mark), Stadt;179.97;8889
+Ortenberg, Stadt;54.7;8885
+Wertingen, St;51.87;8878
+Bad Breisig, Stadt;19.94;8877
+Doberlug-Kirchhain, Stadt;148.94;8875
+Lützen, Stadt;96.49;8871
+Schieder-Schwalenberg, Stadt;60.04;8868
+Auerbach i.d.OPf., St;78.26;8861
+Könnern, Stadt;125.21;8861
+Elze, Stadt;47.71;8852
+Tecklenburg, Stadt;70.49;8839
+Altlandsberg, Stadt;106.24;8809
+Kappeln, Stadt;43.32;8793
+Bad Bevensen, Stadt;48.05;8788
+Beilngries, St;100.07;8781
+Zwenkau, Stadt;46.22;8755
+Bismark (Altmark), Stadt;289.44;8753
+Teterow, Stadt;47.1;8733
+Osthofen, Stadt;18.63;8727
+Hemmoor, Stadt;45.08;8723
+Hainichen, Stadt;51.58;8714
+Bad Liebenzell, Stadt;33.8;8714
+Bad Schmiedeberg, Stadt;160.01;8713
+Torgelow, Stadt;49.27;8713
+Reinfeld (Holstein), Stadt;17.36;8704
+Florstadt, Stadt;39.6;8691
+Leisnig, Stadt;78.05;8685
+Bad Frankenhausen/Kyffhäuser, Stadt;65.86;8677
+Ochsenhausen, Stadt;59.96;8667
+Mittenwalde, Stadt;98.48;8663
+Kandel, Stadt;26.64;8659
+Laufenburg (Baden), Stadt;23.58;8658
+Volkach, St;60.19;8656
+Helmbrechts, St;58.72;8643
+Plön, Stadt;36.73;8642
+Rain, St;77.12;8639
+Borgholzhausen, Stadt;55.99;8633
+Barth, Stadt;41.2;8629
+Freystadt, St;80.56;8628
+Kirchen (Sieg), Stadt;39.59;8599
+Oranienbaum-Wörlitz, Stadt;115.16;8592
+Mendig, Stadt;23.78;8585
+Seeland, Stadt;78.85;8577
+Teuchern, Stadt;81.36;8573
+Nittenau, St;93.16;8568
+Vetschau/Spreewald, Stadt;110.94;8541
+Hemau, St;122.3;8529
+Kirchberg, Stadt;39.58;8516
+Neustadt (Hessen), Stadt;56.88;8492
+Berching, St;131.18;8479
+Premnitz, Stadt;45.39;8474
+Obernburg a.Main, St;24.83;8466
+Schleiz, Stadt;83.03;8466
+Waldenbuch, Stadt;22.7;8461
+Naunhof, Stadt;39.49;8452
+Falkenstein/Vogtl., Stadt;31.05;8435
+Landstuhl, Sickingenstadt, Stadt;15.34;8435
+Neuötting, St;36.6;8424
+Harzgerode, Stadt;164.6;8419
+Vallendar, Stadt;13.22;8413
+Ichenhausen, St;34.27;8411
+Hallstadt, St;14.61;8407
+Bad Griesbach i.Rottal, St;70.16;8399
+Elsterwerda, Stadt;40.55;8384
+Oederan, Stadt;77.38;8366
+Willebadessen, Stadt;128.41;8343
+Altenberg, Stadt;145.8;8317
+Neustadt an der Orla, Stadt;36.51;8303
+Bad Schussenried, Stadt;55.01;8300
+Weißenthurm, Stadt;3.99;8298
+Grafenau, St;63.79;8237
+Bad Lausick, Stadt;69.79;8233
+Bad Sooden-Allendorf, Stadt;73.52;8213
+Rauenberg, Stadt;11.12;8202
+Treuen, Stadt;43.72;8200
+Allstedt, Stadt;149.81;8193
+Wissen, Stadt;34.88;8181
+Waldheim, Stadt;23.84;8181
+Rheinsberg, Stadt;324.83;8179
+Kirn, Stadt;16.53;8177
+Calau, Stadt;162.57;8152
+Großbottwar, Stadt;25.51;8135
+Staufenberg, Stadt;28.13;8126
+Arnstein, St;112.11;8107
+Meßkirch, Stadt;76.24;8105
+Dannenberg (Elbe), Stadt;76.37;8088
+Kandern, Stadt;62.27;8065
+Aken (Elbe), Stadt;59.91;8044
+Bad Düben, Stadt;45.46;8037
+Viechtach, St;62.49;8035
+Werneuchen, Stadt;116.32;8026
+Daun, Stadt;48.98;8013
+Beeskow, Stadt;77.17;7996
+Knittlingen, Stadt;26.33;7982
+Neunburg vorm Wald, St;110.17;7979
+Bad Liebenstein, Stadt;48.81;7971
+Kuppenheim, Stadt;18.08;7956
+Kalbe (Milde), Stadt;272.7;7940
+Bersenbrück, Stadt;42.54;7894
+Medebach, Hansestadt;126.05;7876
+Zell am Harmersbach, Stadt;36.43;7870
+Hermsdorf, Stadt;7.51;7867
+Hardegsen, Stadt;83.89;7867
+Neresheim, Stadt;118.52;7857
+Dornstetten, Stadt;24.21;7842
+Eibenstock, Stadt;112.35;7838
+Klingenthal, Stadt;28.66;7838
+Naila, St;37.05;7821
+Möckmühl, Stadt;49.6;7819
+Vohenstrauß, St;74.06;7810
+Kellinghusen, Stadt;18.81;7794
+Gerbstedt, Stadt;102.31;7785
+Oberkochen, Stadt;23.57;7769
+Kirchheimbolanden, Stadt;26.35;7752
+Münnerstadt, St;93.11;7739
+Ballenstedt, Stadt;65.22;7693
+Sontra, Stadt;111.29;7686
+Gundelfingen a.d.Donau, St;54.05;7670
+Malchin, Stadt;94.48;7657
+Bad Berka, Stadt;55.26;7651
+Bützow, Stadt;39.71;7635
+Rottenburg a.d.Laaber, St;90.12;7633
+Groitzsch, Stadt;70.07;7632
+Wörrstadt, Stadt;16.75;7611
+Pulsnitz, Stadt;26.71;7610
+Herrieden, St;81.71;7590
+Simmern/ Hunsrück, Stadt;11.96;7581
+Homberg (Ohm), Stadt;88.02;7579
+Gedern, Stadt;75.24;7561
+Bad Bergzabern, Stadt;10.71;7547
+Bad Sachsa, Stadt;33.13;7545
+Hüfingen, Stadt;58.53;7544
+Gerolstein, Stadt;64.38;7529
+Vohburg a.d.Donau, St;45.18;7518
+Löffingen, Stadt;88.03;7505
+Staufen im Breisgau, Stadt;23.26;7490
+Lengenfeld, Stadt;47.16;7490
+Hartha, Stadt;54.37;7490
+Treuenbrietzen, Stadt;211.35;7487
+Ramstein-Miesenbach, Stadt;43.02;7480
+Wriezen, Stadt;94.72;7425
+Heringen (Werra), Stadt;61.18;7419
+Breuberg, Stadt;30.76;7407
+Baiersdorf, St;11.8;7404
+Ransbach-Baumbach, Stadt;12.14;7394
+Friedrichroda, Stadt;36.9;7392
+Neuenbürg, Stadt;28.17;7389
+Radeburg, Stadt;54;7387
+Kühlungsborn, Stadt;16.15;7378
+Teublitz, St;38.25;7351
+Renchen, Stadt;32.08;7343
+Hecklingen, Stadt;95.34;7340
+Weida, Stadt;12.61;7330
+Weikersheim, Stadt;80.92;7292
+Schwarzenbach a.d.Saale, St;59.16;7248
+Jerichow, Stadt;269.92;7225
+Annaburg, Stadt;224.28;7224
+Meldorf, Stadt;21.25;7223
+Ebern, St;95.02;7214
+Bönnigheim, Stadt;20.14;7214
+Esens, Stadt;21.68;7214
+Arnstein, Stadt;121.69;7180
+Arendsee (Altmark), Stadt;269.68;7176
+Neukirchen, Stadt;66.26;7175
+Bad Herrenalb, Stadt;33.03;7150
+Schweich, Stadt;31.09;7146
+Moringen, Stadt;82.25;7142
+Otterndorf, Stadt;33.54;7136
+Bad Kötzting, St;62.19;7133
+Oppenheim, Stadt;7.09;7132
+Gundelsheim, Stadt;38.44;7129
+Scheßlitz, St;94.89;7123
+Kremmen, Stadt;209.14;7115
+Römhild, Stadt;122.46;7103
+Rodalben, Stadt;15.69;7073
+Elzach, Stadt;75.28;7069
+Kahla, Stadt;7.96;7066
+Neuhaus am Rennweg, Stadt;80.91;7051
+Immenhausen, Stadt;28.54;6991
+Nossen, Stadt;50.52;6968
+Freyung, St;48.64;6952
+Ebermannstadt, St;49.96;6950
+Greding, St;103.74;6943
+Waldeck, Stadt;115.73;6926
+Annweiler am Trifels, Stadt;39.88;6926
+Haslach im Kinzigtal, Stadt;18.71;6910
+Glashütte, Stadt;95.56;6905
+Dettelbach, St;60.94;6874
+Laufen, St;35.29;6869
+Geiselhöring, St;99.85;6858
+Bernkastel-Kues, Stadt;23.67;6840
+Lugau/Erzgeb., Stadt;6.32;6832
+Bad Blankenburg, Stadt;35.57;6816
+Mitterteich, St;39.38;6812
+Waldsassen, St;66.52;6812
+Königsee-Rottenbach, Stadt;83.74;6800
+Herdorf, Stadt;18.01;6796
+Volkmarsen, Stadt;67.47;6792
+Bad Wimpfen, Stadt;19.38;6784
+Havelberg, Hansestadt;149.12;6764
+Schelklingen, Stadt;75.8;6764
+Bonndorf im Schwarzwald, Stadt;75.93;6749
+Reichelsheim (Wetterau), Stadt;27.6;6736
+Waldmünchen, St;101.18;6733
+Saarburg, Stadt;20.53;6730
+Gau-Algesheim, Stadt;13.99;6725
+Zwingenberg, Stadt;5.66;6715
+Rodewisch, Stadt;26.89;6714
+Thalheim/Erzgeb., Stadt;10.8;6710
+Nienburg (Saale), Stadt;79.14;6707
+Edenkoben, Stadt;17.9;6704
+Großalmerode, Stadt;37.62;6696
+Birkenfeld, Stadt;13.58;6693
+Bernsdorf, Stadt;59.66;6689
+Müncheberg, Stadt;151.97;6686
+Gerolzhofen, St;18.39;6676
+Böhlen, Stadt;24.53;6676
+Falkenberg/Elster, Stadt;81.82;6650
+Schirgiswalde-Kirschau, Stadt;24.32;6648
+Polch, Stadt;28.7;6637
+Leipheim, St;32.13;6637
+Roßwein, Stadt;29.18;6621
+Gröditz, Stadt;8.54;6619
+Boxberg, Stadt;101.81;6612
+Nortorf, Stadt;12.77;6606
+Großröhrsdorf, Stadt;26.45;6603
+Parsberg, St;57.33;6593
+Malchow, Stadt;44.61;6572
+Dietenheim, Stadt;18.76;6557
+Burgkunstadt, St;40.59;6524
+Zierenberg, Stadt;86.53;6523
+Höchstädt a.d.Donau, St;37.45;6520
+Blankenhain, Stadt;113.53;6493
+Neustadt-Glewe, Stadt;93.98;6492
+Bad Brückenau, St;23.72;6462
+Brotterode-Trusetal, Stadt;49.7;6457
+Osterburken, Stadt;47.32;6441
+Bleicherode, Stadt;28.27;6437
+Bad Sobernheim, Stadt;54;6429
+Alpirsbach, Stadt;64.55;6428
+Grafenwöhr, St;216.19;6425
+Beerfelden, Stadt;71.2;6423
+Horstmar, Stadt der Burgmannshöfe;44.76;6409
+Ketzin/Havel, Stadt;92.78;6405
+Rosenfeld, Stadt;51.11;6394
+Nieheim, Stadt;79.71;6382
+Pegau, Stadt;48.62;6365
+Markneukirchen, Stadt;47.37;6353
+Bad Rodach, St;77.65;6331
+Gammertingen, Stadt;52.97;6312
+Mügeln, Stadt;54.95;6309
+Trochtelfingen, Stadt;79.22;6279
+Ilshofen, Stadt;54.87;6270
+Maulbronn, Stadt;25.44;6269
+Rodenberg, Stadt;15.6;6241
+Neuenstein, Stadt;47.84;6228
+Altenkirchen (Westerwald), Stadt;10.98;6227
+Uffenheim, St;59.47;6217
+Friedland, Stadt;97.64;6198
+Bad Lobenstein, Stadt;48.93;6164
+Rochlitz, Stadt;23.77;6142
+Spangenberg, Liebenbachstadt;97.7;6137
+Dohna, Stadt;28.57;6124
+Braunlage, Stadt;31.55;6120
+Kölleda, Stadt;70.15;6116
+Klingenberg a.Main, St;21.15;6106
+Nabburg, St;62.4;6105
+Neuffen, Stadt;17.45;6079
+Plau am See, Stadt;116;6076
+Grünhain-Beierfeld, Stadt;22.26;6064
+Oberlungwitz, Stadt;14.67;6059
+Zell im Wiesental, Stadt;36.13;6059
+Lübz, Stadt;49.16;6057
+Beilstein, Stadt;25.25;6044
+Neumarkt-Sankt Veit, St;61.07;6036
+Geisingen, Stadt;73.74;6028
+Windsbach, St;68.11;6010
+Dornhan, Stadt;44.92;6010
+Dietfurt a.d.Altmühl, St;78.79;5991
+Güglingen, Stadt;16.27;5982
+Fürstenberg/Havel, Stadt;212.53;5972
+Bad Königshofen i.Grabfeld, St;69.52;5969
+Thannhausen, St;20.03;5967
+Geislingen, Stadt;31.95;5962
+Wassertrüdingen, St;53.58;5928
+Vilseck, St;64.68;5926
+Stadtroda, Stadt;16.81;5910
+Heitersheim, Stadt;11.71;5897
+Ruhla, Stadt;38.51;5883
+Bad Marienberg (Westerwald), Stadt;9.96;5874
+Hachenburg, Stadt;21.42;5871
+Neustadt a.d.Waldnaab, St;9.94;5868
+Grebenstein, Stadt;49.85;5866
+Linz am Rhein, Stadt;17.98;5858
+Schwarzheide, Stadt;33.23;5855
+Norderney, Stadt;26.29;5820
+Hirschau, St;74.93;5819
+Gransee, Stadt;121.15;5816
+Wittichenau, Stadt;60.72;5813
+Wolfach, Stadt;67.99;5810
+Tittmoning, St;72.04;5792
+Hausach, Stadt;36.07;5779
+Drebkau, Stadt;142.81;5777
+Bräunlingen, Stadt;62.1;5774
+Großschirma, Stadt;61.44;5772
+Hermeskeil, Stadt;30.85;5770
+Glücksburg (Ostsee), Stadt;39.7;5759
+Grabow, Stadt;47.68;5751
+Traben-Trarbach, Stadt;31.35;5740
+Vogtsburg im Kaiserstuhl, Stadt;37.36;5737
+Schrozberg, Stadt;105.21;5730
+Leun, Stadt;28.66;5722
+Wemding, St;31.62;5721
+Bad Hönningen, Stadt;20.09;5719
+Stavenhagen, Reuterstadt, Stadt;40.84;5718
+Uebigau-Wahrenbrück, Stadt;134.91;5717
+Dierdorf, Stadt;31.9;5708
+Bad Gottleuba-Berggießhübel, Stadt;88.75;5708
+Bodenwerder, Stadt;28.93;5707
+Artern/Unstrut, Stadt;24.04;5707
+Stolpen, Stadt;60.86;5677
+Haiterbach, Stadt;28.92;5663
+Marne, Stadt;4.83;5652
+Stadtoldendorf, Stadt;24.86;5638
+Mellrichstadt, St;55.78;5625
+Westerburg, Stadt;18.48;5623
+Falkenstein/Harz, Stadt;102.97;5619
+Waibstadt, Stadt;25.57;5607
+Schlüsselfeld, St;70.25;5604
+Ingelfingen, Stadt;46.48;5594
+Münzenberg, Stadt;31.63;5584
+Geithain, Stadt;30.18;5580
+Zeil a.Main, St;35.71;5573
+Altentreptow, Stadt;52.82;5533
+Gersfeld (Rhön), Stadt;89.37;5531
+Biesenthal, Stadt;60.47;5525
+Dornburg-Camburg, Stadt;30.73;5518
+Ellrich, Stadt;69.43;5512
+Gadebusch, Stadt;47.64;5510
+Riedenburg, St;100.45;5509
+Leutershausen, St;84.11;5488
+Ohrdruf, Stadt;39.75;5466
+Harburg (Schwaben), St;73.16;5465
+Seelow, Stadt;42.42;5464
+Abenberg, St;48.41;5454
+Laage, Stadt;81.38;5454
+Rockenhausen, Stadt;36.84;5425
+Thum, Stadt;18.89;5424
+Eisfeld, Stadt;46.88;5421
+Neubulach, Stadt;24.69;5420
+Pfreimd, St;51.45;5419
+Battenberg (Eder), Stadt;64.73;5406
+Schöppenstedt, Stadt;39.65;5392
+Schleusingen, Stadt;36.81;5392
+Prüm, Stadt;22.86;5384
+Meersburg, Stadt;12.08;5376
+Lütjenburg, Stadt;6.15;5366
+Pottenstein, St;73.29;5350
+Roßleben, Stadt;33.42;5323
+Kemnath, St;56.82;5319
+Tharandt, Stadt;71.21;5316
+Wilthen, Stadt;17.06;5315
+Hagenbach, Stadt;15.86;5312
+Arzberg, St;43.2;5300
+Eltmann, St;40.75;5296
+Gronau (Leine), Stadt;20.59;5275
+Diemelstadt, Stadt;82.58;5274
+Treffurt, Stadt;54.76;5265
+Lommatzsch, Stadt;66.47;5264
+Dahme/Mark, Stadt;162.01;5253
+Hollfeld, St;80.66;5232
+Külsheim, Stadt;81.46;5231
+Otterberg, Stadt;32.1;5230
+Marienmünster, Stadt;64.36;5230
+Naumburg, Stadt;66.29;5228
+Velburg, St;175.69;5227
+Niedenstein, Stadt;30.61;5225
+Erbendorf, St;67.54;5215
+Wirges, Stadt;10.13;5212
+Adorf/Vogtl., Stadt;42.8;5207
+Seehausen (Altmark), Hansestadt;107.01;5198
+Cochem, Stadt;21.2;5181
+Kitzscher, Stadt;28.99;5174
+Röbel/Müritz, Stadt;30.17;5151
+Trendelburg, Stadt;69.35;5132
+Borkum, Stadt;30.97;5132
+Strasburg (Uckermark), Stadt;86.84;5122
+Hofheim i.UFr., St;56.36;5115
+Bredstedt, Stadt;9.75;5100
+Unkel, Stadt;8.16;5098
+Oettingen i.Bay., St;34.23;5096
+Windischeschenbach, St;36.37;5095
+Kastellaun, Stadt;8.47;5094
+Steinbach-Hallenberg, Kurort, Stadt;22.64;5084
+Amöneburg, Stadt;43.95;5077
+Neudenau, Stadt;32.92;5046
+Heringen/Helme, Stadt;66.73;5033
+Stühlingen, Stadt;93.22;5028
+Lindenfels, Stadt;21.09;5027
+Kusel, Stadt;14.37;5018
+Crivitz, Stadt;75.48;5017
+Freren, Stadt;48.93;4980
+Heimsheim, Stadt;14.3;4975
+Munderkingen, Stadt;13.08;4969
+Wittenburg, Stadt;46.25;4966
+Freinsheim, Stadt;13.6;4964
+Burg Stargard, Stadt;61.68;4961
+Schwaan, Stadt;38.29;4958
+Eggesin, Stadt;88.01;4942
+Oberviechtach, St;62.41;4941
+Monheim, St;69.35;4940
+Hitzacker (Elbe), Stadt;58.45;4932
+Spalt, St;55.72;4929
+Forchtenberg, Stadt;38.08;4916
+Ehrenfriedersdorf, Stadt;15.86;4915
+Lichtenau, Stadt;27.63;4913
+Tönning, Stadt;44.41;4909
+Ronneburg, Stadt;19.19;4902
+Weismain, St;90.15;4896
+Zarrentin am Schaalsee, Stadt;91.89;4878
+Bad Sulza, Stadt;45.35;4873
+Niederstetten, Stadt;104.06;4868
+Freyburg (Unstrut), Stadt;46.55;4862
+Rothenburg/O.L., Stadt;72.29;4860
+Adelsheim, Stadt;43.84;4859
+Stadtilm, Stadt;17.27;4854
+Creußen, St;60.49;4802
+Bischofsheim a.d.Rhön, St;67.71;4794
+Kröpelin, Stadt;67.26;4780
+Triberg im Schwarzwald, Stadt;33.33;4778
+Herrnhut, Stadt;51.7;4768
+Mahlberg, Stadt;16.59;4766
+Todtnau, Stadt;69.59;4764
+Augustusburg, Stadt;23.43;4746
+Emmelshausen, Stadt;7.91;4746
+Herbstein, Stadt;79.98;4745
+Wörth a.Main, St;15.89;4727
+Hartenstein, Stadt;36.72;4717
+Lauter/Sa., Stadt;21.55;4686
+Oppenau, Stadt;73.04;4684
+Wachenheim an der Weinstraße, Stadt;24.97;4683
+Lauchheim, Stadt;40.86;4681
+Geisa, Stadt;71.74;4675
+Marlow, Stadt;140.07;4668
+Lübtheen, Stadt;119.7;4653
+Schwarzenbach a.Wald, St;36.7;4650
+Lunzenau, Stadt;28.36;4645
+Creglingen, Stadt;117.22;4640
+Schömberg, Stadt;23.27;4617
+Wörth a.d.Donau, St;52.25;4586
+Heideck, St;58.64;4584
+Scheinfeld, St;45.11;4583
+Groß-Bieberau, Stadt;18.27;4572
+Nassau, Stadt;17.51;4571
+Waldkappel, Stadt;96.48;4570
+Belgern, Stadt;83.69;4570
+Krautheim, Stadt;52.92;4540
+Loitz, Stadt;89.54;4519
+Tengen, Stadt;61.98;4507
+Schönau, Stadt;22.49;4502
+Geringswalde, Stadt;29.93;4498
+Niederstotzingen, Stadt;29.81;4497
+Iphofen, St;78.06;4495
+Dargun, Stadt;117.14;4471
+Rauschenberg, Stadt;67.33;4463
+Gefrees, St;50.3;4459
+Dahlen, Stadt;71.68;4457
+Hallenberg, Stadt;65.35;4435
+Müllrose, Stadt;68.49;4432
+Tann (Rhön), Stadt;60.45;4430
+Dahn, Stadt;40.75;4427
+Pressath, St;66.33;4423
+Peitz, Stadt;13.38;4420
+Güsten, Stadt;36.16;4394
+Selbitz, St;27.75;4389
+Wilster, Stadt;2.71;4373
+Sternberg, Stadt;67.67;4371
+Königsbrück, Stadt;77.83;4362
+Heimbach, Stadt;64.96;4359
+Johanngeorgenstadt, Stadt;29.59;4358
+Berka/Werra, Stadt;56.93;4358
+Elsterberg, Stadt;25.07;4354
+Dingelstädt, Stadt;20.4;4338
+Rabenau, Stadt;30.73;4335
+Dransfeld, Stadt;28.75;4328
+Waldershof, St;60.37;4321
+Schönberg, Stadt;38.09;4317
+Penzlin, Stadt;115.54;4306
+Bad Berneck i.Fichtelgebirge, St;33.56;4296
+Putbus, Stadt;66.59;4294
+Lengefeld, Stadt;47.52;4290
+Schnaittenbach, St;63.41;4270
+Vellberg, Stadt;31.88;4258
+Wyk auf Föhr, Stadt;8;4242
+Bad Münster am Stein-Ebernburg, Stadt;9.53;4233
+Liebenwalde, Stadt;142.07;4229
+Wanfried, Stadt;46.9;4222
+Waldenburg, Stadt;25.06;4217
+Gerabronn, Stadt;40.38;4207
+Hornberg, Stadt;54.45;4187
+Baruth/Mark, Stadt;231.89;4182
+Lichtenfels, Stadt;96.73;4170
+Netzschkau, Stadt;12.52;4149
+Nastätten, Stadt;13.02;4138
+Tambach-Dietharz/Thür. Wald, Stadt;41.54;4134
+Allendorf (Lumda), Stadt;22.01;4129
+Zell (Mosel), Stadt;44.98;4127
+Kirchberg an der Jagst, Stadt;40.93;4119
+Rennerod, Stadt;18.14;4115
+Steinach, Stadt;26.35;4098
+Gräfenberg, St;37.86;4062
+Mühlberg/Elbe, Stadt;88.56;4051
+Baumholder, Stadt;69.47;4044
+Lucka, Stadt;12.99;4031
+Dassow, Stadt;66.53;4025
+Baunach, St;32.14;4023
+Lambrecht (Pfalz), Stadt;8.31;4022
+Pappenheim, St;64.32;4010
+Regis-Breitingen, Stadt;26.35;4006
+Wolkenstein, Stadt;30.51;4001
+Amorbach, St;50.92;3975
+Seßlach, St;72.53;3962
+Trebsen/Mulde, Stadt;35.03;3958
+Rheinböllen, Stadt;16.33;3954
+Seifhennersdorf, Stadt;19.21;3935
+Bad Buchau, Stadt;23.77;3933
+Neckarbischofsheim, Stadt;26.41;3923
+Neubukow, Stadt;24.99;3917
+Eschenbach i.d.OPf., St;35.13;3916
+Bad Schandau, Stadt;46.8;3912
+Gemünden (Wohra), Stadt;58.67;3895
+Tessin, Stadt;24.52;3895
+Goldberg, Stadt;64.84;3894
+Niedernhall, Stadt;17.71;3889
+Neukloster, Stadt;27.49;3875
+Vöhrenbach, Stadt;70.48;3853
+Schiltach, Stadt;34.22;3849
+Reichenbach/O.L., Stadt;42.79;3849
+Strehla, Stadt;30.07;3849
+Triptis, Stadt;32.97;3843
+Schlotheim, Stadt;22.31;3835
+Neckarsteinach, Stadt;17.23;3831
+Wildenfels, Stadt;20.67;3830
+Welzow, Stadt;39.36;3827
+Freudenberg, Stadt;34.78;3796
+Kirchberg (Hunsrück), Stadt;18.05;3794
+Auma-Weidatal, Stadt;55.75;3791
+Lorch, Stadt;54.53;3782
+Ruhland, Stadt;37.12;3754
+Bad Elster, Stadt;19.73;3749
+Tanna, Stadt;87.18;3746
+Hoya, Stadt;8.39;3740
+Deidesheim, Stadt;26.53;3739
+Geyer, Stadt;18.76;3724
+Greußen, Stadt;19.17;3703
+Brück, Stadt;85.71;3692
+Bad Muskau, Stadt;15.35;3688
+Königsberg i.Bay., St;61.9;3687
+St. Blasien, Stadt;54.36;3684
+Gröningen, Stadt;59.68;3670
+Ellingen, St;31.25;3654
+Woldegk, Stadt;103.71;3654
+Gößnitz, Stadt;14.04;3652
+Vacha, Stadt;19.32;3644
+Bad Köstritz, Stadt;16.85;3642
+Grünsfeld, Stadt;44.72;3639
+Rötha, Stadt;17.88;3629
+Marktbreit, St;20.16;3620
+Goldkronach, St;23.24;3612
+Saalburg-Ebersdorf, Stadt;71.9;3585
+Tegernsee, St;22.77;3582
+Kelbra (Kyffhäuser), Stadt;40.55;3578
+Bad Karlshafen, Stadt;14.85;3561
+Bernstadt a. d. Eigen, Stadt;51.89;3558
+Mühlheim an der Donau, Stadt;21.73;3544
+Pausa/Vogtl., Stadt;36.57;3543
+Lauscha, Stadt;18.72;3535
+Mirow, Stadt;84.08;3526
+Berga/Elster, Stadt;43.48;3526
+Krakow am See, Stadt;87.11;3522
+Egeln, Stadt;29.14;3510
+Ludwigsstadt, St;58.73;3504
+Münstermaifeld, Stadt;27.79;3498
+Schildau, Gneisenaustadt, Stadt;74.61;3483
+Wasungen, Stadt;29.5;3467
+Rötz, St;66.69;3464
+Neustadt (Dosse), Stadt;75.45;3462
+Langewiesen, Stadt;27.5;3460
+Eschershausen, Stadt;23.87;3460
+Hirschhorn (Neckar), Stadt;30.86;3455
+Neusalza-Spremberg, Stadt;22.89;3453
+Kranichfeld, Stadt;23.08;3450
+Hohnstein, Stadt;64.62;3436
+Ostheim v.d.Rhön, St;40.83;3407
+Owen, Stadt;9.7;3406
+Döbern, Stadt;15.73;3399
+Nebra (Unstrut), Stadt;25.42;3399
+Weißensee, Stadt;46.55;3397
+Sonnewalde, Stadt;118.53;3385
+Kirtorf, Stadt;79.91;3368
+Schönwald, St;19.19;3357
+Warin, Stadt;44.27;3357
+Havelsee, Stadt;81.27;3349
+Schöneck/Vogtl., Stadt;54.91;3343
+Kirchenlamitz, St;48.48;3315
+Joachimsthal, Stadt;120.18;3311
+Ulmen, Stadt;28.62;3307
+Speicher, Stadt;15.36;3295
+Wurzbach, Stadt;72.23;3291
+Gehren, Stadt;29.99;3285
+Weißenberg, Stadt;50.92;3280
+Oberriexingen, Stadt;8.16;3263
+Weißenstadt, St;42.24;3248
+Bärnau, St;74.42;3246
+Liebenau, Stadt;48.87;3223
+Stadtsteinach, St;39.79;3217
+Stromberg, Stadt;9.03;3215
+Marktleuthen, St;35.48;3212
+Lebus, Stadt;54;3197
+Schönewalde, Stadt;155.14;3187
+Lychen, Stadt;110.51;3150
+Löwenstein, Stadt;23.46;3139
+Prichsenstadt, St;48.86;3129
+Hillesheim, Stadt;20.63;3126
+Friedland, Stadt;173.21;3109
+Waischenfeld, St;57.2;3101
+Gnoien, Stadt;40.97;3095
+Fridingen an der Donau, Stadt;22.47;3088
+Klütz, Stadt;44.12;3073
+Bürgel, Stadt;27.16;3067
+Laucha an der Unstrut, Stadt;31.14;3066
+Frauenstein, Stadt;58.84;3058
+Kaisersesch, Stadt;8.18;3052
+Schalkau, Stadt;33.58;3049
+Elterlein, Stadt;45.88;3048
+Lindow (Mark), Stadt;64.91;3047
+Dömitz, Stadt;60.43;3047
+Jarmen, Stadt;30.64;3044
+Hatzfeld (Eder), Stadt;58.51;3040
+Braubach, Stadt;19.54;3036
+Wesenberg, Stadt;89.44;3029
+Rehna, Stadt;22.52;3029
+Ulrichstein, Stadt;65.61;3014
+Münchenbernsdorf, Stadt;15.43;3006
+Bad Teinach-Zavelstein, Stadt;25.18;3005
+Wesselburen, Stadt;5.14;3003
+Frankenau, Stadt;57.29;2988
+Themar, Stadt;20.19;2969
+Burgbernheim, St;42.3;2966
+Remda-Teichel, Stadt;79.62;2951
+Waldenburg, Stadt;31.55;2912
+Elstra, Stadt;32.64;2909
+Rhens, Stadt;16.3;2882
+Bad Bibra, Stadt;49.77;2875
+Jöhstadt, Stadt;49.68;2867
+Wallenfels, St;45.66;2863
+Wustrow (Wendland), Stadt;30.01;2858
+Ebeleben, Stadt;40.74;2850
+Adenau, Stadt;18.56;2839
+Oberwesel, Stadt;18.08;2838
+Meisenheim, Stadt;10.34;2833
+Ravenstein, Stadt;55.97;2831
+Wolframs-Eschenbach, St;25.47;2817
+Romrod, Stadt;54.43;2806
+Gützkow, Stadt;42.68;2800
+Eibelstadt, St;7.06;2797
+Schillingsfürst, St;27.52;2791
+Putlitz, Stadt;118.47;2758
+Kohren-Sahlis, Stadt;36.72;2750
+Sankt Goar, Stadt;22.93;2737
+Selters (Westerwald), Stadt;8.72;2734
+Wegeleben, Stadt;51.78;2719
+Merkendorf, St;26.08;2707
+Mylau, Stadt;4.73;2699
+Brüel, Stadt;27.3;2679
+Rastenberg, Stadt;35.43;2678
+Schkölen, Stadt;53.3;2641
+Tribsees, Stadt;54.76;2637
+Großbreitenbach, Stadt;19.62;2636
+Sulzburg, Stadt;22.73;2632
+Bad Wilsnack, Stadt;79.21;2612
+Osterfeld, Stadt;27.61;2608
+Schlieben, Stadt;78.22;2588
+Gefell, Stadt;45.22;2584
+Dommitzsch, Stadt;30.2;2568
+Schwanebeck, Stadt;32.66;2566
+Großenehrich, Stadt;63.27;2554
+Alsleben (Saale), Stadt;23.64;2550
+Lauterstein, Stadt;23.32;2545
+Schönsee, St;50.26;2532
+Golßen, Stadt;63.27;2532
+Scheer, Stadt;18.72;2530
+Friedrichstadt, Stadt;4.03;2490
+Grebenau, Stadt;55.37;2489
+Garding, Stadt;3.06;2489
+Bad Tennstedt, Stadt;27.27;2487
+Friesack, Stadt;83.68;2484
+Ziesar, Stadt;67.46;2482
+Betzenstein, St;51.85;2476
+Schlettau, Stadt;21.19;2468
+Ostritz, Stadt;23.37;2468
+Buttstädt, Stadt;18.31;2458
+Stadtlengsfeld, Stadt;27.61;2442
+Gartz (Oder), Stadt;61.7;2438
+Pleystein, St;42.41;2431
+Hornburg, Stadt;22.11;2428
+Creuzburg, Stadt;35.33;2423
+Eckartsberga, Stadt;35.96;2412
+Bad Grund (Harz), Bergstadt;7.12;2400
+Krempe, Stadt;3.39;2357
+Rethem (Aller), Stadt;33.76;2357
+Schönau im Schwarzwald, Stadt;14.7;2321
+Lenzen (Elbe), Stadt;95.94;2293
+Oberwiesenthal, Kurort, Stadt;39.98;2278
+Hirschberg, Stadt;24.13;2240
+Leutenberg, Stadt;57.17;2239
+Heldrungen, Stadt;23.29;2237
+Königstein/Sächs. Schw., Stadt;26.93;2231
+Mainbernheim, St;12.21;2230
+Ortrand, Stadt;7.35;2213
+Garz/Rügen, Stadt;65.92;2210
+Scheibenberg, Stadt;9.01;2203
+Meyenburg, Stadt;50.62;2203
+Veringenstadt, Stadt;31.25;2200
+Lauterecken, Stadt;8.89;2194
+Katzenelnbogen, Stadt;9.2;2183
+Fladungen, St;46.36;2178
+Rerik, Stadt;33.44;2176
+Aach, Stadt;10.68;2174
+Oderberg, Stadt;35.93;2172
+Rosenthal, Stadt;51.54;2171
+Gräfenthal, Stadt;36.43;2150
+Hayingen, Stadt;63.37;2122
+Gebesee, Stadt;24.03;2105
+Bad Colberg-Heldburg, Stadt;53.37;2071
+Rieneck, St;26.2;2064
+Teuschnitz, St;34.26;2062
+Schauenstein, St;26.66;2024
+Wiesensteig, Stadt;23.4;2013
+Brüssow, Stadt;101.03;1994
+Niemegk, Stadt;44.81;1987
+Sayda, Stadt;35.17;1958
+Sachsenhagen, Stadt;15.53;1954
+Magdala, Stadt;20.52;1952
+Wiehe, Stadt;24.36;1949
+Wolfstein, Stadt;13.74;1944
+Penkun, Stadt;78.64;1907
+Bacharach, Stadt;23.33;1877
+Marktsteft, St;10.52;1849
+Widdern, Stadt;25.23;1846
+Usedom, Stadt;38.65;1838
+Plaue, Stadt;18.19;1838
+Kindelbrück, Stadt;13.29;1829
+Hettingen, Stadt;46.06;1812
+Neukalen, Stadt;46.85;1811
+Lehesten, Stadt;35.96;1807
+Oberweißbach/Thür. Wald, Stadt;9.62;1803
+Velden, St;21.32;1799
+Teupitz, Stadt;48;1786
+Mühltroff, Stadt;27.7;1745
+Ranis, Stadt;10.55;1725
+Kaltennordheim, Stadt;15.62;1712
+Bad Sülze, Stadt;26.38;1707
+Langenburg, Stadt;31.4;1706
+Röttingen, St;27.2;1706
+Rhinow, Stadt;31.51;1667
+Oberhof, Stadt;23.47;1666
+Stadt Wehlen, Stadt;10.81;1666
+Altenau, Bergstadt;4.66;1648
+Hohenleuben, Stadt;9.52;1628
+Arneburg, Stadt;30.64;1601
+Ornbau, St;15.16;1584
+Lassan, Stadt;27.98;1558
+Aub, St;17.54;1538
+Neuerburg, Stadt;10.2;1530
+Stadtprozelten, St;10.87;1530
+Kroppenstedt, Stadt;38.65;1511
+Buckow (Märkische Schweiz), Stadt;14.31;1487
+Franzburg, Stadt;15.19;1467
+Hornbach, Stadt;13.32;1462
+Hohenberg a.d.Eger, St;8.2;1458
+Lieberose, Stadt;72.52;1417
+Richtenberg, Stadt;15.62;1381
+Liebstadt, Stadt;37.41;1376
+Manderscheid, Stadt;10.06;1330
+Buttelstedt, Stadt;18.83;1328
+Sankt Goarshausen, Loreleystadt, Stadt;7;1292
+Neustadt am Kulm, St;20.3;1205
+Schraplau, Stadt;7.06;1179
+Werben (Elbe), Hansestadt;53.37;1166
+Orlamünde, Stadt;7.58;1146
+Lichtenberg, St;9.47;1080
+Schwarzenborn, Stadt;26.9;1066
+Obermoschel, Stadt;10.15;1066
+Clingen, Stadt;10.75;1059
+Kupferberg, St;8.28;1048
+Rothenfels, St;12.06;987
+Sandau (Elbe), Stadt;18.58;930
+Wildemann, Bergstadt;3.34;927
+Stößen, Stadt;7.29;922
+Kyllburg, Stadt;4.62;879
+Kaub, Stadt;12.98;847
+Märkisch Buchholz, Stadt;24.65;771
+Ziegenrück, Stadt;8.24;717
+Schnackenburg, Stadt;23.7;577
+Ummerstadt, Stadt;15.71;487
+Neumark, Stadt;8.64;467
+Arnis, Stadt;0.45;297

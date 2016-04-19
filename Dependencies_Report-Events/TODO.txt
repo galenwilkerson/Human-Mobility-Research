@@ -1,0 +1,7 @@
+subset event by day
+
+remove interevent times from missing data
+
+cdf of interevent times 
+
+think about minute limitation

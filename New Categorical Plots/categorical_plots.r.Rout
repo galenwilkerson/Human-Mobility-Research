@@ -1,0 +1,7955 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: i686-pc-linux-gnu (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # load trips
+> 
+> # for each category
+> 
+> # plot trip length, trip duration, inter-event time
+> 
+> 
+> ##############
+> 
+> 
+> rm(list = ls())
+> library(ggplot2)
+> 
+> ##############
+> 
+> # subset events by category, return list of subset data frames
+> subset.events.category <- function(events, subset.category, cat.values) {
++ 
++   subsets <- list()
++ 
++   i <- 1
++ 
++   for (cat.val in cat.values) {
++     
++     # get rows by category
++     category.events <- subset(events, events[,subset.category] == cat.val)
++     subsets[[i]] <- category.events
++     i <- i + 1
++   }
++ 
++    return(subsets)
++ 
++ }
+> 
+> 
+> ##############
+> 
+> 
+> data.dir = "/home/username/Dropbox/Active_Projects/Mobility_Article/Data/"
+> figures.dir = "./Figures/"
+> 
+> load(paste(data.dir, "trips.Rdata", sep=""))
+> 
+> 
+> ##############
+> 
+> 
+> 
+> # get list of categories of interest
+> 
+> # for each category
+> 
+> # split data by value of category
+> 
+> # plot distribution
+> 
+> 
+> ###############
+> # TODO: PLOT THESE AS LOG LOG CCDFS
+> 
+> # removed numerical, not categorical variables (must be plotted differently)
+> # stich.j, stich.wo, w07", "anzpers", "h02", "h04.3", "hhgr06", "hhgr14", "hhgr18", "anzerw", "hp.alter",  "psu.nr"
+> ###############
+> 
+> 
+> #cats <- c("hvm", "hp.sex")
+> 
+> # removed these - too much detail
+> #"w05.1", "w05.2", "w05.3", "w05.4", "w05.5",  "w05.7", "w05.11", "w05.12", "w05.13", "w05.14", "w05.15", "w05.16", "w05.17", "w05.18", "w05.20", "w05.22", "w05.23",  "w072.2", "w072.3", "w072.4", "w072.5", "w072.6", "w072.7", "w072.8", "w072.9", "w072.10", "w073", "s02.1", "s02.2", "s02.3", "s02.4", "s02.5", "s02.6", "s02.7",
+> 
+> #cats <- c("stichtag")
+> cats <- c("wsource", "int.typ9", "saison", "st.stdg", "st.dat", "en.dat", "stichtag", "w04", "w04.dzw", "w04.sons", "hwzweck", "w01", "w13", "w044", "mrad.f", "mrad.mf",  "pkw.f", "pkw.mf", "lkw.f", "lkw.mf","hvm.diff", "hvm", "hvm.oev", "vm.kombi", "w061", "w062", "w063", "w071", "w072.1",  "w074", "begleit",  "hheink", "oek.stat", "hhtyp", "hp.sex", "hp.altg1", "hp.altg2", "hp.altg3", "hp.besch", "hp.pkwfs", "pergrup", "pergrup1", "p070", "lebensph",  "gesein", "ov.seg", "s03", "s04", "s01", "bland", "westost", "polgk", "rtyp", "rtypd7", "ktyp", "ktyp.zsg", "sgtyp", "sgtypd") 
+> 
+> #cats <- c("wsource", "int.typ9", "saison", "st.stdg", "st.dat", "en.dat", "w04", "w04.sons",
+> 
+> #cats <- c("hwzweck", "w01",
+> #cats <- c("w13", "w044", "mrad.f", "mrad.mf",  "pkw.f", "pkw.mf", "lkw.f", "lkw.mf","hvm.diff", "hvm", "hvm.oev", "vm.kombi", "w061", "w062", "w063", "w071", "w072.1",  "w074", "begleit",  "hheink", "oek.stat", "hhtyp", "hp.sex", "hp.altg1", "hp.altg2", "hp.altg3", "hp.besch", "hp.pkwfs", "pergrup", "pergrup1", "p070", "lebensph",  "gesein", "ov.seg", "s03", "s04", "s01", "bland", "westost", "polgk", "rtyp", "rtypd7", "ktyp", "ktyp.zsg", "sgtyp", "sgtypd") 
+> 
+> 
+> # plot inter-event time, trip length, trip duration subset by trip subsets
+>  # "wegkm.k", "wegmin.k", "tempo", "co2weg", "kraftweg",
+>   
+>  # make trip length histogram for each category, plot log-log
+> 
+> for (this.cat in cats) {
++ 
++   print("")
++   print(this.cat)
++   
++   cat.vals <- as.vector(unique(trips[,this.cat]))
++ 
++   ## # the category name, used for legend and plotting
++   ## Legend <- trips[,this.cat]
++ 
++   ## # plot density
++   ## qplot(timestamp.event, data = trips, geom = "density", adjust = 1/10, color = Legend) +
++   ##   ggtitle(paste(this.cat, "time frequency")) 
++ 
++   ## ggsave(paste(figures.dir, this.cat, "time_frequency.pdf" , sep = "_"), width = 297, height = 210, units = "mm")
++ 
++   
++    
++ # REMOVE BAD/SPECIAL VALUES
++ 
++   trips.subset <- subset(trips, wegkm.k <= 950)
++   Legend <- trips.subset[,this.cat]
++ 
++ 
++ ## ######################### FIND log-log CCDF #############################
++ 
++ # for each subset of cat, find the ccdf
++ 
++   df <- data.frame()
++   
++   for(cat.val in cat.vals) {
++ 
++     trips.subset.cat <- subset(trips.subset, trips.subset[,this.cat] == cat.val)
++   
++ 
++ ## ## # use hist for finding breaks
++ ##     h.inter <- hist(trips.subset.cat$wegkm.k, breaks = 100000, plot = F)
++     
++ ## ## # find xvalues, log x values, log ccdf
++ ##     my.breaks <-  h.inter$breaks
++ ##     trip.lengths <- my.breaks[-1]
++ ##     log10.trip.length <- log10(trip.lengths)
++ 
++ ## ## # find CDF, use for CCDF, log CCDF
++ ##     cdf <- ecdf(trips.subset.cat$wegkm.k)
++ ##     CDF <- cdf(trip.lengths)
++ ##     CCDF1 <- 1 - CDF
++ ##     log10.ccdf <- log10(CCDF1)
++ 
++ ## ## # keep track of results in data frame by category for plotting later
++ ##     df <- rbind(df, data.frame(log10.trip.length, log10.ccdf, cat.val))
++ 
++     
++     print(cat.val)
++     print("mean:")
++     print(mean(trips.subset.cat$wegkm.k))
++     print("sd:")
++     print(sd(trips.subset.cat$wegkm.k))
++ 
++     
++ }
++ 
++   
++   ## # plot trip length
++   ## qplot(log10.trip.length, log10.ccdf, data = df, geom="line", color = cat.val) +
++   ##   ggtitle(paste(this.cat, "log log trip length (km)"))
++  
++ 
++   ## ggsave(paste(figures.dir, this.cat, "trip_length.pdf" , sep = "_"), width = 297, height = 210, units = "mm")
++  
++ ############## duration
++   
++  ##  trips.subset <- subset(trips, wegmin.k <= 480)
++ ##   Legend <- trips.subset[,this.cat]
++ 
++ 
++ 
++ 
++  ##  df <- data.frame()
++   
++ ##   for(cat.val in cat.vals) {
++ 
++ ##     trips.subset.cat <- subset(trips.subset, trips.subset[,this.cat] == cat.val)
++   
++ 
++ ## ## # use hist for finding breaks
++ ##     h.inter <- hist(trips.subset.cat$wegmin.k, breaks = 100000, plot = F)
++     
++ ## ## # find xvalues, log x values, log ccdf
++ ##     my.breaks <-  h.inter$breaks
++ ##     trip.durations <- my.breaks[-1]
++ ##     log10.trip.duration <- log10(trip.durations)
++ 
++ ## ## # find CDF, use for CCDF, log CCDF
++ ##     cdf <- ecdf(trips.subset.cat$wegmin.k)
++ ##     CDF <- cdf(trip.durations)
++ ##     CCDF1 <- 1 - CDF
++ ##     log10.ccdf <- log10(CCDF1)
++ 
++ ## ## # keep track of results in data frame by category for plotting later
++ ##     df <- rbind(df, data.frame(log10.trip.duration, log10.ccdf, cat.val))
++ 
++ ## }
++ 
++ ## ##   # plot trip duration
++ 
++ ##   qplot(log10.trip.duration, log10.ccdf, data = df, geom="line", color = cat.val) +
++ ##     ggtitle(paste(this.cat, "log log trip duration (min)"))
++ 
++ 
++   
++   
++ 
++ 
++ ##   ggsave(paste(figures.dir, this.cat, "trip_duration.pdf" , sep = "_"), width = 297, height = 210, units = "mm")
++ 
++ 
++   
++ #  trips.subset <- subset(trips, tempo <= 639.96)
++ #  Legend <- trips.subset[,this.cat]
++ 
++ 
++   ## # plot trip speed
++   ## qplot(tempo, data = trips.subset, geom="density", color = Legend, log="xy") +
++   ##   ggtitle(paste(this.cat, "log log trip speed (km/h)"))
++ 
++   ## ggsave(paste(figures.dir, this.cat, "trip_speed.pdf" , sep = "_"), width = 297, height = 210, units = "mm")
++ 
++ 
++ 
++   
++   ## trips.subset <- subset(trips, co2weg <= 193449)
++   ## Legend <- trips.subset[,this.cat]
++   
++   ## # plot trip co2
++   ## qplot(co2weg, data = trips.subset, geom="density", color = Legend, log="xy") +
++   ##   ggtitle(paste(this.cat, "log log trip CO2 (kg)"))
++ 
++   ## ggsave(paste(figures.dir, this.cat, "trip_CO2.pdf" , sep = "_"), width = 297, height = 210, units = "mm")
++ 
++ 
++   
++   ## trips.subset <- subset(trips, kraftweg <= 62730)
++   ## Legend <- trips.subset[,this.cat]
++ 
++   
++   ## # plot trip fuel
++   ## qplot(kraftweg, data = trips.subset, geom="density", color = Legend, log="xy") +
++   ##   ggtitle(paste(this.cat, "log log trip fuel (Liter)"))
++ 
++   ## ggsave(paste(figures.dir, this.cat, "trip_fuel.pdf" , sep = "_"), width = 297, height = 210, units = "mm")
++   
++   # get inter-event times
++ 
++   ## trips.subsets <- list()
++ 
++   ## i <- 1
++ 
++   ## for (cat.val in cat.vals) {
++     
++   ##   # get rows by category
++   ##   category.events <- subset(trips, trips[,this.cat] == cat.val)
++   ##   trips.subsets[[i]] <- category.events
++   ##   i <- i + 1
++   ## }
++   
++   #trips.subsets <- subset.events.category(trips, this.cat, cat.vals)
++ 
++ 
++   ## new.trips <- data.frame()
++   
++   ## for (trips.subset in trips.subsets) {
++     
++   ##   # make sure sorted in order of event
++   ##   trips.subset <- trips.subset[order(trips.subset$timestamp.event),]
++ 
++   ##   inter.event.times <- as.numeric(diff(trips.subset$timestamp.event))
++   ##   inter.event.times.mins <- inter.event.times/60
++ 
++   ##   trips.subset$inter.event.times.mins <- inter.event.times.mins
++ 
++   ##   new.trips <- rbind(new.trips, trips.subset)
++ 
++   ## }
++ 
++ 
++   ## qplot(inter.event.times.mins, data = new.trips.subset, geom = "density", color = trips[,this.cat])
++ }
+[1] ""
+[1] "wsource"
+[1] "von Person direkt erfasster Weg"
+[1] "mean:"
+[1] 10.98247
+[1] "sd:"
+[1] 36.36574
+[1] ""
+[1] "int.typ9"
+[1] "Erwachsener > 13 J. (Selbst) mit Wegeprotokoll"
+[1] "mean:"
+[1] 10.39489
+[1] "sd:"
+[1] 33.24946
+[1] "Erwachsener > 13 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 13.85543
+[1] "sd:"
+[1] 44.1025
+[1] "Kind 10-13 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 8.409355
+[1] "sd:"
+[1] 34.2088
+[1] "Kind <10 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 7.986082
+[1] "sd:"
+[1] 34.83984
+[1] "Erw. >13 J. (Selbst) o. Wegeprot. (StTag <= 3 Tage/ Ausl.)"
+[1] "mean:"
+[1] 12.11879
+[1] "sd:"
+[1] 39.33036
+[1] "Ki. 10-13 J. (Selbst) o. Wegeprot. (StTag <= 3 Tage/ Ausl.)"
+[1] "mean:"
+[1] 8.264159
+[1] "sd:"
+[1] 38.50553
+[1] "Kind 10-13 J. (Selbst) mit Wegeprotokoll"
+[1] "mean:"
+[1] 6.922977
+[1] "sd:"
+[1] 21.30798
+[1] ""
+[1] "saison"
+[1] "Winter"
+[1] "mean:"
+[1] 10.23266
+[1] "sd:"
+[1] 34.11728
+[1] "Frhjahr"
+[1] "mean:"
+[1] 11.14851
+[1] "sd:"
+[1] 36.75558
+[1] "Sommer"
+[1] "mean:"
+[1] 11.81647
+[1] "sd:"
+[1] 37.10925
+[1] "Herbst"
+[1] "mean:"
+[1] 10.99711
+[1] "sd:"
+[1] 37.71642
+[1] ""
+[1] "st.stdg"
+[1] "vor 5 Uhr"
+[1] "mean:"
+[1] 32.91757
+[1] "sd:"
+[1] 100.6181
+[1] "5 bis vor 7"
+[1] "mean:"
+[1] 23.70567
+[1] "sd:"
+[1] 57.16983
+[1] "7 bis vor 9"
+[1] "mean:"
+[1] 11.28565
+[1] "sd:"
+[1] 41.44437
+[1] "9 bis vor 11"
+[1] "mean:"
+[1] 11.30754
+[1] "sd:"
+[1] 46.46582
+[1] "11 bis vor 14"
+[1] "mean:"
+[1] 9.489097
+[1] "sd:"
+[1] 32.34595
+[1] "14 bis vor 17"
+[1] "mean:"
+[1] 10.3351
+[1] "sd:"
+[1] 29.46176
+[1] "17 bis vor 20"
+[1] "mean:"
+[1] 9.683359
+[1] "sd:"
+[1] 26.5688
+[1] "20 bis vor 22"
+[1] "mean:"
+[1] 9.577833
+[1] "sd:"
+[1] 26.15714
+[1] "ab 22 Uhr"
+[1] "mean:"
+[1] 10.93978
+[1] "sd:"
+[1] 23.46526
+[1] ""
+[1] "st.dat"
+[1] "Stichtag"
+[1] "mean:"
+[1] 10.94377
+[1] "sd:"
+[1] 36.34355
+[1] "Folgetag"
+[1] "mean:"
+[1] 17.68573
+[1] "sd:"
+[1] 39.47289
+[1] ""
+[1] "en.dat"
+[1] "Stichtag"
+[1] "mean:"
+[1] 10.86396
+[1] "sd:"
+[1] 35.9702
+[1] "Folgetag"
+[1] "mean:"
+[1] 26.49155
+[1] "sd:"
+[1] 69.48087
+[1] ""
+[1] "stichtag"
+[1] "Montag"
+[1] "mean:"
+[1] 9.656879
+[1] "sd:"
+[1] 32.04358
+[1] "Dienstag"
+[1] "mean:"
+[1] 9.468603
+[1] "sd:"
+[1] 30.32532
+[1] "Mittwoch"
+[1] "mean:"
+[1] 9.860523
+[1] "sd:"
+[1] 31.0956
+[1] "Donnerstag"
+[1] "mean:"
+[1] 10.07168
+[1] "sd:"
+[1] 30.71572
+[1] "Freitag"
+[1] "mean:"
+[1] 11.46148
+[1] "sd:"
+[1] 38.83246
+[1] "Samstag"
+[1] "mean:"
+[1] 12.59644
+[1] "sd:"
+[1] 42.29986
+[1] "Sonntag"
+[1] "mean:"
+[1] 15.84355
+[1] "sd:"
+[1] 51.49821
+[1] ""
+[1] "w04"
+[1] "Freizeitaktivitt"
+[1] "mean:"
+[1] 12.96421
+[1] "sd:"
+[1] 45.83312
+[1] "Erreichen des Arbeitsplatzes"
+[1] "mean:"
+[1] 15.78453
+[1] "sd:"
+[1] 30.06869
+[1] "andere Aktivitt"
+[1] "mean:"
+[1] 17.64017
+[1] "sd:"
+[1] 62.11261
+[1] "Einkauf"
+[1] "mean:"
+[1] 5.045086
+[1] "sd:"
+[1] 11.38403
+[1] "dienstlich oder geschftlich"
+[1] "mean:"
+[1] 40.09749
+[1] "sd:"
+[1] 97.47344
+[1] "Erreichen der Ausbildungssttte oder Schule"
+[1] "mean:"
+[1] 11.82477
+[1] "sd:"
+[1] 27.26816
+[1] "zur Schule oder Vorschule"
+[1] "mean:"
+[1] 4.429312
+[1] "sd:"
+[1] 5.674276
+[1] "Begleitung Erwachsener"
+[1] "mean:"
+[1] 8.86512
+[1] "sd:"
+[1] 32.57633
+[1] "Bringen oder Holen von Personen"
+[1] "mean:"
+[1] 7.698705
+[1] "sd:"
+[1] 17.86454
+[1] "nach Hause"
+[1] "mean:"
+[1] 11.58089
+[1] "sd:"
+[1] 38.59494
+[1] "Kindertagessttte oder Kindergarten"
+[1] "mean:"
+[1] 2.761447
+[1] "sd:"
+[1] 12.88478
+[1] "private Erledigungen"
+[1] "mean:"
+[1] 8.332002
+[1] "sd:"
+[1] 26.27255
+[1] "Rckweg vom vorherigen Weg"
+[1] "mean:"
+[1] 6.743664
+[1] "sd:"
+[1] 18.29271
+[1] "verweigert"
+[1] "mean:"
+[1] 45.37308
+[1] "sd:"
+[1] 106.4715
+[1] "wei nicht"
+[1] "mean:"
+[1] 8.361176
+[1] "sd:"
+[1] 10.72629
+[1] ""
+[1] "w04.dzw"
+[1] "Hund ausfhren"
+[1] "mean:"
+[1] 2.809381
+[1] "sd:"
+[1] 3.391825
+[1] "kein Einkaufs-, Erledigungs-, Freizeitweg"
+[1] "mean:"
+[1] 11.92174
+[1] "sd:"
+[1] 37.15053
+[1] "tglicher Bedarf (z.B. Lebensmittel, Tanken etc.)"
+[1] "mean:"
+[1] 3.656041
+[1] "sd:"
+[1] 9.344525
+[1] "Arztbesuch"
+[1] "mean:"
+[1] 7.452461
+[1] "sd:"
+[1] 12.24162
+[1] "Behrde, Bank, Post, Geldautomat"
+[1] "mean:"
+[1] 3.463903
+[1] "sd:"
+[1] 8.996463
+[1] "sonstiger privater Erledigungszweck"
+[1] "mean:"
+[1] 11.46816
+[1] "sd:"
+[1] 38.98991
+[1] "allgemeiner Einkaufsbummel"
+[1] "mean:"
+[1] 9.402481
+[1] "sd:"
+[1] 17.74537
+[1] "Begleitung Erwachsener"
+[1] "mean:"
+[1] 13.14804
+[1] "sd:"
+[1] 46.97699
+[1] "Betreuung anderer Personen"
+[1] "mean:"
+[1] 5.798849
+[1] "sd:"
+[1] 9.103216
+[1] "sonstige Waren (z.B. Kleidung, Mbel, Hausrat etc.)"
+[1] "mean:"
+[1] 9.596932
+[1] "sd:"
+[1] 15.10506
+[1] "sonstiger Einkaufszweck"
+[1] "mean:"
+[1] 6.331841
+[1] "sd:"
+[1] 12.57067
+[1] "Spaziergang, Spazierfahrt"
+[1] "mean:"
+[1] 7.576717
+[1] "sd:"
+[1] 16.99365
+[1] "Dienstleistungen (z.B. Friseur, Schuster etc.)"
+[1] "mean:"
+[1] 5.660761
+[1] "sd:"
+[1] 10.10593
+[1] "Schrebergarten, Wochenendhaus"
+[1] "mean:"
+[1] 6.079487
+[1] "sd:"
+[1] 14.43378
+[1] "Laufen, Joggen, Inlineskating, Nordic Walking etc."
+[1] "mean:"
+[1] 7.379707
+[1] "sd:"
+[1] 8.16408
+[1] "Sport (selbst aktiv), Sportverein"
+[1] "mean:"
+[1] 7.834348
+[1] "sd:"
+[1] 17.64394
+[1] "Restaurant, Gaststtte, Mittagessen etc."
+[1] "mean:"
+[1] 7.358848
+[1] "sd:"
+[1] 25.30402
+[1] "Begleitung von Kindern (Spielplatz etc.)"
+[1] "mean:"
+[1] 6.150912
+[1] "sd:"
+[1] 17.27034
+[1] "Besuch oder Treffen mit|von Freunden, Verwandten, Bekannten"
+[1] "mean:"
+[1] 14.04534
+[1] "sd:"
+[1] 39.5179
+[1] "Ehrenamt, Verein, politische Aktivitten"
+[1] "mean:"
+[1] 5.810911
+[1] "sd:"
+[1] 10.97139
+[1] "Jugendfreizeitheim etc."
+[1] "mean:"
+[1] 4.8348
+[1] "sd:"
+[1] 10.03566
+[1] "Hobby (z.B. Musizieren)"
+[1] "mean:"
+[1] 7.556276
+[1] "sd:"
+[1] 17.99004
+[1] "sonstiger Freizeitzweck"
+[1] "mean:"
+[1] 14.76379
+[1] "sd:"
+[1] 44.59128
+[1] "Spielplatz, Spielen auf der Strae etc."
+[1] "mean:"
+[1] 2.820465
+[1] "sd:"
+[1] 7.224224
+[1] "private Erledigung fr andere Person (unentgeltlich)"
+[1] "mean:"
+[1] 8.676677
+[1] "sd:"
+[1] 22.92464
+[1] "Einkufe, keine Angabe zum Detail"
+[1] "mean:"
+[1] 5.472229
+[1] "sd:"
+[1] 13.84639
+[1] "Besuch kultureller Einrichtung (z.B. Kino, Theater, Museum)"
+[1] "mean:"
+[1] 15.09472
+[1] "sd:"
+[1] 27.34486
+[1] "Freizeit, keine Angabe zum Detail"
+[1] "mean:"
+[1] 14.56933
+[1] "sd:"
+[1] 47.35922
+[1] "Besuch einer Veranstaltung (z.B. Fuballspiel, Markt)"
+[1] "mean:"
+[1] 14.65661
+[1] "sd:"
+[1] 34.53144
+[1] "Kirche, Friedhof"
+[1] "mean:"
+[1] 5.162381
+[1] "sd:"
+[1] 14.29487
+[1] "Tagesausflug, mehrtgiger Ausflug (bis 4 Tage)"
+[1] "mean:"
+[1] 116.2956
+[1] "sd:"
+[1] 157.1559
+[1] "Erledigung, keine Angabe zum Detail"
+[1] "mean:"
+[1] 10.72127
+[1] "sd:"
+[1] 26.84421
+[1] "Urlaub (ab 5 Tage)"
+[1] "mean:"
+[1] 324.4466
+[1] "sd:"
+[1] 228.3501
+[1] "Weiterbildung (z.B. Sprachkurs, Volkshochschule, Nachhilfe)"
+[1] "mean:"
+[1] 11.56284
+[1] "sd:"
+[1] 22.31287
+[1] "Jobben in der Freizeit gegen Entgelt"
+[1] "mean:"
+[1] 6.262319
+[1] "sd:"
+[1] 8.759481
+[1] "keine Angabe"
+[1] "mean:"
+[1] 4.048
+[1] "sd:"
+[1] 3.428786
+[1] ""
+[1] "w04.sons"
+[1] "Freizeitaktivitt :: Hund ausfhren"
+[1] "mean:"
+[1] 2.856488
+[1] "sd:"
+[1] 3.563431
+[1] "zur Arbeit"
+[1] "mean:"
+[1] 11.9264
+[1] "sd:"
+[1] 15.57894
+[1] "von Leipzig nach Limburg"
+[1] "mean:"
+[1] 76
+[1] "sd:"
+[1] NA
+[1] "Erreichen des Arbeitsplatzes"
+[1] "mean:"
+[1] 15.80746
+[1] "sd:"
+[1] 30.13281
+[1] "Einkauf :: tglicher Bedarf (z.B. Lebensmittel, Tanken etc.)"
+[1] "mean:"
+[1] 3.653392
+[1] "sd:"
+[1] 9.291961
+[1] "dienstlich oder geschftlich"
+[1] "mean:"
+[1] 40.09749
+[1] "sd:"
+[1] 97.47344
+[1] "zur Schule oder Ausbildungssttte"
+[1] "mean:"
+[1] 7.173684
+[1] "sd:"
+[1] 7.233635
+[1] "zur  Schule oder Vorschule"
+[1] "mean:"
+[1] 4.429312
+[1] "sd:"
+[1] 5.674276
+[1] "Begleitung Erwachsener"
+[1] "mean:"
+[1] 8.860191
+[1] "sd:"
+[1] 32.55985
+[1] "Blutabnahme beim Arzt"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Bringen oder Holen von Personen"
+[1] "mean:"
+[1] 7.69598
+[1] "sd:"
+[1] 17.86596
+[1] "Rckweg vom vorherigen Weg"
+[1] "mean:"
+[1] 8.331638
+[1] "sd:"
+[1] 19.26182
+[1] "Kindertagessttte oder Kindergarten"
+[1] "mean:"
+[1] 2.761447
+[1] "sd:"
+[1] 12.88478
+[1] "private Erledigungen :: Arztbesuch"
+[1] "mean:"
+[1] 7.465838
+[1] "sd:"
+[1] 12.24242
+[1] "private Erledigungen :: Behrde, Bank, Post, Geldautomat"
+[1] "mean:"
+[1] 3.449594
+[1] "sd:"
+[1] 8.93653
+[1] "private Erledigungen :: Hund ausfhren"
+[1] "mean:"
+[1] 2.587948
+[1] "sd:"
+[1] 2.308564
+[1] "private Erledigungen :: sonstiges und zwar"
+[1] "mean:"
+[1] 11.46683
+[1] "sd:"
+[1] 38.84836
+[1] "Einkauf :: allgemeiner Einkaufsbummel"
+[1] "mean:"
+[1] 9.164684
+[1] "sd:"
+[1] 16.1769
+[1] "private Erledigungen :: allgemeiner Einkaufsbummel"
+[1] "mean:"
+[1] 9.268642
+[1] "sd:"
+[1] 30.46162
+[1] "Freizeitaktivitt :: Begleitung Erwachsener"
+[1] "mean:"
+[1] 14.23264
+[1] "sd:"
+[1] 53.5805
+[1] "private Erledigungen :: Betreuung anderer Personen"
+[1] "mean:"
+[1] 5.798849
+[1] "sd:"
+[1] 9.103216
+[1] "Einkauf :: sonstige Waren (z.B. Kleidung, Mbel, Hausrat etc.)"
+[1] "mean:"
+[1] 9.564518
+[1] "sd:"
+[1] 15.01864
+[1] "nach Hause"
+[1] "mean:"
+[1] 15.00031
+[1] "sd:"
+[1] 51.90961
+[1] "Einkauf :: sonstiges und zwar  ...."
+[1] "mean:"
+[1] 6.387533
+[1] "sd:"
+[1] 12.92038
+[1] "Freizeitaktivitt :: Spaziergang, Spazierfahrt"
+[1] "mean:"
+[1] 7.578761
+[1] "sd:"
+[1] 16.96845
+[1] "Einkauf :: Dienstleistungen (z.B. Friseur, Schuster etc.)"
+[1] "mean:"
+[1] 5.685581
+[1] "sd:"
+[1] 12.46298
+[1] "Arzt besuch"
+[1] "mean:"
+[1] 13.3
+[1] "sd:"
+[1] NA
+[1] "Freizeitaktivitt :: Schrebergarten, Wochenendhaus"
+[1] "mean:"
+[1] 6.081783
+[1] "sd:"
+[1] 14.39445
+[1] "Freizeitaktivitt :: Laufen, Joggen, Inlineskating, Nordic Walking etc."
+[1] "mean:"
+[1] 7.455961
+[1] "sd:"
+[1] 8.488613
+[1] "Freundin aufgesucht"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Freizeitaktivitt :: Sport (selbst aktiv), Sportverein (z.B. Fuball, Tennis, Training, Wettkampf)"
+[1] "mean:"
+[1] 7.853987
+[1] "sd:"
+[1] 17.75649
+[1] "private Erledigungen :: Restaurant, Gaststtte, Mittagessen etc."
+[1] "mean:"
+[1] 8.841009
+[1] "sd:"
+[1] 50.09066
+[1] "private Erledigungen :: Begleitung von Kindern (Spielplatz etc.)"
+[1] "mean:"
+[1] 8.616341
+[1] "sd:"
+[1] 27.01488
+[1] "Hinfahrt zur Rehaklinik"
+[1] "mean:"
+[1] 50.35
+[1] "sd:"
+[1] NA
+[1] "Freizeitaktivitt ::  Besuch oder Treffen mit|von Freunden, Verwandten, Bekannten"
+[1] "mean:"
+[1] 13.94897
+[1] "sd:"
+[1] 39.57987
+[1] "private Erledigungen :: Besuch oder Treffen mit|von Freunden, Verwandten, Bekannten"
+[1] "mean:"
+[1] 14.79883
+[1] "sd:"
+[1] 39.85684
+[1] "Sport"
+[1] "mean:"
+[1] 1.205
+[1] "sd:"
+[1] 0.318198
+[1] "private Erledigungen :: Ehrenamt, Verein, politische Aktivitten"
+[1] "mean:"
+[1] 6.644729
+[1] "sd:"
+[1] 13.85273
+[1] "Freizeitaktivitt :: Begleitung von Kindern (Spielplatz etc.)"
+[1] "mean:"
+[1] 5.063093
+[1] "sd:"
+[1] 10.58486
+[1] "Freizeitaktivitt :: Restaurant, Kneipe, Gaststtte, Disco"
+[1] "mean:"
+[1] 7.209193
+[1] "sd:"
+[1] 18.12326
+[1] "Fahrt zur Mutter"
+[1] "mean:"
+[1] 7.84
+[1] "sd:"
+[1] 0.3394113
+[1] "Freizeitaktivitt :: Jugendfreizeitheim etc."
+[1] "mean:"
+[1] 4.8348
+[1] "sd:"
+[1] 10.03566
+[1] "Freizeitaktivitt :: Hobby (z.B. Musizieren)"
+[1] "mean:"
+[1] 7.369599
+[1] "sd:"
+[1] 17.37548
+[1] "Auto zum Parkplatz gebracht"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Erreichen der Ausbildungssttte oder Schule"
+[1] "mean:"
+[1] 11.8508
+[1] "sd:"
+[1] 27.33708
+[1] "Freizeitaktivitt :: Sonstiges"
+[1] "mean:"
+[1] 14.73336
+[1] "sd:"
+[1] 44.41946
+[1] "Zum Wohnheim"
+[1] "mean:"
+[1] 0.3425
+[1] "sd:"
+[1] 0.1871497
+[1] "Tochter bei Schwiegereltern abgeholt"
+[1] "mean:"
+[1] 5.23
+[1] "sd:"
+[1] NA
+[1] "Freizeitaktivitt :: allgemeiner Einkaufsbummel"
+[1] "mean:"
+[1] 10.62506
+[1] "sd:"
+[1] 21.15804
+[1] "Klarinettenunterricht"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "Freizeitaktivitt :: Spielplatz, Spielen auf der Strae etc."
+[1] "mean:"
+[1] 2.798889
+[1] "sd:"
+[1] 7.164685
+[1] "private Erledigungen :: private Erledigung fr andere Person (unentgeltlich)"
+[1] "mean:"
+[1] 8.924531
+[1] "sd:"
+[1] 23.85004
+[1] "private Erledigungen :: Dienstleistungen (z.B. Friseur, Schuster etc.)"
+[1] "mean:"
+[1] 5.938763
+[1] "sd:"
+[1] 10.66977
+[1] "Freizeitaktivitt :: Besuch kultureller Einrichtung (z.B. Kino, Theater, Museum"
+[1] "mean:"
+[1] 15.09798
+[1] "sd:"
+[1] 27.23
+[1] "Gymnastik"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Freizeitaktivitt :: Besuch einer Veranstaltung (z.B. Fuballspiel, Markt, Popkonzert)"
+[1] "mean:"
+[1] 14.59726
+[1] "sd:"
+[1] 34.2545
+[1] "Besuch des Bauernhofes"
+[1] "mean:"
+[1] 5.88
+[1] "sd:"
+[1] NA
+[1] "mit dem Kindergarten zum Bauernhof"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "private Erledigungen :: Kirche, Friedhof"
+[1] "mean:"
+[1] 4.457369
+[1] "sd:"
+[1] 10.08167
+[1] "Freizeitaktivitt :: Ehrenamt, Verein, politische Aktivitten"
+[1] "mean:"
+[1] 5.32818
+[1] "sd:"
+[1] 8.723078
+[1] "Spaziergang"
+[1] "mean:"
+[1] 3.038
+[1] "sd:"
+[1] 2.202276
+[1] "Bringen oder Holen von Personen :: Sonstiges"
+[1] "mean:"
+[1] 19
+[1] "sd:"
+[1] NA
+[1] "Bringen oder Holen von Personen :: Begleitung Erwachsener"
+[1] "mean:"
+[1] 18.05
+[1] "sd:"
+[1] NA
+[1] "Arztbesuch"
+[1] "mean:"
+[1] 5.28
+[1] "sd:"
+[1] 7.921469
+[1] "Ehefrau vom Krankenhaus abgeholt"
+[1] "mean:"
+[1] 28.5
+[1] "sd:"
+[1] NA
+[1] "Freizeitaktivitt :: Kirche, Friedhof"
+[1] "mean:"
+[1] 5.968493
+[1] "sd:"
+[1] 17.97596
+[1] "Freizeitaktivitt :: Tagesausflug, mehrtgiger Ausflug (bis 4 Tage)"
+[1] "mean:"
+[1] 115.8061
+[1] "sd:"
+[1] 156.3768
+[1] "Der Weg zur Mittagspause"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Weg zur werkstatt der Hochschule"
+[1] "mean:"
+[1] 3.43
+[1] "sd:"
+[1] NA
+[1] "Als Beifahrer"
+[1] "mean:"
+[1] 11.4
+[1] "sd:"
+[1] NA
+[1] "Feuerwehrgrundlehrgang"
+[1] "mean:"
+[1] 18.05
+[1] "sd:"
+[1] NA
+[1] "Arzt"
+[1] "mean:"
+[1] 3.2575
+[1] "sd:"
+[1] 3.246253
+[1] "Familie besuchen"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Zum Altkleiderkontainer gefahren"
+[1] "mean:"
+[1] 0.48
+[1] "sd:"
+[1] NA
+[1] "Beerdigung"
+[1] "mean:"
+[1] 41.40667
+[1] "sd:"
+[1] 95.16079
+[1] "Fortbildungsbesuch"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Feurewehrhaus"
+[1] "mean:"
+[1] 9.03
+[1] "sd:"
+[1] NA
+[1] "Besuch der Freundin"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] 2.687006
+[1] "Fahrt zur Geburtstagsfeier"
+[1] "mean:"
+[1] 48.45
+[1] "sd:"
+[1] NA
+[1] "Geburtstagsfeier"
+[1] "mean:"
+[1] 48.45
+[1] "sd:"
+[1] NA
+[1] "in die Kirche"
+[1] "mean:"
+[1] 2.14
+[1] "sd:"
+[1] 0.3394114
+[1] "Freizeitaktivitt :: Urlaub (ab 5 Tage)"
+[1] "mean:"
+[1] 325.3146
+[1] "sd:"
+[1] 228.7901
+[1] "Reisetaschen der Enkelkinder nach Hause (der Kinder) gebracht"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Besuch"
+[1] "mean:"
+[1] 174.886
+[1] "sd:"
+[1] 115.7311
+[1] "Verwandte besucht"
+[1] "mean:"
+[1] 56.05
+[1] "sd:"
+[1] 55.08362
+[1] "Fahrt zur Kirche"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Norbert hat sie von der Bushaltestelle abgeholt und nach Hause gefahren"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Krankengym"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "Wohnungsbesichtigung"
+[1] "mean:"
+[1] 2.65
+[1] "sd:"
+[1] 0.2828426
+[1] "Zum Mllplatz"
+[1] "mean:"
+[1] 1.743333
+[1] "sd:"
+[1] 0.2713546
+[1] "private Erledigungen :: Weiterbildung(z.B. Sprachkurs, Volkshochschule, Nachhilfe etc.)"
+[1] "mean:"
+[1] 11.42034
+[1] "sd:"
+[1] 18.20507
+[1] "Pflege einer lteren Dame"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "Besuch des Nachbarn"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Zum Auto Waschen"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Spaziergang mit dem hund"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Fupflege fr Fr Ehemann"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Zum Seminar nach Bochum"
+[1] "mean:"
+[1] 8.55
+[1] "sd:"
+[1] NA
+[1] "Kontrollgang am Friedhof"
+[1] "mean:"
+[1] 0.39
+[1] "sd:"
+[1] NA
+[1] "briefkasten"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Botengang"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Gang zum Parkplatz"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Bruder zum Flughafen gefahren"
+[1] "mean:"
+[1] 42.75
+[1] "sd:"
+[1] NA
+[1] "Freizeitaktivitt :: Weiterbildung(z.B. Sprachkurs, Volkshochschule, Nachhilfe, etc.)"
+[1] "mean:"
+[1] 11.6669
+[1] "sd:"
+[1] 27.41494
+[1] "Hundespaziergang"
+[1] "mean:"
+[1] 2.7675
+[1] "sd:"
+[1] 2.950225
+[1] "verweigert"
+[1] "mean:"
+[1] 45.37308
+[1] "sd:"
+[1] 106.4715
+[1] "Hund gassi fhren"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "private Erledigungen :: Begleitung Erwachsener"
+[1] "mean:"
+[1] 10.24329
+[1] "sd:"
+[1] 20.27144
+[1] "Autotausch mit Ehemann"
+[1] "mean:"
+[1] 8.55
+[1] "sd:"
+[1] NA
+[1] "Besuch des Vater"
+[1] "mean:"
+[1] 3.43
+[1] "sd:"
+[1] NA
+[1] "Hund Gassi fhren"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "zum Bahnhof"
+[1] "mean:"
+[1] 6.855
+[1] "sd:"
+[1] 8.124697
+[1] "mit dem Hund raus"
+[1] "mean:"
+[1] 2.45
+[1] "sd:"
+[1] 0.6929647
+[1] "Frau zur  Arbeit gefahren"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Zu Fu zur Garage"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Fahrt nzum Haus, um Gattin mitzunehmrn"
+[1] "mean:"
+[1] 0.48
+[1] "sd:"
+[1] NA
+[1] "Cousine von der Schule anholen"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Frau zu Mittag nach hause holen"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Fahrt zur Mittagspause"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Staubsaugerrepertatur"
+[1] "mean:"
+[1] 10.45
+[1] "sd:"
+[1] NA
+[1] "Auto in Garage"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "zur Freundin gegangen"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Schieen"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Ehrenamt"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] 6.717514
+[1] "Mittagessen"
+[1] "mean:"
+[1] 4.611429
+[1] "sd:"
+[1] 5.373542
+[1] "zum Sport"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Abgeholt"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Turnen"
+[1] "mean:"
+[1] 3.61
+[1] "sd:"
+[1] NA
+[1] "Trompetenunterricht"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Weg zur Garage"
+[1] "mean:"
+[1] 8.275
+[1] "sd:"
+[1] 10.59953
+[1] "Ansicht des berwemmten Schewimmbads"
+[1] "mean:"
+[1] 1.33
+[1] "sd:"
+[1] NA
+[1] "Ansicht von berschwemmten Grten"
+[1] "mean:"
+[1] 1.14
+[1] "sd:"
+[1] NA
+[1] "Begleitung"
+[1] "mean:"
+[1] 14.56667
+[1] "sd:"
+[1] 13.77773
+[1] "Kirchenbesuch"
+[1] "mean:"
+[1] 2.97
+[1] "sd:"
+[1] 1.120089
+[1] "Geschftserffnung"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] 0
+[1] "Rckkehr aus dem Urlaub"
+[1] "mean:"
+[1] 437
+[1] "sd:"
+[1] NA
+[1] "Geschftserffnung von Freunden"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "mit Ehemann spazieren gegangen"
+[1] "mean:"
+[1] 4.9
+[1] "sd:"
+[1] NA
+[1] "Sparziergang"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "Spaziergang mit den Hunden"
+[1] "mean:"
+[1] 3.92
+[1] "sd:"
+[1] NA
+[1] "Cantine"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Ad. ist zu seinen Groeltern gegangen"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Kind zum Freund gebracht"
+[1] "mean:"
+[1] 1.24
+[1] "sd:"
+[1] 0
+[1] "zum Hotel gegangen"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "Training"
+[1] "mean:"
+[1] 7.22
+[1] "sd:"
+[1] NA
+[1] "Sportkamaraden nach Hause gefahren"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Bahnhof"
+[1] "mean:"
+[1] 13.93
+[1] "sd:"
+[1] 18.59691
+[1] "in der Kantine essen"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Rckweg zum Haus der Tochter"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "zur Bushaltestelle"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Zur Schule"
+[1] "mean:"
+[1] 9.976667
+[1] "sd:"
+[1] 6.171874
+[1] "Glser zum Glascontainer gebracht"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Andre war mit seinem Praktikumschef unterwegs"
+[1] "mean:"
+[1] 0.45
+[1] "sd:"
+[1] NA
+[1] "Groeltern besuchen"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Groelter"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "private Erledigungen :: Hobby (z.B. Musizieren)"
+[1] "mean:"
+[1] 10.52506
+[1] "sd:"
+[1] 24.58817
+[1] "Auto abholen"
+[1] "mean:"
+[1] 95.95
+[1] "sd:"
+[1] 133.0068
+[1] "Freizeitaktivitt :: Jobben in der Freizeit gegen Entgeld (z.B. Zeitungen austragen)"
+[1] "mean:"
+[1] 5.855735
+[1] "sd:"
+[1] 7.21037
+[1] "Parken des Autos vom Handwerker"
+[1] "mean:"
+[1] 0.48
+[1] "sd:"
+[1] NA
+[1] "Schwimmen"
+[1] "mean:"
+[1] 4.51
+[1] "sd:"
+[1] NA
+[1] "Mit der Tochter zum Zahnarzt"
+[1] "mean:"
+[1] 16.15
+[1] "sd:"
+[1] NA
+[1] "Arztbesuich"
+[1] "mean:"
+[1] 2.45
+[1] "sd:"
+[1] NA
+[1] "Die Tochter zum Kinderarzt gebracht."
+[1] "mean:"
+[1] 3.04
+[1] "sd:"
+[1] NA
+[1] "Jugendhilfeausschuss"
+[1] "mean:"
+[1] 8.55
+[1] "sd:"
+[1] NA
+[1] "Friedhof"
+[1] "mean:"
+[1] 3.478
+[1] "sd:"
+[1] 3.771203
+[1] "Elternabend Kinderladehn"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Fahrt zum Sportheim"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Sparkasse"
+[1] "mean:"
+[1] 0.88
+[1] "sd:"
+[1] NA
+[1] "Altglasentsorgung"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "zur Sporthalle gegangen"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Rckfahrt vom Krankenhaus nach Hause"
+[1] "mean:"
+[1] 161.5
+[1] "sd:"
+[1] NA
+[1] "Freidhof"
+[1] "mean:"
+[1] 0.69
+[1] "sd:"
+[1] NA
+[1] "Hochzeitsvorbereitungen"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "kirchliche Trauung"
+[1] "mean:"
+[1] 28.5
+[1] "sd:"
+[1] NA
+[1] "Fahrt zur Hochzeit"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Ein Transport"
+[1] "mean:"
+[1] 0.48
+[1] "sd:"
+[1] NA
+[1] "wagen hollen"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Ehrenamt in der Gemeinde"
+[1] "mean:"
+[1] 1.14
+[1] "sd:"
+[1] NA
+[1] "Begleitung der Frau"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Kranken Gymnastik"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Zum essen"
+[1] "mean:"
+[1] 8.55
+[1] "sd:"
+[1] 4.936345
+[1] "Berufsorientierungskurs"
+[1] "mean:"
+[1] 8.12
+[1] "sd:"
+[1] NA
+[1] "Zum TV"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Zum Skat"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Apotheke"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Elterndienst im Kindergarten"
+[1] "mean:"
+[1] 2.71
+[1] "sd:"
+[1] NA
+[1] "Handy zur Reperatur"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Treffpunkt"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Khe gefttert"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "zu seiner neuen Wohnung gefahen"
+[1] "mean:"
+[1] 23.75
+[1] "sd:"
+[1] NA
+[1] "Familien besuch"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Schule"
+[1] "mean:"
+[1] 4.51
+[1] "sd:"
+[1] NA
+[1] "Zur Kantine frstcken"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Auto zum TV bringen"
+[1] "mean:"
+[1] 1.43
+[1] "sd:"
+[1] NA
+[1] "Weg zum Schulungsraum"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Schul aktivitt"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Zurck zum Aotuhaus"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "zur Cafeteria"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] 0
+[1] "zurck zum Schulungsraum"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] 0
+[1] "Mittag essen"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] NA
+[1] "Mittagspause"
+[1] "mean:"
+[1] 1.018
+[1] "sd:"
+[1] 0.6803823
+[1] "zur Cafeteria Mittagessen"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "zum bernachtungszimmer gegangen"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "zum Schulungsraum"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "zurck ins bernachtungszimmer"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Erreichen der Zweitwohnung"
+[1] "mean:"
+[1] 2.375
+[1] "sd:"
+[1] 0.6717514
+[1] "Tochter in den Kindergarten gebracht"
+[1] "mean:"
+[1] 0.48
+[1] "sd:"
+[1] NA
+[1] "Umzug"
+[1] "mean:"
+[1] 11.69
+[1] "sd:"
+[1] NA
+[1] " ---- kein Eintrag ----"
+[1] "mean:"
+[1] 1.18
+[1] "sd:"
+[1] NA
+[1] "Rum gefahren"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Hospitation"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Skatturnir"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Arbeitsschuhe abgeholt"
+[1] "mean:"
+[1] 19
+[1] "sd:"
+[1] NA
+[1] "Benzin weggebracht"
+[1] "mean:"
+[1] 33.25
+[1] "sd:"
+[1] NA
+[1] "zur Schwiegermutter gegangen und Brtchen hingebracht"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "aufsuchen eines Trdelmarktes"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "zum Trdelmarkt"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "Zum Trdelmarkt"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "Besuch der Groeltern"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "Bei den Kindern ihrer Tochter"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Mit den Hunden draussen"
+[1] "mean:"
+[1] 0.64
+[1] "sd:"
+[1] 0.09999999
+[1] "Hund bei den eltern abgegeben"
+[1] "mean:"
+[1] 8.55
+[1] "sd:"
+[1] 0
+[1] "Auf der Feier"
+[1] "mean:"
+[1] 0.39
+[1] "sd:"
+[1] NA
+[1] "Zur feier"
+[1] "mean:"
+[1] 0.39
+[1] "sd:"
+[1] NA
+[1] "Zur Feier"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] 0
+[1] "Hund abholen"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] 0
+[1] "Einkauf :: Behrde, Bank, Post, Geldautomat"
+[1] "mean:"
+[1] 7.26
+[1] "sd:"
+[1] 8.079059
+[1] "Werkstatt"
+[1] "mean:"
+[1] 15.01
+[1] "sd:"
+[1] 16.81258
+[1] "Feuerwehreinsatz"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] 0
+[1] "Schwimmunterricht"
+[1] "mean:"
+[1] 3.55
+[1] "sd:"
+[1] 3.917372
+[1] "Ortswechsel bei Weiterbildung"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Notfall, Krankenhaus"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "zum Freund vom Sohn gefahren"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "weg zum Auto"
+[1] "mean:"
+[1] 6.32
+[1] "sd:"
+[1] NA
+[1] "ehrenamtlich ttig"
+[1] "mean:"
+[1] 7.89
+[1] "sd:"
+[1] NA
+[1] "zur Arbeitsstelle der Mutter gegangen"
+[1] "mean:"
+[1] 0.78
+[1] "sd:"
+[1] NA
+[1] "Krankenbesuche"
+[1] "mean:"
+[1] 2.09
+[1] "sd:"
+[1] NA
+[1] "Krenkenbesuch"
+[1] "mean:"
+[1] 1.62
+[1] "sd:"
+[1] NA
+[1] "erreichen des Parkplatzes des Arbeitgebers"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "Einsatz bei der freiwilligen Feuerwehr"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "ANKOMMEN AM eINSATZORT"
+[1] "mean:"
+[1] 3.61
+[1] "sd:"
+[1] NA
+[1] "zur Mutter gegangen"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] 0
+[1] "Mll in Container"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Auto aus dem Parkhaus holen"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Heimreise"
+[1] "mean:"
+[1] 120.65
+[1] "sd:"
+[1] 135.6938
+[1] "Heimreise mit dem Zug"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "in den Osterurlaub gefahren"
+[1] "mean:"
+[1] 123.5
+[1] "sd:"
+[1] NA
+[1] "Weg zum Gottesdienst"
+[1] "mean:"
+[1] 2.5675
+[1] "sd:"
+[1] 3.373577
+[1] "wei nicht"
+[1] "mean:"
+[1] 8.361176
+[1] "sd:"
+[1] 10.72629
+[1] "Weg zur Wohnung des Vaters"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "Katzen von nachbarn fttern"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "zum Schrebergarten"
+[1] "mean:"
+[1] 1.18
+[1] "sd:"
+[1] NA
+[1] "Rckfahrt vom Urlaub"
+[1] "mean:"
+[1] 570
+[1] "sd:"
+[1] NA
+[1] "zur neuen Wohnung"
+[1] "mean:"
+[1] 1.52
+[1] "sd:"
+[1] 0
+[1] "Weg zur Kirche"
+[1] "mean:"
+[1] 2.224
+[1] "sd:"
+[1] 1.689461
+[1] "Urlaubsrckreise"
+[1] "mean:"
+[1] 812.25
+[1] "sd:"
+[1] NA
+[1] "in den urlaub gefahren"
+[1] "mean:"
+[1] 57
+[1] "sd:"
+[1] 0
+[1] "Hunderunde"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "Besuch beim Bruder"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Krankenhaus"
+[1] "mean:"
+[1] 30.02
+[1] "sd:"
+[1] 25.66407
+[1] "2. Hunderunde"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "besuch der Cousine"
+[1] "mean:"
+[1] 66.5
+[1] "sd:"
+[1] NA
+[1] "3. Hunderunde"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "zurck zum Hotel"
+[1] "mean:"
+[1] 4.776
+[1] "sd:"
+[1] 3.263993
+[1] "Erreichen der Wohnung des Vaters"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Rckweg vom Urlaub"
+[1] "mean:"
+[1] 760
+[1] "sd:"
+[1] NA
+[1] "Lehrgang"
+[1] "mean:"
+[1] 5.15
+[1] "sd:"
+[1] 5.487148
+[1] "Betreuung der Mutter"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Pflege"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Weg zum Bcker"
+[1] "mean:"
+[1] 4.515556
+[1] "sd:"
+[1] 6.470891
+[1] "Weg zur Universitt"
+[1] "mean:"
+[1] 10.285
+[1] "sd:"
+[1] 5.607357
+[1] "Stadt"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Pflege der Tante"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "Weg zur Beerdigung"
+[1] "mean:"
+[1] 2.44
+[1] "sd:"
+[1] NA
+[1] "Krankenkasse"
+[1] "mean:"
+[1] 237.5
+[1] "sd:"
+[1] NA
+[1] "Tante"
+[1] "mean:"
+[1] 1.425
+[1] "sd:"
+[1] 0.6717514
+[1] "Weg zur Tankstelle"
+[1] "mean:"
+[1] 19.95
+[1] "sd:"
+[1] NA
+[1] "zur Universitt gefahren"
+[1] "mean:"
+[1] 23.75
+[1] "sd:"
+[1] NA
+[1] "Anhnger aus der Garage geholt"
+[1] "mean:"
+[1] 1.43
+[1] "sd:"
+[1] NA
+[1] "Rckweg zu Bekannten vom einkauf"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "zurck zur Garage"
+[1] "mean:"
+[1] 1.24
+[1] "sd:"
+[1] NA
+[1] "Besuch des Gottesdienstes"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "private Erledigungen :: Jobben in der Freizeit gegen Entgeld (z.B. Zeitungen austragen)"
+[1] "mean:"
+[1] 6.657286
+[1] "sd:"
+[1] 10.07677
+[1] "Gang zur Kfz-werkstatt"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "Bank"
+[1] "mean:"
+[1] 1.14
+[1] "sd:"
+[1] NA
+[1] "Bilder aufhgen"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Finanzamt"
+[1] "mean:"
+[1] 1.05
+[1] "sd:"
+[1] NA
+[1] "briefkasten des Sohnes geleehrt"
+[1] "mean:"
+[1] 0.76
+[1] "sd:"
+[1] NA
+[1] "Briefkasten geleehrt (Sohn)"
+[1] "mean:"
+[1] 0.76
+[1] "sd:"
+[1] NA
+[1] "Weg zur Nachbarin"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Weg zum Friedhof"
+[1] "mean:"
+[1] 1.951667
+[1] "sd:"
+[1] 1.592726
+[1] "Parkhaus"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "Umtausch von einem Artikel"
+[1] "mean:"
+[1] 13.3
+[1] "sd:"
+[1] NA
+[1] "Weg zum Tierarzt"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Weg zur Versicherung"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Tageskind nach Hause bringen"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Zur Baustelle"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] 0
+[1] "ein Frhstck ausserhalb"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Auf die Baustelle"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "feier"
+[1] "mean:"
+[1] 11.4
+[1] "sd:"
+[1] NA
+[1] "Auf die bestelle"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Weg zum Mllkontainer"
+[1] "mean:"
+[1] 1.43
+[1] "sd:"
+[1] NA
+[1] "in den Garten des Sohnes"
+[1] "mean:"
+[1] 4.9
+[1] "sd:"
+[1] NA
+[1] "Arbeitsaufnahme vom Sohn"
+[1] "mean:"
+[1] 95
+[1] "sd:"
+[1] NA
+[1] "Weg zum Bahnhof"
+[1] "mean:"
+[1] 0.864
+[1] "sd:"
+[1] 0.6151666
+[1] "besuch von nachbaren"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Zum Hotel"
+[1] "mean:"
+[1] 110.415
+[1] "sd:"
+[1] 170.6287
+[1] "das Auto von der Garage geholt"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Weg zur Weiterbildungssttte"
+[1] "mean:"
+[1] 9.03
+[1] "sd:"
+[1] NA
+[1] "zu einem Vortrag in die Uniklinik gefahren"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Auto in die Garage gebracht"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Zurck zum Hotel"
+[1] "mean:"
+[1] 2.26
+[1] "sd:"
+[1] NA
+[1] "Weg zur Lesung"
+[1] "mean:"
+[1] 20.9
+[1] "sd:"
+[1] NA
+[1] "Weg zum Postkasten"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Weg zur Baustelle"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Gartenarbeit beim Bruder"
+[1] "mean:"
+[1] 23.75
+[1] "sd:"
+[1] NA
+[1] "von der klassenfahrt"
+[1] "mean:"
+[1] 541.5
+[1] "sd:"
+[1] NA
+[1] "berufliche Fahrt - Dentallabor"
+[1] "mean:"
+[1] 4.28
+[1] "sd:"
+[1] NA
+[1] "Hasen Fttern"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Schlerlotzin"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "Weg zur Mutter(Schlerlotzin)"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Fusspflege"
+[1] "mean:"
+[1] 3.16
+[1] "sd:"
+[1] NA
+[1] "Zur Fusspflege"
+[1] "mean:"
+[1] 3.16
+[1] "sd:"
+[1] NA
+[1] "Krankenbesuch"
+[1] "mean:"
+[1] 4.28
+[1] "sd:"
+[1] NA
+[1] "Weg zur Klavierschule"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "Weg zu den Groeltern"
+[1] "mean:"
+[1] 18.88
+[1] "sd:"
+[1] 20.32225
+[1] "Geschwister von der Kita abholen"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Pedikre"
+[1] "mean:"
+[1] 0.39
+[1] "sd:"
+[1] NA
+[1] "Friseur"
+[1] "mean:"
+[1] 2.473333
+[1] "sd:"
+[1] 1.922871
+[1] "Aachen"
+[1] "mean:"
+[1] 28.5
+[1] "sd:"
+[1] NA
+[1] "Fussballschuhe subern"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Werkzeug ausgeliehen"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "dieser Weg muss verworfen werden"
+[1] "mean:"
+[1] 19.88
+[1] "sd:"
+[1] 26.77106
+[1] "Weg zu einem Vortrag"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Weg zum Optiker"
+[1] "mean:"
+[1] 0.9
+[1] "sd:"
+[1] NA
+[1] "fahren zu einen hotel"
+[1] "mean:"
+[1] 1.43
+[1] "sd:"
+[1] NA
+[1] "kein Weg gemacht"
+[1] "mean:"
+[1] 4.9
+[1] "sd:"
+[1] NA
+[1] "zur Mutter ins Bro"
+[1] "mean:"
+[1] 3.16
+[1] "sd:"
+[1] NA
+[1] "Besuch bei der Oma"
+[1] "mean:"
+[1] 0.57
+[1] "sd:"
+[1] NA
+[1] "Besuch bei Oma"
+[1] "mean:"
+[1] 0.57
+[1] "sd:"
+[1] NA
+[1] "Fahrstunde"
+[1] "mean:"
+[1] 30.875
+[1] "sd:"
+[1] 10.07627
+[1] "Abholung einer Maschine"
+[1] "mean:"
+[1] 20.9
+[1] "sd:"
+[1] NA
+[1] "Weg zum eigenen Garten"
+[1] "mean:"
+[1] 11.4
+[1] "sd:"
+[1] 0
+[1] "Pause"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Excursion"
+[1] "mean:"
+[1] 13.54
+[1] "sd:"
+[1] NA
+[1] "Weg zur Auffhrung"
+[1] "mean:"
+[1] 33.25
+[1] "sd:"
+[1] NA
+[1] "Klinik"
+[1] "mean:"
+[1] 8.55
+[1] "sd:"
+[1] 5.374012
+[1] "Bergerhausen"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Universitt"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "Weg zur Bckerei zum Frhstck"
+[1] "mean:"
+[1] 15.2
+[1] "sd:"
+[1] NA
+[1] "Erreichen des Bahnhofs"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Zugfahrt zum Zielbahnhof"
+[1] "mean:"
+[1] 496.38
+[1] "sd:"
+[1] NA
+[1] "Mediathek"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "nach Hause in die Zweitwohnung"
+[1] "mean:"
+[1] 1.43
+[1] "sd:"
+[1] NA
+[1] "Kinderclub"
+[1] "mean:"
+[1] 0.67
+[1] "sd:"
+[1] NA
+[1] "zwischenstopp auf den nach hasue weg"
+[1] "mean:"
+[1] 142.5
+[1] "sd:"
+[1] NA
+[1] "Fahrt zur Oma"
+[1] "mean:"
+[1] 57
+[1] "sd:"
+[1] NA
+[1] "Rntgen"
+[1] "mean:"
+[1] 13.54
+[1] "sd:"
+[1] NA
+[1] "Weg in die Werkstatt"
+[1] "mean:"
+[1] 20.9
+[1] "sd:"
+[1] NA
+[1] "Weg zur Probefahrt"
+[1] "mean:"
+[1] 13.3
+[1] "sd:"
+[1] NA
+[1] "Probefahrt"
+[1] "mean:"
+[1] 15.2
+[1] "sd:"
+[1] NA
+[1] "fahrt ins hotel"
+[1] "mean:"
+[1] 19
+[1] "sd:"
+[1] NA
+[1] "Sonntagsgottesdienst"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Begleitung Ihres Ehemannes"
+[1] "mean:"
+[1] 19.95
+[1] "sd:"
+[1] NA
+[1] "Dinge Trasportiert"
+[1] "mean:"
+[1] 2.38
+[1] "sd:"
+[1] NA
+[1] "wurde abgeholt"
+[1] "mean:"
+[1] 0.48
+[1] "sd:"
+[1] NA
+[1] "Spielen"
+[1] "mean:"
+[1] 0.54
+[1] "sd:"
+[1] 0.622254
+[1] "Milch weggebracht"
+[1] "mean:"
+[1] 0.18
+[1] "sd:"
+[1] NA
+[1] "Besuch des Schwiegervaters im Krankenhaus"
+[1] "mean:"
+[1] 45.6
+[1] "sd:"
+[1] NA
+[1] "Weg zur Oma"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] NA
+[1] "Weg zum Feld"
+[1] "mean:"
+[1] 1.35
+[1] "sd:"
+[1] NA
+[1] "Rckfahrt von Arbeitsstelle zur Unterkunft"
+[1] "mean:"
+[1] 30.4
+[1] "sd:"
+[1] NA
+[1] "Zahnarzt"
+[1] "mean:"
+[1] 7.225
+[1] "sd:"
+[1] 9.93485
+[1] "Auto waschen"
+[1] "mean:"
+[1] 1.19
+[1] "sd:"
+[1] 0.3394112
+[1] "Besprechung in einer Kirchengemeinde"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Weg zur Fahrschule"
+[1] "mean:"
+[1] 0.69
+[1] "sd:"
+[1] NA
+[1] "Fahrschulunterricht"
+[1] "mean:"
+[1] 28.5
+[1] "sd:"
+[1] NA
+[1] "Zum Autohaus"
+[1] "mean:"
+[1] 4.28
+[1] "sd:"
+[1] NA
+[1] "Zur Autowerkstatt"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Weg in die Stadt"
+[1] "mean:"
+[1] 2.62
+[1] "sd:"
+[1] 3.012275
+[1] "Weg zu den Eltern"
+[1] "mean:"
+[1] 12.35
+[1] "sd:"
+[1] 9.40452
+[1] "Weg zur Weiterbildung"
+[1] "mean:"
+[1] 18.05
+[1] "sd:"
+[1] NA
+[1] "Besuch der RWTH Aachen"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "flaschen entsorgen"
+[1] "mean:"
+[1] 0.48
+[1] "sd:"
+[1] NA
+[1] "Erledigungen"
+[1] "mean:"
+[1] 13.3
+[1] "sd:"
+[1] NA
+[1] "Weg zum Rathaus"
+[1] "mean:"
+[1] 4.28
+[1] "sd:"
+[1] 0
+[1] "Einkauf :: Besuch einer Veranstaltung (z.B. Fuballspiel, Markt, Popkonzert)"
+[1] "mean:"
+[1] 5.173333
+[1] "sd:"
+[1] 7.120757
+[1] "Ehrenamtliche Ttigkeit"
+[1] "mean:"
+[1] 0.885
+[1] "sd:"
+[1] 0.417193
+[1] "Weg zum Fahrradhndler"
+[1] "mean:"
+[1] 10.61667
+[1] "sd:"
+[1] 8.769951
+[1] "Weg zum Feinkostladen"
+[1] "mean:"
+[1] 4.41
+[1] "sd:"
+[1] NA
+[1] "Begleitung seiner Mutter"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Weg zur Post"
+[1] "mean:"
+[1] 0.48
+[1] "sd:"
+[1] NA
+[1] "zur Schule"
+[1] "mean:"
+[1] 5.945
+[1] "sd:"
+[1] 7.714535
+[1] "Weg zur Feuerwehr"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Weg zum Jugendzentrum"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Weg zum Flohmarkt"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] 0
+[1] "Rundgang auf dem Flohmarkt"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] 0
+[1] "Standesamt"
+[1] "mean:"
+[1] 30.4
+[1] "sd:"
+[1] NA
+[1] "Rckweg zum Hotel"
+[1] "mean:"
+[1] 3.34
+[1] "sd:"
+[1] 3.337544
+[1] "Weg zurck ins Hotel"
+[1] "mean:"
+[1] 5.24
+[1] "sd:"
+[1] 6.02455
+[1] "Hochzeitsfeier"
+[1] "mean:"
+[1] 19
+[1] "sd:"
+[1] 0
+[1] "zum zweiten Wohnsitz"
+[1] "mean:"
+[1] 14.81
+[1] "sd:"
+[1] 26.54985
+[1] "Weg zur Nachhilfeschlerin"
+[1] "mean:"
+[1] 0.67
+[1] "sd:"
+[1] NA
+[1] "Begleitung Tochter"
+[1] "mean:"
+[1] 6.86
+[1] "sd:"
+[1] NA
+[1] "zur tagesmutter"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "."
+[1] "mean:"
+[1] 16.92306
+[1] "sd:"
+[1] 51.03706
+[1] "Fortbildung"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "TV"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] 5.374011
+[1] "SPIELEN"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "verwerfen - Programmfehler"
+[1] "mean:"
+[1] 0.44
+[1] "sd:"
+[1] 0.212132
+[1] "Rckweg"
+[1] "mean:"
+[1] 0.39
+[1] "sd:"
+[1] NA
+[1] "Sohn zur Arbeit begleitet"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Weg zum Friseur"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Besorgungen"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Weg zum Solarium"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "VERWERFEN PROGRAMMFEHLER"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Fahrschule"
+[1] "mean:"
+[1] 5.143333
+[1] "sd:"
+[1] 6.945256
+[1] "besuch eines autohauses"
+[1] "mean:"
+[1] 12.74
+[1] "sd:"
+[1] NA
+[1] "Mit dem Pferd draussen"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "das auto an der tankstelle waschen"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "flaschenwegbrigen"
+[1] "mean:"
+[1] 0.39
+[1] "sd:"
+[1] NA
+[1] "Begleitung der Person X"
+[1] "mean:"
+[1] 142.5
+[1] "sd:"
+[1] NA
+[1] "Essen gehen"
+[1] "mean:"
+[1] 18.05
+[1] "sd:"
+[1] NA
+[1] "Arbeit am See"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Stadt besichtigung"
+[1] "mean:"
+[1] 3.92
+[1] "sd:"
+[1] NA
+[1] "Weg zur kirchlichen Trauung"
+[1] "mean:"
+[1] 57
+[1] "sd:"
+[1] NA
+[1] "Weg zur Trauung"
+[1] "mean:"
+[1] 57
+[1] "sd:"
+[1] NA
+[1] "Weg zur Feier"
+[1] "mean:"
+[1] 38
+[1] "sd:"
+[1] 0
+[1] "Weg zum Stadtbummel"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "Gastwohnung"
+[1] "mean:"
+[1] 2.71
+[1] "sd:"
+[1] NA
+[1] "in seine Wohnung in Berlin"
+[1] "mean:"
+[1] 2.26
+[1] "sd:"
+[1] NA
+[1] "Rckkehr zum Schlafen bei ihrem Freund"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "fahrt zu einem 10Km-K-Lauf"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "zum bahnhoff"
+[1] "mean:"
+[1] 14.44
+[1] "sd:"
+[1] NA
+[1] "Kirchgang"
+[1] "mean:"
+[1] 8.61
+[1] "sd:"
+[1] 11.20057
+[1] "Weg zum Ausgangspunkt der Wanderung"
+[1] "mean:"
+[1] 23.75
+[1] "sd:"
+[1] NA
+[1] "zeitung austragen"
+[1] "mean:"
+[1] 4.9
+[1] "sd:"
+[1] NA
+[1] "Weg zur Sonnenbank"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Fahrt zu ihre Freund"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Weg zur Rheinpromenade"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] NA
+[1] "Weg zu einem Treffpunkt"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] NA
+[1] "Weg zum Geburtstagskind"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Zurck zum Treffpunkt"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Weg ist zu verwerfen: EDV-Problem"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Schulschwimmen"
+[1] "mean:"
+[1] 6.32
+[1] "sd:"
+[1] NA
+[1] "Nachhilfe"
+[1] "mean:"
+[1] 1.455
+[1] "sd:"
+[1] 0.7141779
+[1] "Rundweg"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "ARZTBESUCH"
+[1] "mean:"
+[1] 0.67
+[1] "sd:"
+[1] NA
+[1] "AZTBESUCH"
+[1] "mean:"
+[1] 0.67
+[1] "sd:"
+[1] NA
+[1] "Bau"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "ZUM ZAHNARZT"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "in die mensa"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] NA
+[1] "Weg zum Kindergarten"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Weg zum Schulkurs"
+[1] "mean:"
+[1] 4.51
+[1] "sd:"
+[1] NA
+[1] "Vorstellungsgesprch"
+[1] "mean:"
+[1] 9.026666
+[1] "sd:"
+[1] 1.805002
+[1] "Zurck zur Ferienwohnung"
+[1] "mean:"
+[1] 19.6
+[1] "sd:"
+[1] NA
+[1] "WALDARBEITEN"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Friedhofsbesuch"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "ehrenamtlich"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "zum Freund"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "herrichtung des gstehauses"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Behrdengang"
+[1] "mean:"
+[1] 1.93
+[1] "sd:"
+[1] 0.04242645
+[1] "Bcherei"
+[1] "mean:"
+[1] 2.95
+[1] "sd:"
+[1] NA
+[1] "Auto in werkstatt gebracht"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "Reifen wechsel"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] 0
+[1] "Altpapier"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] 0.2687006
+[1] "ins Hotel"
+[1] "mean:"
+[1] 5.596667
+[1] "sd:"
+[1] 5.079294
+[1] "Frisr"
+[1] "mean:"
+[1] 4.9
+[1] "sd:"
+[1] NA
+[1] "in eine Wohngruppe"
+[1] "mean:"
+[1] 0.96
+[1] "sd:"
+[1] 0.7212489
+[1] "Beerdiegungsessen"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "zum Freund gefahren"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Arbeitsweg"
+[1] "mean:"
+[1] 21.85
+[1] "sd:"
+[1] NA
+[1] "Garage Aufrumen"
+[1] "mean:"
+[1] 0.86
+[1] "sd:"
+[1] NA
+[1] "Treffpunkt mit Frau"
+[1] "mean:"
+[1] 20.76
+[1] "sd:"
+[1] NA
+[1] "Zum Garten"
+[1] "mean:"
+[1] 7.966
+[1] "sd:"
+[1] 8.663827
+[1] "Schulausflug"
+[1] "mean:"
+[1] 8.475
+[1] "sd:"
+[1] 10.59953
+[1] "Zum Briefkasten"
+[1] "mean:"
+[1] 0.6866667
+[1] "sd:"
+[1] 0.5080682
+[1] "Zweit Wohnug"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Zum Bahnhof"
+[1] "mean:"
+[1] 13.23
+[1] "sd:"
+[1] 14.87753
+[1] "vom Einkaufen um Kunden im Rahmen der beruflichen Wege"
+[1] "mean:"
+[1] 13.3
+[1] "sd:"
+[1] NA
+[1] "nach Hause zur Mutter"
+[1] "mean:"
+[1] 2.38
+[1] "sd:"
+[1] NA
+[1] "Besuchsort"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Fahrrad reparieren"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] 0
+[1] "anderer Ort"
+[1] "mean:"
+[1] 218.5
+[1] "sd:"
+[1] NA
+[1] "Familienfrhstck"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Weg zur Komunalwahl"
+[1] "mean:"
+[1] 0.735
+[1] "sd:"
+[1] 0.3464823
+[1] "zu Hause in Gttingen"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Elternabend"
+[1] "mean:"
+[1] 7.283333
+[1] "sd:"
+[1] 3.596642
+[1] "Bildung"
+[1] "mean:"
+[1] 14.54
+[1] "sd:"
+[1] NA
+[1] "Zum Parkhaus"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Weg zum Praktikum"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "Weg zum Zweitjob"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "zur Pension"
+[1] "mean:"
+[1] 16.25
+[1] "sd:"
+[1] 22.69813
+[1] "Hund bei einer Freundin abgeben"
+[1] "mean:"
+[1] 1.14
+[1] "sd:"
+[1] NA
+[1] "Weg zum Ferienort(zur Ostsee)"
+[1] "mean:"
+[1] 176.7
+[1] "sd:"
+[1] 0
+[1] "Weg zur Bckerei"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "zurck zur Freundin"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "Weg zum Blumenfachhandel"
+[1] "mean:"
+[1] 18.05
+[1] "sd:"
+[1] NA
+[1] "Mutter im Geschft besucht"
+[1] "mean:"
+[1] 28.5
+[1] "sd:"
+[1] NA
+[1] "Weg zu den Schwiegereltern"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Geschenk einkaufen"
+[1] "mean:"
+[1] 0.48
+[1] "sd:"
+[1] NA
+[1] "Entsorgung von Glas"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Auto aus garage geholt (ausserhalb vom Grundstck)"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Weg zur Krankengymnastik"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] 0.6929647
+[1] "Auto besorgen"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "Krankengymnastik"
+[1] "mean:"
+[1] 1.21
+[1] "sd:"
+[1] 1.142497
+[1] "Zur Auto Werkstatt"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Weg zur Uni"
+[1] "mean:"
+[1] 45.6
+[1] "sd:"
+[1] NA
+[1] "praktikum"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "weiter zur Stadt"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Besuch einer anderen Schule"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Schulprojekt mit Behinderten"
+[1] "mean:"
+[1] 5.87
+[1] "sd:"
+[1] NA
+[1] "Sportplatz/ Sponsorenlauf"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "zum Sportplatz"
+[1] "mean:"
+[1] 4.9
+[1] "sd:"
+[1] NA
+[1] "KG"
+[1] "mean:"
+[1] 0.88
+[1] "sd:"
+[1] 0.834386
+[1] "zum Hotel"
+[1] "mean:"
+[1] 1.838
+[1] "sd:"
+[1] 0.2078942
+[1] "Auto-Werkstatt"
+[1] "mean:"
+[1] 20.9
+[1] "sd:"
+[1] NA
+[1] "klassenfahrt"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Elternabend / Feuerwehr"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "Elternabend / Jugendfeuerwehr"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "Weg zu dem Geschft der Eltern"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Rstung leihen"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Eis essen"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] 0
+[1] "bholung von geparktem Auto"
+[1] "mean:"
+[1] 2.38
+[1] "sd:"
+[1] NA
+[1] "von der Arbeit zur Oma gefahren"
+[1] "mean:"
+[1] 0.48
+[1] "sd:"
+[1] NA
+[1] "Zur Apotheke"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "Fahrt zum Heimatort"
+[1] "mean:"
+[1] 14.44
+[1] "sd:"
+[1] NA
+[1] "Zur Fahrschule"
+[1] "mean:"
+[1] 3.52
+[1] "sd:"
+[1] 4.426489
+[1] "Verkaufswagen"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Weg zum Flugplatz"
+[1] "mean:"
+[1] 22.56
+[1] "sd:"
+[1] 0
+[1] "Flug nach Stuttgart"
+[1] "mean:"
+[1] 586.63
+[1] "sd:"
+[1] 0
+[1] "Park and Ride Parkplatz"
+[1] "mean:"
+[1] 57.95
+[1] "sd:"
+[1] 38.96158
+[1] "Kundenbesuch"
+[1] "mean:"
+[1] 42.75
+[1] "sd:"
+[1] 55.08362
+[1] "neue Strasse anschauen"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Wagen aus Garage geholt"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "Wagen zur Garage gefahren"
+[1] "mean:"
+[1] 1.43
+[1] "sd:"
+[1] NA
+[1] "Pferd aufs Feld gestellt"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Umzugshilfe"
+[1] "mean:"
+[1] 8.55
+[1] "sd:"
+[1] 0
+[1] "Pferd wieder rein gestellt"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Heiluftballon geflogen"
+[1] "mean:"
+[1] 47.5
+[1] "sd:"
+[1] NA
+[1] "Schultheater"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "zurck zur Unterkunft (Urlaubsort)"
+[1] "mean:"
+[1] 36.1
+[1] "sd:"
+[1] NA
+[1] "Zur Werkstatt"
+[1] "mean:"
+[1] 8.81375
+[1] "sd:"
+[1] 9.895718
+[1] "Schulschwimmen im Freibad"
+[1] "mean:"
+[1] 6.32
+[1] "sd:"
+[1] NA
+[1] "zurck zu Verwandten"
+[1] "mean:"
+[1] 0.92
+[1] "sd:"
+[1] 0.6081118
+[1] "Kirschen flcken"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] NA
+[1] "Sportunterricht"
+[1] "mean:"
+[1] 9.03
+[1] "sd:"
+[1] NA
+[1] "Erde mit Traktor transportiert"
+[1] "mean:"
+[1] 6.32
+[1] "sd:"
+[1] NA
+[1] "Wege in der Fabrikhalle"
+[1] "mean:"
+[1] 19.6
+[1] "sd:"
+[1] NA
+[1] "Erreichen des Bahnhofes Wesel"
+[1] "mean:"
+[1] 19
+[1] "sd:"
+[1] NA
+[1] "Fahrt zur Universitt in Passau"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Fahrt mit der Motoryacht aug der Elde-Wasserstrasse und Strkanal nach Schwerin"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "wieder an Bord gegangen"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Zum Schutzenfest"
+[1] "mean:"
+[1] 2.09
+[1] "sd:"
+[1] NA
+[1] "internat"
+[1] "mean:"
+[1] 57
+[1] "sd:"
+[1] 0
+[1] "Rckfahrt vom Arbeitsplatz und Treffen mit der Mutter"
+[1] "mean:"
+[1] 19.86
+[1] "sd:"
+[1] NA
+[1] "Mittagsbetreuung"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Erreichen der Baustelle fr Eigenheim"
+[1] "mean:"
+[1] 17.1
+[1] "sd:"
+[1] NA
+[1] "Baustelle"
+[1] "mean:"
+[1] 17.1
+[1] "sd:"
+[1] NA
+[1] "zur baustelle"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Anreise nach Augsburg zur Schulung"
+[1] "mean:"
+[1] 71.25
+[1] "sd:"
+[1] NA
+[1] "Holz holen"
+[1] "mean:"
+[1] 21.85
+[1] "sd:"
+[1] 0
+[1] "Fortsetzung der Schulung"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Mann begleitetet beim Verteilen von Eier"
+[1] "mean:"
+[1] 23.75
+[1] "sd:"
+[1] NA
+[1] "Wohungsbetreuung"
+[1] "mean:"
+[1] 2.47
+[1] "sd:"
+[1] NA
+[1] "Ehefrau zum friseur gefahren"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] ".."
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "zurck zur ferienwohnung"
+[1] "mean:"
+[1] 1.43
+[1] "sd:"
+[1] NA
+[1] "zur Unterkunft (arbeitet auf Montage)"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "zurck zur Ferienunterkunft"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "zurck zur Zweitwohnung"
+[1] "mean:"
+[1] 9.693333
+[1] "sd:"
+[1] 8.979122
+[1] "in die Zweitwohnung"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Weg zum Praktikumsbetrieb"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "Weg zum Hotel"
+[1] "mean:"
+[1] 14.0275
+[1] "sd:"
+[1] 25.48536
+[1] "zu meinem Freund (mein zweites zu Hause)"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Wertstoffhof"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Zeitung austragen"
+[1] "mean:"
+[1] 2.45
+[1] "sd:"
+[1] 0.6929647
+[1] "zum Parkplatz"
+[1] "mean:"
+[1] 5.485
+[1] "sd:"
+[1] 5.678067
+[1] "Ferienhaus"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] 0
+[1] "zum Ferienhaus"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Auto angeschaut"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Weg ins Hotel zur bernachtung"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Parkplatz um Benjamin abzuholen"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "zur Unterkunft am Urlaubsort"
+[1] "mean:"
+[1] 2.695
+[1] "sd:"
+[1] 2.546115
+[1] "Ziel Einkauf, aber etwas vergessen und deshalb zurck"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Zum Bahnhof gefahren"
+[1] "mean:"
+[1] 1.81
+[1] "sd:"
+[1] NA
+[1] "am Zielbahnhof angekommen"
+[1] "mean:"
+[1] 361
+[1] "sd:"
+[1] NA
+[1] "Aushilfsarbeit"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "zur Tagesmutter"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "zur Oma zur Betreuung"
+[1] "mean:"
+[1] 3.33
+[1] "sd:"
+[1] NA
+[1] "Bereuung bei der Oma"
+[1] "mean:"
+[1] 3.33
+[1] "sd:"
+[1] NA
+[1] "zurck zum Ferienhaus"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "zurck zur Pension"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "zurck zu den Freunden"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] NA
+[1] "Zum Sohn in die werkstatt"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Stadtbummel"
+[1] "mean:"
+[1] 5.88
+[1] "sd:"
+[1] 5.543717
+[1] "ims Hotel"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "Fahrt zum Noric Walking"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "zur Bank gefahren"
+[1] "mean:"
+[1] 0.76
+[1] "sd:"
+[1] NA
+[1] "zur Tankstelle gefahren"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "zurck zur Ferienwohnung"
+[1] "mean:"
+[1] 3.342857
+[1] "sd:"
+[1] 2.373322
+[1] "Auroverkauf"
+[1] "mean:"
+[1] 80.75
+[1] "sd:"
+[1] NA
+[1] "zurck zur Fereinwohnung"
+[1] "mean:"
+[1] 3.655
+[1] "sd:"
+[1] 3.146625
+[1] "nach Hause zu den Cousinen"
+[1] "mean:"
+[1] 13.3
+[1] "sd:"
+[1] NA
+[1] "Begleitung Mutter ins Krankenhaus"
+[1] "mean:"
+[1] 10.45
+[1] "sd:"
+[1] NA
+[1] "Weg zum Urlaub"
+[1] "mean:"
+[1] 190
+[1] "sd:"
+[1] NA
+[1] "Nachbarschaftshilfe"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Weg zum Garten"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Besprechung beim Kirchenvorstand"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "hort"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] 0
+[1] "Zum Miethaus"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "zurck zur Unterkunft"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "nach Hause zum Quartier"
+[1] "mean:"
+[1] 19
+[1] "sd:"
+[1] NA
+[1] "Gartenabfall wegbringen"
+[1] "mean:"
+[1] 7.13
+[1] "sd:"
+[1] NA
+[1] "Gepck abholen"
+[1] "mean:"
+[1] 2.71
+[1] "sd:"
+[1] NA
+[1] "Zum Flohmarkt"
+[1] "mean:"
+[1] 9.812
+[1] "sd:"
+[1] 11.46711
+[1] "Weg ins Krankenhaus"
+[1] "mean:"
+[1] 19
+[1] "sd:"
+[1] NA
+[1] "weg zum Theater"
+[1] "mean:"
+[1] 21.85
+[1] "sd:"
+[1] NA
+[1] "Weg zur Theaterauffhrung"
+[1] "mean:"
+[1] 21.85
+[1] "sd:"
+[1] NA
+[1] "Weg zum Motorradclub"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Fahrzeug berfhrung"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Hinweg zum Sammelplatz"
+[1] "mean:"
+[1] 4.51
+[1] "sd:"
+[1] NA
+[1] "Fahrt zur Kur"
+[1] "mean:"
+[1] 106.4
+[1] "sd:"
+[1] NA
+[1] "Informationen einholen"
+[1] "mean:"
+[1] 42.75
+[1] "sd:"
+[1] NA
+[1] "ZURCK ZU DER WOHNUNG WO SIE MOMENTAN  WOHNT"
+[1] "mean:"
+[1] 23.75
+[1] "sd:"
+[1] NA
+[1] "Betreuung einer Nachbarin"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Ferien-Kinderbetreuung"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "zum Campingplatz"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] 0
+[1] "zurck ins Hotel"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Weg zur 2, berufl. Ttigkeit"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Rckfaht zum Urlaubsort"
+[1] "mean:"
+[1] 36.1
+[1] "sd:"
+[1] NA
+[1] "Pappe Entsorgt"
+[1] "mean:"
+[1] 0.39
+[1] "sd:"
+[1] NA
+[1] "Weg ins Hotel"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] 1.343503
+[1] "Rckkehr zum Hotel"
+[1] "mean:"
+[1] 52.25
+[1] "sd:"
+[1] NA
+[1] "elternabend in die schule"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Treffpunkt Geschft"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Nach Magdeburg"
+[1] "mean:"
+[1] 161.5
+[1] "sd:"
+[1] NA
+[1] "2. Wohnung anschauen"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "Benzin holen"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Wein und Blumen"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "S-Bahn"
+[1] "mean:"
+[1] 27.08
+[1] "sd:"
+[1] NA
+[1] "Massage"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] NA
+[1] "Ziel zum Hundeausfhren"
+[1] "mean:"
+[1] 13.54
+[1] "sd:"
+[1] NA
+[1] "Zum Flughafen"
+[1] "mean:"
+[1] 54.15
+[1] "sd:"
+[1] NA
+[1] "ANGELN"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Zum Angeln"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "zum hotel"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Weg zur Fhre"
+[1] "mean:"
+[1] 3.43
+[1] "sd:"
+[1] NA
+[1] "Weg mit der Fhre"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Mit Freunden aufrumen"
+[1] "mean:"
+[1] 0.39
+[1] "sd:"
+[1] NA
+[1] "Rckkehr ins Hotel"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] 0
+[1] "Weg zum Wohnheim"
+[1] "mean:"
+[1] 20.9
+[1] "sd:"
+[1] NA
+[1] "Oma im Garten geholfen"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "Plakate aufgehngt"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Weg zur Strassenbahnhaltestelle"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Weg zur Kaserne vom Biwak"
+[1] "mean:"
+[1] 27.08
+[1] "sd:"
+[1] NA
+[1] "Physieotherapie"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "Erreichen des Startausgangspunktes"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "Weg zum Jahrmarkt"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] 0
+[1] "Weg zu einer Geburtstagsfeier"
+[1] "mean:"
+[1] 2.145
+[1] "sd:"
+[1] 2.340523
+[1] ""
+[1] "mean:"
+[1] 9.085
+[1] "sd:"
+[1] 7.304413
+[1] "Weg zur Praxis"
+[1] "mean:"
+[1] 2.71
+[1] "sd:"
+[1] NA
+[1] "Weg zur Sportveranstaltung"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Rckkehr zu den Kindern"
+[1] "mean:"
+[1] 23.75
+[1] "sd:"
+[1] NA
+[1] "Pilze sammeln"
+[1] "mean:"
+[1] 18.05
+[1] "sd:"
+[1] 21.49605
+[1] "Weg zur Autowerkstatt"
+[1] "mean:"
+[1] 2.38
+[1] "sd:"
+[1] NA
+[1] "Kinder in die Schule fahren"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Probe in der Musikschule"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Fahrt um Kinder abzuholen"
+[1] "mean:"
+[1] 1.33
+[1] "sd:"
+[1] NA
+[1] "Praktikum"
+[1] "mean:"
+[1] 16.625
+[1] "sd:"
+[1] 3.358757
+[1] "Unipraktikum an einer Schule"
+[1] "mean:"
+[1] 8.12
+[1] "sd:"
+[1] NA
+[1] "Frdergruppe"
+[1] "mean:"
+[1] 8.08
+[1] "sd:"
+[1] NA
+[1] "Erreichen des Flughafens"
+[1] "mean:"
+[1] 76
+[1] "sd:"
+[1] NA
+[1] "Freiwilliges Soziales Jahr"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Mit der Schwester unterwegs"
+[1] "mean:"
+[1] 27.55
+[1] "sd:"
+[1] NA
+[1] "Weg zur Berufsschule"
+[1] "mean:"
+[1] 27.55
+[1] "sd:"
+[1] NA
+[1] "InfoBesuch im IT shop"
+[1] "mean:"
+[1] 0.63
+[1] "sd:"
+[1] NA
+[1] "Weg nach Halle (Heimatort)"
+[1] "mean:"
+[1] 388.08
+[1] "sd:"
+[1] NA
+[1] "Fahrt ins krankenhaus"
+[1] "mean:"
+[1] 11.4
+[1] "sd:"
+[1] NA
+[1] "Zum Wald"
+[1] "mean:"
+[1] 1.43
+[1] "sd:"
+[1] NA
+[1] "Gemeinde Fest"
+[1] "mean:"
+[1] 3.33
+[1] "sd:"
+[1] NA
+[1] "Weg zur Reha"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Hinfahrt zur Gartenanlage"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Weg zur Gartenanlage"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Zum garten"
+[1] "mean:"
+[1] 8.9875
+[1] "sd:"
+[1] 13.22916
+[1] "Schulaufgabe, Bltter sammeln frs Herbarium"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "Babysitten"
+[1] "mean:"
+[1] 0.77
+[1] "sd:"
+[1] 0.01414212
+[1] "Geschft war geschlossen"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Trkei"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Weg zur Familienfeier"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Weg zum Geburtstag"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] 0
+[1] "Bummel"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Besuch von Elektroausstellung"
+[1] "mean:"
+[1] 19
+[1] "sd:"
+[1] NA
+[1] "Besuch Elektroausstellung"
+[1] "mean:"
+[1] 19
+[1] "sd:"
+[1] NA
+[1] "Zur Yachthafen"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Blumengieen"
+[1] "mean:"
+[1] 1.43
+[1] "sd:"
+[1] 0
+[1] "Rckkkehr zum Basiscamp"
+[1] "mean:"
+[1] 1.18
+[1] "sd:"
+[1] NA
+[1] "Rckkehr ins Basiscamp Hotel"
+[1] "mean:"
+[1] 1.18
+[1] "sd:"
+[1] NA
+[1] "Frhstck"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Betriebspraktikum"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "zur Zweitwohnung"
+[1] "mean:"
+[1] 3.473333
+[1] "sd:"
+[1] 2.917402
+[1] "Nebenjob"
+[1] "mean:"
+[1] 5.13
+[1] "sd:"
+[1] NA
+[1] "garage"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Deponie"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "zurck zu der Mutter"
+[1] "mean:"
+[1] 0.59
+[1] "sd:"
+[1] NA
+[1] "Abholung Wohnwagen aus Werkstatt"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Fahrschler"
+[1] "mean:"
+[1] 47.5
+[1] "sd:"
+[1] NA
+[1] "zurck zu meinen Gastgebern"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Zur Videothek"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Flohmarkt"
+[1] "mean:"
+[1] 11.4
+[1] "sd:"
+[1] NA
+[1] "Hilfe beim Umzug"
+[1] "mean:"
+[1] 5.225
+[1] "sd:"
+[1] 3.358757
+[1] "Im Rahmen des Umzugs"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Holz sgen"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "von zuhause zum Studenwohnheim"
+[1] "mean:"
+[1] 81.7
+[1] "sd:"
+[1] NA
+[1] "Rckweg ins Hotel"
+[1] "mean:"
+[1] 15.11667
+[1] "sd:"
+[1] 13.27145
+[1] "zur Garage"
+[1] "mean:"
+[1] 0.485
+[1] "sd:"
+[1] 0.417193
+[1] "Bummel und Veranstaltung der Diakonie"
+[1] "mean:"
+[1] 1.35
+[1] "sd:"
+[1] NA
+[1] "Zur Garage"
+[1] "mean:"
+[1] 5.24
+[1] "sd:"
+[1] 6.02455
+[1] "Rckkehr zur Basis"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "zur Unterkunft in der Studienstadt"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Rckkehr ins Basislager"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Rchweg zum Ausgangspunkt des 1. Weges"
+[1] "mean:"
+[1] 14.44
+[1] "sd:"
+[1] NA
+[1] "Rckweg zum 1. Ausgangspunkt"
+[1] "mean:"
+[1] 14.44
+[1] "sd:"
+[1] NA
+[1] "Auto abgeholt"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] 2.687006
+[1] "Auto Abholen"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Auto weg bringen"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Erreichen des Besuchsziels"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Erreichen des Besuchsziel"
+[1] "mean:"
+[1] 18.05
+[1] "sd:"
+[1] NA
+[1] "Auto vor Wirtshaus abholen"
+[1] "mean:"
+[1] 2.45
+[1] "sd:"
+[1] NA
+[1] "Rcktransport aus krankenhaus (Spdtirol) in Kli nik (Mnchen)"
+[1] "mean:"
+[1] 85.5
+[1] "sd:"
+[1] NA
+[1] "Schulaugaben Hilfe"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Kindergarten"
+[1] "mean:"
+[1] 2.71
+[1] "sd:"
+[1] NA
+[1] "zurck zum Zweitwohnsitz"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Kosmetikerin"
+[1] "mean:"
+[1] 1.43
+[1] "sd:"
+[1] NA
+[1] "wollte nach Hause, Bus fuhr dann nicht mehr weiter"
+[1] "mean:"
+[1] 19.86
+[1] "sd:"
+[1] NA
+[1] "Freunde besucht"
+[1] "mean:"
+[1] 3.43
+[1] "sd:"
+[1] NA
+[1] "Garage"
+[1] "mean:"
+[1] 0.2566667
+[1] "sd:"
+[1] 0.1069268
+[1] "Besuch bei Freunden"
+[1] "mean:"
+[1] 3.92
+[1] "sd:"
+[1] NA
+[1] "Arbeit in der Landwirtschaft"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Zum Krankenhaus"
+[1] "mean:"
+[1] 20.43
+[1] "sd:"
+[1] NA
+[1] "Mensa aufgesucht"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Krankengymnasti"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "Nachhilfe geben"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Rckweg zu den Bekannten"
+[1] "mean:"
+[1] 38
+[1] "sd:"
+[1] NA
+[1] "Rckweg zur Bekannten"
+[1] "mean:"
+[1] 38
+[1] "sd:"
+[1] NA
+[1] "Gruppenstunde bei Maltesern"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Friseurtermin"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Landschulheim"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "Rckfahrt zum Hotel"
+[1] "mean:"
+[1] 3.33
+[1] "sd:"
+[1] NA
+[1] "Schulsport"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "zurck zu seiner Freundin"
+[1] "mean:"
+[1] 5.23
+[1] "sd:"
+[1] NA
+[1] "Besuch im Krankenhaus"
+[1] "mean:"
+[1] 12.35
+[1] "sd:"
+[1] 14.05872
+[1] "zurck zur Kaserne"
+[1] "mean:"
+[1] 6.32
+[1] "sd:"
+[1] NA
+[1] "Autowerkstadt"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "vorstellungsgesprch"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "unter Obhut"
+[1] "mean:"
+[1] 4.372
+[1] "sd:"
+[1] 2.059034
+[1] "Eerreichen des urlaubszieles"
+[1] "mean:"
+[1] 285
+[1] "sd:"
+[1] NA
+[1] "Urlaub in Italien"
+[1] "mean:"
+[1] 285
+[1] "sd:"
+[1] NA
+[1] "zum Startpunkt des Bummels"
+[1] "mean:"
+[1] 2.205
+[1] "sd:"
+[1] 0.3464823
+[1] "Zur Therapie"
+[1] "mean:"
+[1] 3.28
+[1] "sd:"
+[1] 2.078894
+[1] "Auto Kaufen"
+[1] "mean:"
+[1] 13.3
+[1] "sd:"
+[1] NA
+[1] "Weg vom Ziel des Berglaufes zur Htte nahe Gipfelkreuz"
+[1] "mean:"
+[1] 0.39
+[1] "sd:"
+[1] NA
+[1] "Zum Ball"
+[1] "mean:"
+[1] 5.416667
+[1] "sd:"
+[1] 4.688084
+[1] "Kirche"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Gartenbesuch"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] NA
+[1] "Zum Seminarort"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "zurck nach Hause"
+[1] "mean:"
+[1] 0.69
+[1] "sd:"
+[1] NA
+[1] "zurck zu den Eltern"
+[1] "mean:"
+[1] 21.375
+[1] "sd:"
+[1] 16.79379
+[1] "zurck zu den Groeltern"
+[1] "mean:"
+[1] 33.25
+[1] "sd:"
+[1] 0
+[1] "Freizeit"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "Alte Wohnung aufraumen"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "zurck in das Hotel"
+[1] "mean:"
+[1] 4.9
+[1] "sd:"
+[1] NA
+[1] "Weg zu Treffpunkt fr Fahrgemeinschaft zur Schule"
+[1] "mean:"
+[1] 3.33
+[1] "sd:"
+[1] NA
+[1] "Fahrt zum Bus"
+[1] "mean:"
+[1] 3.33
+[1] "sd:"
+[1] NA
+[1] "Begeltung zum Kigas der Schwester"
+[1] "mean:"
+[1] 0.48
+[1] "sd:"
+[1] NA
+[1] "wie bei rita"
+[1] "mean:"
+[1] 1.57
+[1] "sd:"
+[1] 1.810193
+[1] "Vom Einkaufen zum Garten"
+[1] "mean:"
+[1] 5.23
+[1] "sd:"
+[1] NA
+[1] "Dienstreise"
+[1] "mean:"
+[1] 631.75
+[1] "sd:"
+[1] NA
+[1] "Essen"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Krankengymnastikl"
+[1] "mean:"
+[1] 28.5
+[1] "sd:"
+[1] NA
+[1] "Weg zu einer Veranstaltung"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "zur neuen wohnung"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Treffen"
+[1] "mean:"
+[1] 0.78
+[1] "sd:"
+[1] NA
+[1] "Weg zur Veranstaltung im Ehrenamt"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Familienfeier"
+[1] "mean:"
+[1] 23.75
+[1] "sd:"
+[1] NA
+[1] "familienfeier"
+[1] "mean:"
+[1] 23.75
+[1] "sd:"
+[1] 0
+[1] "zm Resraurant"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "zum Resraurant"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "zum Restaurant"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Spaziegang"
+[1] "mean:"
+[1] 7.84
+[1] "sd:"
+[1] NA
+[1] "Nebenttigkeit"
+[1] "mean:"
+[1] 1.81
+[1] "sd:"
+[1] NA
+[1] "Weg zur Tagesmutter"
+[1] "mean:"
+[1] 0.45
+[1] "sd:"
+[1] NA
+[1] "Arztbesuch, Krankenhaus, Untersuchung"
+[1] "mean:"
+[1] 23.75
+[1] "sd:"
+[1] NA
+[1] "Fiedhof"
+[1] "mean:"
+[1] 0.78
+[1] "sd:"
+[1] NA
+[1] "zur Unterkunft am Arbeitsort"
+[1] "mean:"
+[1] 3.15
+[1] "sd:"
+[1] 1.088944
+[1] "Hausbesuch"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Werbetour"
+[1] "mean:"
+[1] 117.1667
+[1] "sd:"
+[1] 68.00965
+[1] "begleitung des ehemannes"
+[1] "mean:"
+[1] 23.75
+[1] "sd:"
+[1] NA
+[1] "Veranstaltung in der Schule"
+[1] "mean:"
+[1] 3.33
+[1] "sd:"
+[1] 0
+[1] "in die Kirsche"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "zu Friedhof"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "zu einem anderen Friedhof"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "zum Friehof"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Fiedhof Dormagen"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "zum Fridhof"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "zum  Fiedhof"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "zum Friedhof"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Weg nach"
+[1] "mean:"
+[1] 42.75
+[1] "sd:"
+[1] NA
+[1] "Weg nach Neukloster"
+[1] "mean:"
+[1] 4.9
+[1] "sd:"
+[1] NA
+[1] "Stadbesichtigung Neukloster"
+[1] "mean:"
+[1] 3.92
+[1] "sd:"
+[1] NA
+[1] "Satdtbesichtigung Neukloster"
+[1] "mean:"
+[1] 3.92
+[1] "sd:"
+[1] NA
+[1] "Spazierfahrt"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "Weg zur Zweitwohnung"
+[1] "mean:"
+[1] 142.5
+[1] "sd:"
+[1] NA
+[1] "Bundeswehr"
+[1] "mean:"
+[1] 94.525
+[1] "sd:"
+[1] 108.152
+[1] "sonstiges"
+[1] "mean:"
+[1] 0.78
+[1] "sd:"
+[1] NA
+[1] "stand am bahnhof"
+[1] "mean:"
+[1] 410.64
+[1] "sd:"
+[1] NA
+[1] "Wassergymnastik"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Bewerbungsgesprch"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "ins Ferienhaus zurck"
+[1] "mean:"
+[1] 17.1
+[1] "sd:"
+[1] NA
+[1] "Zurck ins Ferienhaus"
+[1] "mean:"
+[1] 17.1
+[1] "sd:"
+[1] NA
+[1] "in die Pension"
+[1] "mean:"
+[1] 2.45
+[1] "sd:"
+[1] NA
+[1] "Erreichen des Praktikumsplatzes"
+[1] "mean:"
+[1] 27.08
+[1] "sd:"
+[1] NA
+[1] "Weg zur Ausbildung"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "Behindertenwerkstatt"
+[1] "mean:"
+[1] 13.54
+[1] "sd:"
+[1] NA
+[1] "Zum Markt"
+[1] "mean:"
+[1] 1.3175
+[1] "sd:"
+[1] 0.4592294
+[1] "zur Ehrenamtlichen Ttigkeit"
+[1] "mean:"
+[1] 2.09
+[1] "sd:"
+[1] 0
+[1] "Auto waschem"
+[1] "mean:"
+[1] 1.43
+[1] "sd:"
+[1] NA
+[1] "Whlen"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] 0
+[1] "Ersatzteile holen"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Auto zurck gebracht"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "zurck zur Zweitwohnung am Arbeitsort"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "tagesmutter"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "zum Startpunkt des Einkaufsbummels"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] 1.343503
+[1] "zur Messe gefahren"
+[1] "mean:"
+[1] 13.54
+[1] "sd:"
+[1] NA
+[1] "Zurck zum Vater"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Umtausch von Ware"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Sohn begleitet, im Auto gewartet"
+[1] "mean:"
+[1] 1.43
+[1] "sd:"
+[1] NA
+[1] "Selbsthilfegruppe"
+[1] "mean:"
+[1] 8.08
+[1] "sd:"
+[1] 0
+[1] "1. Teil des Weges zum Einkauf"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "Hotel in der Stadt der ehrenamtlichen Aktivitt"
+[1] "mean:"
+[1] 59.85
+[1] "sd:"
+[1] NA
+[1] "Zurck ins Hotel"
+[1] "mean:"
+[1] 0.78
+[1] "sd:"
+[1] NA
+[1] "Disco"
+[1] "mean:"
+[1] 4.9
+[1] "sd:"
+[1] NA
+[1] "zum Hotel zurck"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "Werkzeug holen"
+[1] "mean:"
+[1] 19
+[1] "sd:"
+[1] NA
+[1] "ist zur wohnungsbesichtigung gegangen"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Auto in Werkstatt bringen"
+[1] "mean:"
+[1] 1.33
+[1] "sd:"
+[1] NA
+[1] "Tagesmutter"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "Zum Auto um l einzufllen"
+[1] "mean:"
+[1] 0.78
+[1] "sd:"
+[1] NA
+[1] "Hat die Uni besucht von der schule aus"
+[1] "mean:"
+[1] 19.86
+[1] "sd:"
+[1] NA
+[1] "Auto in Werkstatt abholen"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Mietshaus renovierung"
+[1] "mean:"
+[1] 27.08
+[1] "sd:"
+[1] NA
+[1] "Zur fahrschule"
+[1] "mean:"
+[1] 28.5
+[1] "sd:"
+[1] NA
+[1] "Geschftlich zur Bank"
+[1] "mean:"
+[1] 0.86
+[1] "sd:"
+[1] NA
+[1] "Auto holen"
+[1] "mean:"
+[1] 9.22
+[1] "sd:"
+[1] NA
+[1] "zur Bushaltestelle auf dem Weg zur Schule"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "zur Weiterbildung"
+[1] "mean:"
+[1] 23.75
+[1] "sd:"
+[1] NA
+[1] "Zwischenstation Bahnhof"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Zur Neuen Wohung"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "zu KITA"
+[1] "mean:"
+[1] 2.71
+[1] "sd:"
+[1] NA
+[1] "Rckweg zur Unterkunft"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "Arbeitsstelle des Freundes aufgesucht zwecks Abholung"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "zum ausgangspunkt der wanderung"
+[1] "mean:"
+[1] 19.95
+[1] "sd:"
+[1] NA
+[1] "zum Startpunkt der Wanderung"
+[1] "mean:"
+[1] 19.95
+[1] "sd:"
+[1] NA
+[1] "zurck zur Bekannten"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] "zum Schulbus"
+[1] "mean:"
+[1] 0.78
+[1] "sd:"
+[1] NA
+[1] "Auto abgestellt"
+[1] "mean:"
+[1] 2.38
+[1] "sd:"
+[1] NA
+[1] "zur wchentlichen Wohnung"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "Hotel"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "Krankengymnastiik"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Kongress Besuch"
+[1] "mean:"
+[1] 90.25
+[1] "sd:"
+[1] NA
+[1] "Besuch machen"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "zu den Groeltern, um dann mit Mutter nach Hause zu fahren"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Erreichen eines Seminares"
+[1] "mean:"
+[1] 17.1
+[1] "sd:"
+[1] NA
+[1] "zur oma"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] 0
+[1] "Elternsprechtag"
+[1] "mean:"
+[1] 7.41
+[1] "sd:"
+[1] NA
+[1] "Atallarbeit"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "information zu einem geburtstagsgeschenk"
+[1] "mean:"
+[1] 28.5
+[1] "sd:"
+[1] NA
+[1] "Weihnachtsmarkt"
+[1] "mean:"
+[1] 6.58
+[1] "sd:"
+[1] 5.473006
+[1] "Auto abstellen"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "auf dem weg zum FLUGHAFEN"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "HORT"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Konfirmantenunterricht"
+[1] "mean:"
+[1] 0.59
+[1] "sd:"
+[1] 0
+[1] "zUM GARTEN"
+[1] "mean:"
+[1] 5.42
+[1] "sd:"
+[1] NA
+[1] "Spaziergang - Mittagspause"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "einkaufen des tglichen bedarfs und kind von der schule abholen"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "bis zur Grenze , weiter zur Arbeit"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "Weg zum Sportunterricht"
+[1] "mean:"
+[1] 0.78
+[1] "sd:"
+[1] NA
+[1] "Nach dem Grundstck sehen"
+[1] "mean:"
+[1] 26.6
+[1] "sd:"
+[1] NA
+[1] "Zahnarztbesuch"
+[1] "mean:"
+[1] 2
+[1] "sd:"
+[1] NA
+[1] "Abholen von Material"
+[1] "mean:"
+[1] 8.55
+[1] "sd:"
+[1] NA
+[1] "In Zweitwohnung"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "zum Startpunpt der fahrradtour"
+[1] "mean:"
+[1] 40.61
+[1] "sd:"
+[1] NA
+[1] "zum Startpunkt Gassigehen erreicht"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Treffen an der Freiberger Uni"
+[1] "mean:"
+[1] 123.5
+[1] "sd:"
+[1] NA
+[1] "Tannenbume verkaufen"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Mll zur Wiederverwertungsstelle gebracht"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "Zur Mllwiederverwertung"
+[1] "mean:"
+[1] 3.52
+[1] "sd:"
+[1] NA
+[1] "Caf nach Beerdigung"
+[1] "mean:"
+[1] 0.67
+[1] "sd:"
+[1] 0
+[1] "Versammlung"
+[1] "mean:"
+[1] 22.56
+[1] "sd:"
+[1] NA
+[1] "zum"
+[1] "mean:"
+[1] 12.35
+[1] "sd:"
+[1] NA
+[1] "Besuch bei Eltern"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Startpunkt des Einkaufs"
+[1] "mean:"
+[1] 1.35
+[1] "sd:"
+[1] NA
+[1] "zum Startpunkt des Einkaufs"
+[1] "mean:"
+[1] 1.35
+[1] "sd:"
+[1] NA
+[1] "zum Frhstck"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "zurck zu den Kindern"
+[1] "mean:"
+[1] 16.625
+[1] "sd:"
+[1] 2.742414
+[1] "Besuch und Singen im Altenheim"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "wollte Sohn von der Schule abholen, dieser war aber nicht mehr dort"
+[1] "mean:"
+[1] 2.38
+[1] "sd:"
+[1] NA
+[1] "Rckweg zur Pension"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "ich mute zu meinem Verputzer wegen einer Reklamation"
+[1] "mean:"
+[1] 10.45
+[1] "sd:"
+[1] NA
+[1] "zum Verputzer"
+[1] "mean:"
+[1] 10.45
+[1] "sd:"
+[1] NA
+[1] "zweite arbeitsstelle"
+[1] "mean:"
+[1] 9.6
+[1] "sd:"
+[1] NA
+[1] "Minijob"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Fahrt zur Musikschule"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Fahrt zur"
+[1] "mean:"
+[1] 28.5
+[1] "sd:"
+[1] NA
+[1] "zu den Grosseltern"
+[1] "mean:"
+[1] 9.03
+[1] "sd:"
+[1] 0
+[1] "musste Baum bei Oma abliefern"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Wahl, Bregrentscheid"
+[1] "mean:"
+[1] 1.27
+[1] "sd:"
+[1] NA
+[1] "zur bundeswehr"
+[1] "mean:"
+[1] 1.08
+[1] "sd:"
+[1] NA
+[1] "in die kaserne"
+[1] "mean:"
+[1] 1.76
+[1] "sd:"
+[1] NA
+[1] "zur bushaltestelle"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "zurck zur Wohnung der Gastgeberin"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "zur Wohnung der Gastgeberin"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Konferenz in der FH"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "Startpunkt des Weihnachtsmarktbesuchs"
+[1] "mean:"
+[1] 6.77
+[1] "sd:"
+[1] 3.196122
+[1] "in den zweitwohnsitz"
+[1] "mean:"
+[1] 3.72
+[1] "sd:"
+[1] NA
+[1] "Chor Auftritt"
+[1] "mean:"
+[1] 4.06
+[1] "sd:"
+[1] NA
+[1] "zur Haltestelle"
+[1] "mean:"
+[1] 10.83
+[1] "sd:"
+[1] NA
+[1] "zum treffpunkt"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Von der Mutter anf halbem Weg eingesammelt"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "zweitwohnsitz"
+[1] "mean:"
+[1] 4.02
+[1] "sd:"
+[1] NA
+[1] "zum Weihnachtsmarkt"
+[1] "mean:"
+[1] 9.03
+[1] "sd:"
+[1] NA
+[1] "essen gehen"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "nach hause"
+[1] "mean:"
+[1] 118.75
+[1] "sd:"
+[1] NA
+[1] "nebenverdienst,zeitung austragen"
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Nachfrage bei EON"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "aLTGELAS WEG BRINGEN"
+[1] "mean:"
+[1] 0.39
+[1] "sd:"
+[1] NA
+[1] "Aktivierung der Beine."
+[1] "mean:"
+[1] 0.98
+[1] "sd:"
+[1] NA
+[1] "Post aus leerstehender Wohnung holen"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "toxchter beim hausbau helfen"
+[1] "mean:"
+[1] 19
+[1] "sd:"
+[1] NA
+[1] "erledigung"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] ",,,"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "zum Startpunkt des bummels"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "zum startpunkt des Bummels"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "zurck zur Schwiegermutter"
+[1] "mean:"
+[1] 4.135
+[1] "sd:"
+[1] 3.825448
+[1] "1. Teil der Fahrt zum Arbeitsort (Berufspendler)"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "2. Teil der Fahrt zum Arbeitsort (Berufspendler)"
+[1] "mean:"
+[1] 198.55
+[1] "sd:"
+[1] NA
+[1] "zur Unterkunft"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] 6.717514
+[1] "Zweitwohnung"
+[1] "mean:"
+[1] 8.075
+[1] "sd:"
+[1] 3.358757
+[1] "Zurck zum Ausgangspunkt"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Tannenbaum entsorgen"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Zur Wanderung"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] 0
+[1] "wanderen"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Enkel versorgt"
+[1] "mean:"
+[1] 5.7
+[1] "sd:"
+[1] NA
+[1] "Saal suchen"
+[1] "mean:"
+[1] 2.19
+[1] "sd:"
+[1] NA
+[1] "Weg zum Bus"
+[1] "mean:"
+[1] 7.6
+[1] "sd:"
+[1] NA
+[1] "zur Kaserne"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] NA
+[1] "Sportunterricht schwchwimmen"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Ganztagsbetreuung"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "zu ihrem Zweitwohnsitz"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Physiotherapie"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "zurck zum Haus der Freundin"
+[1] "mean:"
+[1] 1.57
+[1] "sd:"
+[1] NA
+[1] "Einen Beleg abholen"
+[1] "mean:"
+[1] 33.25
+[1] "sd:"
+[1] 0
+[1] "zurck zur Wohnung der Freundin"
+[1] "mean:"
+[1] 1.37
+[1] "sd:"
+[1] NA
+[1] "Hessenwahl"
+[1] "mean:"
+[1] 1.9
+[1] "sd:"
+[1] 0
+[1] "Weiterbildung"
+[1] "mean:"
+[1] 46.08
+[1] "sd:"
+[1] NA
+[1] "Autohaus besucht"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Wscherei"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "zum Zivildienst"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "Pkw der Ehefrau zum Parkplatz gefahren"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "zur Oma"
+[1] "mean:"
+[1] 2.71
+[1] "sd:"
+[1] NA
+[1] "Auto wegbringen"
+[1] "mean:"
+[1] 1.14
+[1] "sd:"
+[1] NA
+[1] "dienstlich"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "Umschulung"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] NA
+[1] "in den Kindergarten"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "zum Startpunkt der Stadtbesichtigung"
+[1] "mean:"
+[1] 13.3
+[1] "sd:"
+[1] NA
+[1] "Brot zu de Caritas bringen"
+[1] "mean:"
+[1] 15.2
+[1] "sd:"
+[1] NA
+[1] "Ankunft beim Vater"
+[1] "mean:"
+[1] 8.55
+[1] "sd:"
+[1] NA
+[1] "Weg zur Studien-WG"
+[1] "mean:"
+[1] 3.61
+[1] "sd:"
+[1] NA
+[1] "Gymmnastik"
+[1] "mean:"
+[1] 0.39
+[1] "sd:"
+[1] NA
+[1] "Trauerfeier"
+[1] "mean:"
+[1] 2.71
+[1] "sd:"
+[1] NA
+[1] "Rckweg als Beifahrer"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Dienstlich zum Amtsgericht"
+[1] "mean:"
+[1] 0.95
+[1] "sd:"
+[1] NA
+[1] "Dialyse"
+[1] "mean:"
+[1] 2.44
+[1] "sd:"
+[1] NA
+[1] "Zeitungen austragen"
+[1] "mean:"
+[1] 4.9
+[1] "sd:"
+[1] NA
+[1] "Papier entsorgen"
+[1] "mean:"
+[1] 0.29
+[1] "sd:"
+[1] NA
+[1] "2. wohung"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "neue Wohnung zum Renovieren"
+[1] "mean:"
+[1] 0.48
+[1] "sd:"
+[1] NA
+[1] "Rckweg zum Freund"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Briefkasten"
+[1] "mean:"
+[1] 0.23
+[1] "sd:"
+[1] 0.2251666
+[1] "begleitung des vaters"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Arbeitsgericht"
+[1] "mean:"
+[1] 47.5
+[1] "sd:"
+[1] NA
+[1] "Erledigungen fr den Fhrerschein gemacht"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "Anmelden der Tochter bei der Fahrschule"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Anmelden in der fahrschule"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Mll wegbringen"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Zum Essen Rast eingelegt"
+[1] "mean:"
+[1] 4.9
+[1] "sd:"
+[1] NA
+[1] "Besuch im Autohaus"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] 0
+[1] "Auto geholt"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "arbeiten (anderer Arbeitsplatz)"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "Mll Entsogung"
+[1] "mean:"
+[1] 4.75
+[1] "sd:"
+[1] NA
+[1] "krankenhaus"
+[1] "mean:"
+[1] 28.5
+[1] "sd:"
+[1] NA
+[1] "nach speyer"
+[1] "mean:"
+[1] 28.5
+[1] "sd:"
+[1] NA
+[1] " Hort"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Universtitt"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "Seminarfach frs Kolloquium (fr die Schule)"
+[1] "mean:"
+[1] 0.72
+[1] "sd:"
+[1] NA
+[1] "Leergut weggebracht"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "zurck zur Unterkunft (Konfirmandenfreizeit)"
+[1] "mean:"
+[1] 1.17
+[1] "sd:"
+[1] NA
+[1] "Zur einer Wanderung"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Wanderung"
+[1] "mean:"
+[1] 9.65
+[1] "sd:"
+[1] 0.2121322
+[1] "Wanderen"
+[1] "mean:"
+[1] 9.8
+[1] "sd:"
+[1] NA
+[1] "inden Kindergarten"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Zum wochenmarkt"
+[1] "mean:"
+[1] 9.5
+[1] "sd:"
+[1] NA
+[1] "Treffen, gemeinsam fr Klausur lernen"
+[1] "mean:"
+[1] 8.75
+[1] "sd:"
+[1] NA
+[1] "Schulausflug (Sportveranstaltung)"
+[1] "mean:"
+[1] 36.1
+[1] "sd:"
+[1] NA
+[1] "Weg zur Kantine"
+[1] "mean:"
+[1] 0.49
+[1] "sd:"
+[1] NA
+[1] "Erreichen der Baustelle"
+[1] "mean:"
+[1] 3.61
+[1] "sd:"
+[1] NA
+[1] "Mlltonne"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "etwas vergessen"
+[1] "mean:"
+[1] 2.85
+[1] "sd:"
+[1] NA
+[1] "zurck zu dem Besuch"
+[1] "mean:"
+[1] 5.23
+[1] "sd:"
+[1] NA
+[1] "ehrenamtliche Ttigkeit"
+[1] "mean:"
+[1] 0.1
+[1] "sd:"
+[1] NA
+[1] "Kleinmbel weiter gegeben"
+[1] "mean:"
+[1] 2.38
+[1] "sd:"
+[1] NA
+[1] "auto in garage bringen"
+[1] "mean:"
+[1] 1.14
+[1] "sd:"
+[1] NA
+[1] "Besuch des eigenen Weinbergs"
+[1] "mean:"
+[1] 0.99
+[1] "sd:"
+[1] 0
+[1] "Besuch des Weinbergs"
+[1] "mean:"
+[1] 0.99
+[1] "sd:"
+[1] NA
+[1] "zurck zur Tochter mit Enkel"
+[1] "mean:"
+[1] 0.59
+[1] "sd:"
+[1] NA
+[1] "Besichtigung im Rahmen der Ausbildung"
+[1] "mean:"
+[1] 4.51
+[1] "sd:"
+[1] NA
+[1] "zur Waffenkammer"
+[1] "mean:"
+[1] 0.2
+[1] "sd:"
+[1] NA
+[1] "Gelndebung Bundeswehr"
+[1] "mean:"
+[1] 3.92
+[1] "sd:"
+[1] NA
+[1] "Neuen Wohung"
+[1] "mean:"
+[1] 0.97
+[1] "sd:"
+[1] 0.01732053
+[1] "in die Zweitwohnung nach Mnchen"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Eheman begleitet zu einer Angebotsabgabe"
+[1] "mean:"
+[1] 6.65
+[1] "sd:"
+[1] NA
+[1] "Auto bernehmen vom Ehemann"
+[1] "mean:"
+[1] 2.38
+[1] "sd:"
+[1] NA
+[1] "Schwester zum Autoglaser begleitet"
+[1] "mean:"
+[1] 171
+[1] "sd:"
+[1] NA
+[1] "zur Werkstatt"
+[1] "mean:"
+[1] 171
+[1] "sd:"
+[1] NA
+[1] "Reiten"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "reiten"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] "Spazierengehen auf rztliche Verordnung hin"
+[1] "mean:"
+[1] 1.96
+[1] "sd:"
+[1] NA
+[1] "Internet-Unterricht fr Senioren"
+[1] "mean:"
+[1] 1.47
+[1] "sd:"
+[1] NA
+[1] "zurck zum Arbeitsplatz"
+[1] "mean:"
+[1] 0.78
+[1] "sd:"
+[1] NA
+[1] "in die Unterkunft"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "retour zur Unterkunft"
+[1] "mean:"
+[1] 14.25
+[1] "sd:"
+[1] NA
+[1] "Zurck zur Studentenwohnung"
+[1] "mean:"
+[1] 2.94
+[1] "sd:"
+[1] NA
+[1] "1. Wohnsitz"
+[1] "mean:"
+[1] 204.25
+[1] "sd:"
+[1] NA
+[1] ""
+[1] "hwzweck"
+[1] "Freizeit"
+[1] "mean:"
+[1] 13.54797
+[1] "sd:"
+[1] 47.00694
+[1] "Arbeit"
+[1] "mean:"
+[1] 17.39953
+[1] "sd:"
+[1] 40.67567
+[1] "Einkauf"
+[1] "mean:"
+[1] 5.193623
+[1] "sd:"
+[1] 14.02609
+[1] "dienstlich"
+[1] "mean:"
+[1] 36.5788
+[1] "sd:"
+[1] 89.50421
+[1] "Ausbildung"
+[1] "mean:"
+[1] 8.154007
+[1] "sd:"
+[1] 23.9643
+[1] "Begleitung"
+[1] "mean:"
+[1] 7.736384
+[1] "sd:"
+[1] 21.83344
+[1] "Erledigung"
+[1] "mean:"
+[1] 8.055963
+[1] "sd:"
+[1] 24.36821
+[1] "keine Angabe"
+[1] "mean:"
+[1] 22.98187
+[1] "sd:"
+[1] 69.31285
+[1] ""
+[1] "w01"
+[1] "zu Hause"
+[1] "mean:"
+[1] 13.34532
+[1] "sd:"
+[1] 42.00943
+[1] "woanders auerhalb"
+[1] "mean:"
+[1] 84.65172
+[1] "sd:"
+[1] 167.6813
+[1] "ab zweitem Weg nicht erhoben"
+[1] "mean:"
+[1] 8.973279
+[1] "sd:"
+[1] 25.79894
+[1] "erfasster erster Weg ist Rckweg"
+[1] "mean:"
+[1] 5.71
+[1] "sd:"
+[1] 5.443819
+[1] "Arbeitsplatz"
+[1] "mean:"
+[1] 22.60558
+[1] "sd:"
+[1] 44.92745
+[1] "woanders innerhalb des Ortes"
+[1] "mean:"
+[1] 9.02855
+[1] "sd:"
+[1] 26.55004
+[1] "keine Angabe"
+[1] "mean:"
+[1] 14.11871
+[1] "sd:"
+[1] 39.23428
+[1] "verweigert"
+[1] "mean:"
+[1] NaN
+[1] "sd:"
+[1] NA
+[1] ""
+[1] "w13"
+[1] "Rundweg"
+[1] "mean:"
+[1] 5.774491
+[1] "sd:"
+[1] 14.46023
+[1] "Arbeitsplatz"
+[1] "mean:"
+[1] 15.69906
+[1] "sd:"
+[1] 29.84937
+[1] "anderes Ziel auerhalb der Stadt oder des Ortes"
+[1] "mean:"
+[1] 23.07622
+[1] "sd:"
+[1] 57.98968
+[1] "anderes Ziel innerhalb der Stadt oder des Ortes"
+[1] "mean:"
+[1] 3.271071
+[1] "sd:"
+[1] 11.64886
+[1] "bei Rckweg nicht erhoben"
+[1] "mean:"
+[1] 8.331574
+[1] "sd:"
+[1] 19.26206
+[1] "bei Zweck Kita | Kindergarten nicht erhoben"
+[1] "mean:"
+[1] 2.761447
+[1] "sd:"
+[1] 12.88478
+[1] "zu Hause"
+[1] "mean:"
+[1] 15.08532
+[1] "sd:"
+[1] 52.36846
+[1] "keine Angabe"
+[1] "mean:"
+[1] 2.02
+[1] "sd:"
+[1] 3.906914
+[1] "wei nicht"
+[1] "mean:"
+[1] 13.603
+[1] "sd:"
+[1] 30.45552
+[1] "verweigert"
+[1] "mean:"
+[1] 190
+[1] "sd:"
+[1] 0
+[1] ""
+[1] "w044"
+[1] "kein Weg mit Detailzweck 501-505 u. 601-602 (siehe w04_dzw)"
+[1] "mean:"
+[1] 12.37571
+[1] "sd:"
+[1] 43.7285
+[1] "kein Einkaufs-, Erledigungs-, Freizeitweg"
+[1] "mean:"
+[1] 11.92174
+[1] "sd:"
+[1] 37.15053
+[1] "innerhalb der nheren Umgebung"
+[1] "mean:"
+[1] 2.291185
+[1] "sd:"
+[1] 5.978875
+[1] "Zentrum innerhalb dieser Stadt oder diesem Ort"
+[1] "mean:"
+[1] 5.424886
+[1] "sd:"
+[1] 11.58876
+[1] "anderes Ziel"
+[1] "mean:"
+[1] 13.22745
+[1] "sd:"
+[1] 19.35974
+[1] "EKZ am Stadt- oder Ortsrand, auf der grnen Wiese"
+[1] "mean:"
+[1] 6.963992
+[1] "sd:"
+[1] 12.00966
+[1] "wei nicht"
+[1] "mean:"
+[1] 7.026491
+[1] "sd:"
+[1] 9.698053
+[1] "keine Angabe"
+[1] "mean:"
+[1] 9.231132
+[1] "sd:"
+[1] 20.31916
+[1] "verweigert"
+[1] "mean:"
+[1] 3.8
+[1] "sd:"
+[1] NA
+[1] ""
+[1] "mrad.f"
+[1] "Weg nicht mit Motorrad"
+[1] "mean:"
+[1] 10.95796
+[1] "sd:"
+[1] 36.35398
+[1] "genannt"
+[1] "mean:"
+[1] 21.03781
+[1] "sd:"
+[1] 38.30546
+[1] "nicht genannt"
+[1] "mean:"
+[1] 21.6058
+[1] "sd:"
+[1] 49.76207
+[1] ""
+[1] "mrad.mf"
+[1] "Weg nicht mit Motorrad"
+[1] "mean:"
+[1] 10.95796
+[1] "sd:"
+[1] 36.35398
+[1] "nicht genannt"
+[1] "mean:"
+[1] 21.03781
+[1] "sd:"
+[1] 38.30546
+[1] "genannt"
+[1] "mean:"
+[1] 21.6058
+[1] "sd:"
+[1] 49.76207
+[1] ""
+[1] "pkw.f"
+[1] "Weg nicht mit Pkw"
+[1] "mean:"
+[1] 4.844393
+[1] "sd:"
+[1] 22.44148
+[1] "genannt"
+[1] "mean:"
+[1] 14.13151
+[1] "sd:"
+[1] 37.22788
+[1] "nicht genannt"
+[1] "mean:"
+[1] 18.98139
+[1] "sd:"
+[1] 55.55794
+[1] ""
+[1] "pkw.mf"
+[1] "Weg nicht mit Pkw"
+[1] "mean:"
+[1] 4.844393
+[1] "sd:"
+[1] 22.44148
+[1] "nicht genannt"
+[1] "mean:"
+[1] 13.75338
+[1] "sd:"
+[1] 34.98566
+[1] "genannt"
+[1] "mean:"
+[1] 19.89507
+[1] "sd:"
+[1] 58.89941
+[1] ""
+[1] "lkw.f"
+[1] "Weg nicht mit Lkw"
+[1] "mean:"
+[1] 10.91992
+[1] "sd:"
+[1] 36.00954
+[1] "genannt"
+[1] "mean:"
+[1] 63.89754
+[1] "sd:"
+[1] 142.8838
+[1] "nicht genannt"
+[1] "mean:"
+[1] 51.51093
+[1] "sd:"
+[1] 129.8693
+[1] ""
+[1] "lkw.mf"
+[1] "Weg nicht mit Lkw"
+[1] "mean:"
+[1] 10.91992
+[1] "sd:"
+[1] 36.00954
+[1] "nicht genannt"
+[1] "mean:"
+[1] 63.89754
+[1] "sd:"
+[1] 142.8838
+[1] "genannt"
+[1] "mean:"
+[1] 51.51093
+[1] "sd:"
+[1] 129.8693
+[1] ""
+[1] "hvm.diff"
+[1] "zu Fu"
+[1] "mean:"
+[1] 1.43697
+[1] "sd:"
+[1] 2.053817
+[1] "Pkw (Fahrer)"
+[1] "mean:"
+[1] 13.67536
+[1] "sd:"
+[1] 35.15783
+[1] "Pkw (Mitfahrer)"
+[1] "mean:"
+[1] 17.93593
+[1] "sd:"
+[1] 51.6273
+[1] "Fahrrad"
+[1] "mean:"
+[1] 3.23321
+[1] "sd:"
+[1] 6.533422
+[1] "PNV"
+[1] "mean:"
+[1] 12.55142
+[1] "sd:"
+[1] 14.06314
+[1] "sonstiges"
+[1] "mean:"
+[1] 7.009598
+[1] "sd:"
+[1] 11.39296
+[1] "Mofa | Moped"
+[1] "mean:"
+[1] 5.263742
+[1] "sd:"
+[1] 5.127959
+[1] "Lkw"
+[1] "mean:"
+[1] 61.5408
+[1] "sd:"
+[1] 140.3074
+[1] "Schiff | Bahn | Bus | Flugzeug"
+[1] "mean:"
+[1] 176.5251
+[1] "sd:"
+[1] 203.3349
+[1] "Motorrad"
+[1] "mean:"
+[1] 21.04743
+[1] "sd:"
+[1] 39.97187
+[1] "keine Angabe"
+[1] "mean:"
+[1] 9.38125
+[1] "sd:"
+[1] 9.244649
+[1] "Taxi"
+[1] "mean:"
+[1] 9.907348
+[1] "sd:"
+[1] 10.69413
+[1] ""
+[1] "hvm"
+[1] "zu Fu"
+[1] "mean:"
+[1] 1.43697
+[1] "sd:"
+[1] 2.053817
+[1] "MIV (Fahrer)"
+[1] "mean:"
+[1] 13.76214
+[1] "sd:"
+[1] 35.77791
+[1] "MIV (Mitfahrer)"
+[1] "mean:"
+[1] 17.9837
+[1] "sd:"
+[1] 51.82445
+[1] "Fahrrad"
+[1] "mean:"
+[1] 3.23321
+[1] "sd:"
+[1] 6.533422
+[1] "PV"
+[1] "mean:"
+[1] 20.85032
+[1] "sd:"
+[1] 61.14028
+[1] "keine Angabe"
+[1] "mean:"
+[1] 9.38125
+[1] "sd:"
+[1] 9.244649
+[1] ""
+[1] "hvm.oev"
+[1] "zu Fu"
+[1] "mean:"
+[1] 1.43697
+[1] "sd:"
+[1] 2.053817
+[1] "MIV (Fahrer)"
+[1] "mean:"
+[1] 13.76214
+[1] "sd:"
+[1] 35.77791
+[1] "MIV (Mitfahrer)"
+[1] "mean:"
+[1] 17.9837
+[1] "sd:"
+[1] 51.82445
+[1] "Fahrrad"
+[1] "mean:"
+[1] 3.23321
+[1] "sd:"
+[1] 6.533422
+[1] "PNV"
+[1] "mean:"
+[1] 12.11235
+[1] "sd:"
+[1] 13.90361
+[1] "PFV"
+[1] "mean:"
+[1] 176.5251
+[1] "sd:"
+[1] 203.3349
+[1] "keine Angabe"
+[1] "mean:"
+[1] 9.38125
+[1] "sd:"
+[1] 9.244649
+[1] ""
+[1] "vm.kombi"
+[1] "zu Fu"
+[1] "mean:"
+[1] 1.459756
+[1] "sd:"
+[1] 2.143867
+[1] "nur MIV (Fahrer)"
+[1] "mean:"
+[1] 13.76205
+[1] "sd:"
+[1] 35.77769
+[1] "nur MIV (Mitfahrer)"
+[1] "mean:"
+[1] 17.9837
+[1] "sd:"
+[1] 51.82445
+[1] "Fahrrad"
+[1] "mean:"
+[1] 3.242196
+[1] "sd:"
+[1] 6.559119
+[1] "nur V"
+[1] "mean:"
+[1] 16.84855
+[1] "sd:"
+[1] 49.22987
+[1] "anderes"
+[1] "mean:"
+[1] 6.835436
+[1] "sd:"
+[1] 11.74759
+[1] "MIV (Mitfahrer) und V"
+[1] "mean:"
+[1] 81.88078
+[1] "sd:"
+[1] 158.7284
+[1] "MIV (Fahrer) und V"
+[1] "mean:"
+[1] 61.48357
+[1] "sd:"
+[1] 120.4793
+[1] "Fahrrad und V"
+[1] "mean:"
+[1] 23.42833
+[1] "sd:"
+[1] 25.53004
+[1] ""
+[1] "w061"
+[1] "Weg nicht mit Motorrad, Auto oder Lkw zurckgelegt"
+[1] "mean:"
+[1] 4.89207
+[1] "sd:"
+[1] 22.1323
+[1] "Fahrer"
+[1] "mean:"
+[1] 13.90863
+[1] "sd:"
+[1] 35.76077
+[1] "Mitfahrer"
+[1] "mean:"
+[1] 21.27031
+[1] "sd:"
+[1] 58.85845
+[1] "Kind 10-13 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 8.409355
+[1] "sd:"
+[1] 34.2088
+[1] "Kind <10 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 7.986082
+[1] "sd:"
+[1] 34.83984
+[1] "unterschiedlich"
+[1] "mean:"
+[1] 141.9698
+[1] "sd:"
+[1] 198.2816
+[1] "Ki. 10-13 J. (Selbst) o. Wegeprot. (StTag <= 3 Tage/ Ausl.)"
+[1] "mean:"
+[1] 8.264159
+[1] "sd:"
+[1] 38.50553
+[1] "Kind 10-13 J. (Selbst) mit Wegeprotokoll"
+[1] "mean:"
+[1] 6.922977
+[1] "sd:"
+[1] 21.30798
+[1] "keine Angabe"
+[1] "mean:"
+[1] 12.35659
+[1] "sd:"
+[1] 19.21828
+[1] "wei nicht"
+[1] "mean:"
+[1] 26.51783
+[1] "sd:"
+[1] 43.28156
+[1] ""
+[1] "w062"
+[1] "Weg ohne Autonutzung"
+[1] "mean:"
+[1] 4.844393
+[1] "sd:"
+[1] 22.44148
+[1] "ja"
+[1] "mean:"
+[1] 14.59209
+[1] "sd:"
+[1] 39.95191
+[1] "nein"
+[1] "mean:"
+[1] 26.30443
+[1] "sd:"
+[1] 71.71759
+[1] "HH mit mehr als 4 Autos"
+[1] "mean:"
+[1] 22.67968
+[1] "sd:"
+[1] 42.429
+[1] "HH ohne Auto"
+[1] "mean:"
+[1] 18.3938
+[1] "sd:"
+[1] 54.07274
+[1] "wei nicht"
+[1] "mean:"
+[1] 8.19375
+[1] "sd:"
+[1] 7.180203
+[1] ""
+[1] "w063"
+[1] "Weg ohne Autonutzung"
+[1] "mean:"
+[1] 4.844393
+[1] "sd:"
+[1] 22.44148
+[1] "Auto 1"
+[1] "mean:"
+[1] 14.74705
+[1] "sd:"
+[1] 41.08532
+[1] "Weg mit Autonutzung, aber ohne Nutzung eines HH-Autos"
+[1] "mean:"
+[1] 26.2846
+[1] "sd:"
+[1] 71.68116
+[1] "anderes Fahrzeug"
+[1] "mean:"
+[1] 20.84973
+[1] "sd:"
+[1] 58.72804
+[1] "Auto 3"
+[1] "mean:"
+[1] 15.25687
+[1] "sd:"
+[1] 30.90893
+[1] "Auto 2"
+[1] "mean:"
+[1] 13.69098
+[1] "sd:"
+[1] 35.87961
+[1] "HH mit mehr als 4 Autos"
+[1] "mean:"
+[1] 22.67968
+[1] "sd:"
+[1] 42.429
+[1] "HH ohne Auto"
+[1] "mean:"
+[1] 18.3938
+[1] "sd:"
+[1] 54.07274
+[1] "wei nicht"
+[1] "mean:"
+[1] 22.14087
+[1] "sd:"
+[1] 70.05151
+[1] "verweigert"
+[1] "mean:"
+[1] 11.08667
+[1] "sd:"
+[1] 4.04
+[1] ""
+[1] "w071"
+[1] "1-Personen-Haushalt"
+[1] "mean:"
+[1] 9.275045
+[1] "sd:"
+[1] 33.77541
+[1] "Person ohne Begleitung unterwegs"
+[1] "mean:"
+[1] 8.570405
+[1] "sd:"
+[1] 24.49629
+[1] "nein"
+[1] "mean:"
+[1] 14.52452
+[1] "sd:"
+[1] 45.20559
+[1] "ja"
+[1] "mean:"
+[1] 13.48283
+[1] "sd:"
+[1] 45.5825
+[1] "wei nicht"
+[1] "mean:"
+[1] 10.72
+[1] "sd:"
+[1] 29.09254
+[1] "verweigert"
+[1] "mean:"
+[1] 3.696667
+[1] "sd:"
+[1] 2.509507
+[1] ""
+[1] "w072.1"
+[1] "1-Personen-Haushalt"
+[1] "mean:"
+[1] 9.275045
+[1] "sd:"
+[1] 33.77541
+[1] "Person ohne Begleitung unterwegs"
+[1] "mean:"
+[1] 8.570405
+[1] "sd:"
+[1] 24.49629
+[1] "Begleiter nicht aus HH"
+[1] "mean:"
+[1] 14.52452
+[1] "sd:"
+[1] 45.20559
+[1] "nicht genannt"
+[1] "mean:"
+[1] 12.02769
+[1] "sd:"
+[1] 40.48967
+[1] "genannt"
+[1] "mean:"
+[1] 15.54089
+[1] "sd:"
+[1] 51.87089
+[1] "keine Info, ob Begleiter aus HH"
+[1] "mean:"
+[1] 9.266897
+[1] "sd:"
+[1] 25.97147
+[1] ""
+[1] "w074"
+[1] "kein Weg mit Zweck Bringen und Holen von Personen"
+[1] "mean:"
+[1] 10.67456
+[1] "sd:"
+[1] 34.44782
+[1] "Erwachsener > 13 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 13.85543
+[1] "sd:"
+[1] 44.1025
+[1] "Kind 10-13 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 8.409355
+[1] "sd:"
+[1] 34.2088
+[1] "Kind <10 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 7.986082
+[1] "sd:"
+[1] 34.83984
+[1] "Begleiter aus HH"
+[1] "mean:"
+[1] 7.02428
+[1] "sd:"
+[1] 15.58514
+[1] "private Erledigungen"
+[1] "mean:"
+[1] 9.397923
+[1] "sd:"
+[1] 16.64597
+[1] "Person ohne Begleitung unterwegs"
+[1] "mean:"
+[1] 6.663144
+[1] "sd:"
+[1] 13.83792
+[1] "1-Personen-Haushalt"
+[1] "mean:"
+[1] 8.477511
+[1] "sd:"
+[1] 16.14039
+[1] "andere Aktivitt"
+[1] "mean:"
+[1] 11.69238
+[1] "sd:"
+[1] 21.51951
+[1] "Erreichen der Ausbildungssttte oder Schule"
+[1] "mean:"
+[1] 2.234737
+[1] "sd:"
+[1] 2.251711
+[1] "Freizeitaktivitt"
+[1] "mean:"
+[1] 12.72625
+[1] "sd:"
+[1] 27.68602
+[1] "Erreichen des Arbeitsplatzes"
+[1] "mean:"
+[1] 10.48105
+[1] "sd:"
+[1] 13.12733
+[1] "dienstlich oder geschftlich"
+[1] "mean:"
+[1] 12.44062
+[1] "sd:"
+[1] 19.68294
+[1] "Einkauf"
+[1] "mean:"
+[1] 4.682857
+[1] "sd:"
+[1] 2.828231
+[1] ""
+[1] "begleit"
+[1] "Person ohne Begleitung unterwegs"
+[1] "mean:"
+[1] 8.46815
+[1] "sd:"
+[1] 24.9374
+[1] "andere Person(en) nicht aus Haushalt"
+[1] "mean:"
+[1] 14.49403
+[1] "sd:"
+[1] 45.47669
+[1] "erwachsene Person(en) aus HH"
+[1] "mean:"
+[1] 14.22123
+[1] "sd:"
+[1] 46.3995
+[1] "Kind(er) aus HH (< 14 Jahre)"
+[1] "mean:"
+[1] 6.01388
+[1] "sd:"
+[1] 21.95571
+[1] "Kind(er) und erwachsene Person(en) aus HH"
+[1] "mean:"
+[1] 15.93924
+[1] "sd:"
+[1] 56.25814
+[1] "Jugendliche(r) und erwachsene Person(en) aus HH"
+[1] "mean:"
+[1] 21.05961
+[1] "sd:"
+[1] 57.74632
+[1] "Jugendliche(r) aus HH (14 -17 Jahre)"
+[1] "mean:"
+[1] 9.538662
+[1] "sd:"
+[1] 18.25177
+[1] "nicht zuzuordnen"
+[1] "mean:"
+[1] 12.69084
+[1] "sd:"
+[1] 36.72533
+[1] "Kind(er) und Jugendliche(r) aus HH"
+[1] "mean:"
+[1] 8.74927
+[1] "sd:"
+[1] 13.26497
+[1] "Kind(er), Jugendliche(r) und erwachsene Person(en) aus HH"
+[1] "mean:"
+[1] 33.51523
+[1] "sd:"
+[1] 80.50558
+[1] ""
+[1] "hheink"
+[1] "1.500 Euro bis unter 2.000 Euro"
+[1] "mean:"
+[1] 9.468217
+[1] "sd:"
+[1] 34.05793
+[1] "2.000 Euro bis unter 2.600 Euro"
+[1] "mean:"
+[1] 9.991925
+[1] "sd:"
+[1] 32.07687
+[1] "6.000 Euro bis unter 6.600 Euro"
+[1] "mean:"
+[1] 16.58776
+[1] "sd:"
+[1] 64.63748
+[1] "mehr als 7.000 Euro"
+[1] "mean:"
+[1] 12.40521
+[1] "sd:"
+[1] 39.1078
+[1] "4.000 Euro bis unter 4.600 Euro"
+[1] "mean:"
+[1] 13.8655
+[1] "sd:"
+[1] 43.62631
+[1] "900 Euro bis unter 1.500 Euro"
+[1] "mean:"
+[1] 8.232261
+[1] "sd:"
+[1] 27.3791
+[1] "5.000 Euro bis unter 5.600 Euro"
+[1] "mean:"
+[1] 13.85168
+[1] "sd:"
+[1] 44.8998
+[1] "3.000 Euro bis unter 3.600 Euro"
+[1] "mean:"
+[1] 11.84168
+[1] "sd:"
+[1] 38.41419
+[1] "3.600 Euro bis unter 4.000 Euro"
+[1] "mean:"
+[1] 10.99617
+[1] "sd:"
+[1] 32.99812
+[1] "2.600 Euro bis unter 3.000 Euro"
+[1] "mean:"
+[1] 10.92875
+[1] "sd:"
+[1] 35.07995
+[1] "verweigert"
+[1] "mean:"
+[1] 10.69489
+[1] "sd:"
+[1] 33.48626
+[1] "wei nicht"
+[1] "mean:"
+[1] 12.40405
+[1] "sd:"
+[1] 41.95573
+[1] "500 Euro bis unter 900 Euro"
+[1] "mean:"
+[1] 8.623639
+[1] "sd:"
+[1] 33.66382
+[1] "4.600 Euro bis unter 5.000 Euro"
+[1] "mean:"
+[1] 12.02418
+[1] "sd:"
+[1] 38.52198
+[1] "bis unter 500 Euro"
+[1] "mean:"
+[1] 10.52177
+[1] "sd:"
+[1] 46.36609
+[1] "5.600 Euro bis unter 6.000 Euro"
+[1] "mean:"
+[1] 11.05765
+[1] "sd:"
+[1] 30.21051
+[1] "keine Angabe"
+[1] "mean:"
+[1] 15.27518
+[1] "sd:"
+[1] 53.61706
+[1] "6.600 Euro bis 7.000 Euro"
+[1] "mean:"
+[1] 13.84089
+[1] "sd:"
+[1] 43.34514
+[1] ""
+[1] "oek.stat"
+[1] "hoch"
+[1] "mean:"
+[1] 11.90937
+[1] "sd:"
+[1] 38.60346
+[1] "mittel"
+[1] "mean:"
+[1] 10.14424
+[1] "sd:"
+[1] 33.06661
+[1] "sehr hoch"
+[1] "mean:"
+[1] 14.0902
+[1] "sd:"
+[1] 47.39094
+[1] "niedrig"
+[1] "mean:"
+[1] 9.708854
+[1] "sd:"
+[1] 31.62958
+[1] "sehr niedrig"
+[1] "mean:"
+[1] 9.327201
+[1] "sd:"
+[1] 32.39728
+[1] "nicht zuzuordnen"
+[1] "mean:"
+[1] 7.984516
+[1] "sd:"
+[1] 22.62945
+[1] ""
+[1] "hhtyp"
+[1] "Einpersonenhh_Person 30 bis < 60 Jahre"
+[1] "mean:"
+[1] 11.44449
+[1] "sd:"
+[1] 36.46663
+[1] "HH mit drei und mehr erwachsenen Personen"
+[1] "mean:"
+[1] 13.20848
+[1] "sd:"
+[1] 39.5348
+[1] "HH mit zwei Erwachsenen_jngste Person 30 bis < 60 Jahre"
+[1] "mean:"
+[1] 12.69633
+[1] "sd:"
+[1] 40.47398
+[1] "HH mit mindestens einem Kind unter 18 Jahre"
+[1] "mean:"
+[1] 11.14598
+[1] "sd:"
+[1] 31.57411
+[1] "HH mit mindestens einem Kind unter 14 Jahre"
+[1] "mean:"
+[1] 10.20139
+[1] "sd:"
+[1] 34.73491
+[1] "HH mit mindestens einem Kind unter 6 Jahre"
+[1] "mean:"
+[1] 10.38747
+[1] "sd:"
+[1] 37.22654
+[1] "Einpersonenhh_Person 60 Jahre und lter"
+[1] "mean:"
+[1] 6.851199
+[1] "sd:"
+[1] 29.92257
+[1] "HH mit zwei Erwachsenen_jngste Person 60 Jahre und lter"
+[1] "mean:"
+[1] 9.129745
+[1] "sd:"
+[1] 33.82178
+[1] "HH mit zwei Erwachsenen_jngste Person 18 bis < 30 Jahre"
+[1] "mean:"
+[1] 13.78619
+[1] "sd:"
+[1] 39.82508
+[1] "Alleinerziehende"
+[1] "mean:"
+[1] 9.024757
+[1] "sd:"
+[1] 32.39943
+[1] "kein Privathaushalt"
+[1] "mean:"
+[1] 16.77558
+[1] "sd:"
+[1] 72.82235
+[1] "Einpersonenhh_Person 18 bis < 30 Jahre"
+[1] "mean:"
+[1] 13.31839
+[1] "sd:"
+[1] 45.27012
+[1] "Alter von mind. 1 HH-Mitglied nicht bekannt"
+[1] "mean:"
+[1] 16.30242
+[1] "sd:"
+[1] 50.71698
+[1] "nicht zuzuordnen"
+[1] "mean:"
+[1] 17.92808
+[1] "sd:"
+[1] 40.97407
+[1] ""
+[1] "hp.sex"
+[1] "weiblich"
+[1] "mean:"
+[1] 9.522904
+[1] "sd:"
+[1] 32.73258
+[1] "mnnlich"
+[1] "mean:"
+[1] 12.49547
+[1] "sd:"
+[1] 39.72742
+[1] "keine Angabe"
+[1] "mean:"
+[1] 5.357333
+[1] "sd:"
+[1] 6.021598
+[1] ""
+[1] "hp.altg1"
+[1] "25 - 44"
+[1] "mean:"
+[1] 12.39661
+[1] "sd:"
+[1] 38.2567
+[1] "45 - 59"
+[1] "mean:"
+[1] 12.36153
+[1] "sd:"
+[1] 38.6851
+[1] "18 - 24"
+[1] "mean:"
+[1] 13.91312
+[1] "sd:"
+[1] 36.75171
+[1] "14 - 17"
+[1] "mean:"
+[1] 9.207513
+[1] "sd:"
+[1] 28.92563
+[1] "10 - 13"
+[1] "mean:"
+[1] 8.061732
+[1] "sd:"
+[1] 31.82584
+[1] "0 - 5 Jahre"
+[1] "mean:"
+[1] 8.616564
+[1] "sd:"
+[1] 37.33548
+[1] "6 - 9"
+[1] "mean:"
+[1] 7.324112
+[1] "sd:"
+[1] 31.93527
+[1] "65 und lter"
+[1] "mean:"
+[1] 8.604954
+[1] "sd:"
+[1] 33.15603
+[1] "60 - 64"
+[1] "mean:"
+[1] 10.04947
+[1] "sd:"
+[1] 36.67623
+[1] "keine Angabe"
+[1] "mean:"
+[1] 15.96327
+[1] "sd:"
+[1] 48.45247
+[1] ""
+[1] "hp.altg2"
+[1] "40 - 49"
+[1] "mean:"
+[1] 12.38969
+[1] "sd:"
+[1] 39.34272
+[1] "50 - 59"
+[1] "mean:"
+[1] 11.97135
+[1] "sd:"
+[1] 36.82985
+[1] "20 - 29"
+[1] "mean:"
+[1] 15.22157
+[1] "sd:"
+[1] 40.88313
+[1] "10 - 19"
+[1] "mean:"
+[1] 9.345971
+[1] "sd:"
+[1] 30.40126
+[1] "0 - 9 Jahre"
+[1] "mean:"
+[1] 7.973864
+[1] "sd:"
+[1] 34.75981
+[1] "30 - 39"
+[1] "mean:"
+[1] 12.25246
+[1] "sd:"
+[1] 38.2843
+[1] "80 und lter"
+[1] "mean:"
+[1] 6.625854
+[1] "sd:"
+[1] 32.17519
+[1] "60 - 69"
+[1] "mean:"
+[1] 9.730131
+[1] "sd:"
+[1] 35.98279
+[1] "70 - 79"
+[1] "mean:"
+[1] 8.051165
+[1] "sd:"
+[1] 30.74823
+[1] "keine Angabe"
+[1] "mean:"
+[1] 15.96327
+[1] "sd:"
+[1] 48.45247
+[1] ""
+[1] "hp.altg3"
+[1] "40 - 49"
+[1] "mean:"
+[1] 12.38969
+[1] "sd:"
+[1] 39.34272
+[1] "50 - 59"
+[1] "mean:"
+[1] 11.97135
+[1] "sd:"
+[1] 36.82985
+[1] "18 - 29"
+[1] "mean:"
+[1] 14.19275
+[1] "sd:"
+[1] 38.39385
+[1] "14 - 17"
+[1] "mean:"
+[1] 9.207513
+[1] "sd:"
+[1] 28.92563
+[1] "11 - 13"
+[1] "mean:"
+[1] 8.099555
+[1] "sd:"
+[1] 31.6255
+[1] "0 - 4 Jahre"
+[1] "mean:"
+[1] 8.887045
+[1] "sd:"
+[1] 36.88879
+[1] "30 - 39"
+[1] "mean:"
+[1] 12.25246
+[1] "sd:"
+[1] 38.2843
+[1] "5 - 10"
+[1] "mean:"
+[1] 7.488091
+[1] "sd:"
+[1] 33.1617
+[1] "75 und lter"
+[1] "mean:"
+[1] 7.438781
+[1] "sd:"
+[1] 33.27161
+[1] "65 - 74"
+[1] "mean:"
+[1] 8.913642
+[1] "sd:"
+[1] 33.11914
+[1] "60 - 64"
+[1] "mean:"
+[1] 10.04947
+[1] "sd:"
+[1] 36.67623
+[1] "keine Angabe"
+[1] "mean:"
+[1] 15.96327
+[1] "sd:"
+[1] 48.45247
+[1] ""
+[1] "hp.besch"
+[1] "Berufsttige(r) - Vollzeit"
+[1] "mean:"
+[1] 15.34447
+[1] "sd:"
+[1] 44.60983
+[1] "Berufsttige(r) - Teilzeit (11 bis unter 35 Stunden/ Woche)"
+[1] "mean:"
+[1] 9.218374
+[1] "sd:"
+[1] 28.69819
+[1] "Student(in)"
+[1] "mean:"
+[1] 14.56859
+[1] "sd:"
+[1] 37.27299
+[1] "Auszubildende(r)"
+[1] "mean:"
+[1] 12.93879
+[1] "sd:"
+[1] 27.84638
+[1] "Hausfrau | Hausmann"
+[1] "mean:"
+[1] 8.25046
+[1] "sd:"
+[1] 33.02308
+[1] "Schler(in) (einschlielich Vorschule)"
+[1] "mean:"
+[1] 8.538048
+[1] "sd:"
+[1] 31.52319
+[1] "andere Ttigkeit"
+[1] "mean:"
+[1] 10.36937
+[1] "sd:"
+[1] 39.59141
+[1] "Rentner(in) | Pensionr(in)"
+[1] "mean:"
+[1] 8.48171
+[1] "sd:"
+[1] 31.23457
+[1] "Kind betreut im Kindergarten, Krippe, Tagesmutter etc."
+[1] "mean:"
+[1] 8.284309
+[1] "sd:"
+[1] 36.96933
+[1] "zurzeit arbeitslos"
+[1] "mean:"
+[1] 9.342906
+[1] "sd:"
+[1] 36.06755
+[1] "vorbergeh. freigest. (z.B. Mutterschaftsurl., Elternzeit)"
+[1] "mean:"
+[1] 7.668738
+[1] "sd:"
+[1] 31.66481
+[1] "Kind zu Hause betreut"
+[1] "mean:"
+[1] 9.081539
+[1] "sd:"
+[1] 36.77645
+[1] "Wehr- oder Zivildienstleistende(r), Freiwilligendienst"
+[1] "mean:"
+[1] 16.53695
+[1] "sd:"
+[1] 63.05745
+[1] "keine Angabe"
+[1] "mean:"
+[1] 16.15514
+[1] "sd:"
+[1] 52.69662
+[1] "Berufsttige(r) ohne Angabe zum Umfang"
+[1] "mean:"
+[1] 8.056513
+[1] "sd:"
+[1] 14.61461
+[1] ""
+[1] "hp.pkwfs"
+[1] "ja"
+[1] "mean:"
+[1] 11.84493
+[1] "sd:"
+[1] 37.53594
+[1] "nein"
+[1] "mean:"
+[1] 8.123794
+[1] "sd:"
+[1] 32.03432
+[1] "keine Angabe"
+[1] "mean:"
+[1] 7.342558
+[1] "sd:"
+[1] 8.819159
+[1] "verweigert"
+[1] "mean:"
+[1] 7.56
+[1] "sd:"
+[1] 1.680089
+[1] "wei nicht"
+[1] "mean:"
+[1] 1.628333
+[1] "sd:"
+[1] 1.149146
+[1] ""
+[1] "pergrup"
+[1] "Berufsttige(r) mit verfgbarem Pkw"
+[1] "mean:"
+[1] 13.68269
+[1] "sd:"
+[1] 40.00883
+[1] "Berufsttige(r) ohne Pkw"
+[1] "mean:"
+[1] 9.823577
+[1] "sd:"
+[1] 42.06553
+[1] "Student(in)"
+[1] "mean:"
+[1] 14.56859
+[1] "sd:"
+[1] 37.27299
+[1] "Auszubildende(r)"
+[1] "mean:"
+[1] 12.90282
+[1] "sd:"
+[1] 27.4682
+[1] "Nicht-Berufsttige(r) mit verfgbarem Pkw"
+[1] "mean:"
+[1] 9.144034
+[1] "sd:"
+[1] 32.87993
+[1] "Schler(in) ab 11 Jahren"
+[1] "mean:"
+[1] 8.932754
+[1] "sd:"
+[1] 30.70072
+[1] "Kind 0-6 Jahre"
+[1] "mean:"
+[1] 8.501513
+[1] "sd:"
+[1] 36.23586
+[1] "Schler(in) 7-10 Jahre"
+[1] "mean:"
+[1] 7.365343
+[1] "sd:"
+[1] 32.39839
+[1] "Nicht-Berufsttige(r) ohne Pkw"
+[1] "mean:"
+[1] 5.614478
+[1] "sd:"
+[1] 32.44512
+[1] "nicht zuzuordnen"
+[1] "mean:"
+[1] 8.092879
+[1] "sd:"
+[1] 28.20122
+[1] ""
+[1] "pergrup1"
+[1] "Berufsttige(r) mit verfgbarem Pkw"
+[1] "mean:"
+[1] 13.68269
+[1] "sd:"
+[1] 40.00883
+[1] "Berufsttige(r) ohne Pkw"
+[1] "mean:"
+[1] 9.823577
+[1] "sd:"
+[1] 42.06553
+[1] "Student(in) mit verfgbarem Pkw"
+[1] "mean:"
+[1] 16.32564
+[1] "sd:"
+[1] 38.6759
+[1] "Auszubildende(r) mit verfgbarem Pkw"
+[1] "mean:"
+[1] 13.93558
+[1] "sd:"
+[1] 30.07239
+[1] "Nicht-Berufsttige(r) mit verfgbarem Pkw"
+[1] "mean:"
+[1] 9.144034
+[1] "sd:"
+[1] 32.87993
+[1] "Schler(in) ab 11 Jahren mit verfgbarem Pkw"
+[1] "mean:"
+[1] 11.33186
+[1] "sd:"
+[1] 37.58354
+[1] "Schler(in) ab 11 Jahren ohne Pkw"
+[1] "mean:"
+[1] 5.206746
+[1] "sd:"
+[1] 13.77949
+[1] "Kind 0-6 Jahre"
+[1] "mean:"
+[1] 8.501513
+[1] "sd:"
+[1] 36.23586
+[1] "Schler(in) 7-10 Jahre"
+[1] "mean:"
+[1] 7.365343
+[1] "sd:"
+[1] 32.39839
+[1] "Nicht-Berufsttige(r) ohne Pkw"
+[1] "mean:"
+[1] 5.614478
+[1] "sd:"
+[1] 32.44512
+[1] "Student(in) ohne Pkw"
+[1] "mean:"
+[1] 10.31247
+[1] "sd:"
+[1] 33.26544
+[1] "Auszubildende(r) ohne Pkw"
+[1] "mean:"
+[1] 9.33224
+[1] "sd:"
+[1] 14.26221
+[1] "nicht zuzuordnen"
+[1] "mean:"
+[1] 7.402941
+[1] "sd:"
+[1] 26.2528
+[1] ""
+[1] "p070"
+[1] "Monatskarte im Abonnement, Jahreskarte (Umweltabo etc.)"
+[1] "mean:"
+[1] 10.75422
+[1] "sd:"
+[1] 32.38492
+[1] "Einzelfahrschein, Tageskarte, Kurzstrecke"
+[1] "mean:"
+[1] 10.71807
+[1] "sd:"
+[1] 35.23294
+[1] "Erwachsener > 13 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 13.85543
+[1] "sd:"
+[1] 44.1025
+[1] "fahre nie mit ffentlichen Verkehrsmitteln"
+[1] "mean:"
+[1] 10.51966
+[1] "sd:"
+[1] 31.61697
+[1] "anderes"
+[1] "mean:"
+[1] 9.78531
+[1] "sd:"
+[1] 31.00798
+[1] "Wochenkarte, Monatskarte ohne Abonnement"
+[1] "mean:"
+[1] 10.83543
+[1] "sd:"
+[1] 29.03923
+[1] "Kind 10-13 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 8.409355
+[1] "sd:"
+[1] 34.2088
+[1] "Kind <10 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 7.986082
+[1] "sd:"
+[1] 34.83984
+[1] "Mehrfachkarte, Streifenkarte"
+[1] "mean:"
+[1] 9.187908
+[1] "sd:"
+[1] 32.9067
+[1] "wei nicht"
+[1] "mean:"
+[1] 11.82708
+[1] "sd:"
+[1] 44.05057
+[1] "Jobticket, Semesterticket"
+[1] "mean:"
+[1] 13.6613
+[1] "sd:"
+[1] 37.7606
+[1] "Ki. 10-13 J. (Selbst) o. Wegeprot. (StTag <= 3 Tage/ Ausl.)"
+[1] "mean:"
+[1] 8.264159
+[1] "sd:"
+[1] 38.50553
+[1] "Kind 10-13 J. (Selbst) mit Wegeprotokoll"
+[1] "mean:"
+[1] 6.922977
+[1] "sd:"
+[1] 21.30798
+[1] "verweigert"
+[1] "mean:"
+[1] 8.342727
+[1] "sd:"
+[1] 11.52491
+[1] ""
+[1] "lebensph"
+[1] "Berufsttige(r) - Vollzeit (inkl. Azubi, Zivi)"
+[1] "mean:"
+[1] 15.17062
+[1] "sd:"
+[1] 43.72025
+[1] "Berufsttige(r) - Teilzeit"
+[1] "mean:"
+[1] 9.218374
+[1] "sd:"
+[1] 28.69819
+[1] "Student"
+[1] "mean:"
+[1] 14.56859
+[1] "sd:"
+[1] 37.27299
+[1] "Hausfrau | Hausmann (inkl. Elternzeit)"
+[1] "mean:"
+[1] 8.18613
+[1] "sd:"
+[1] 32.87514
+[1] "Schler"
+[1] "mean:"
+[1] 8.538048
+[1] "sd:"
+[1] 31.52319
+[1] "Sonstiges"
+[1] "mean:"
+[1] 9.848366
+[1] "sd:"
+[1] 37.42271
+[1] "Rentner(in) | Pensionr(in)"
+[1] "mean:"
+[1] 8.48171
+[1] "sd:"
+[1] 31.23457
+[1] "Kind"
+[1] "mean:"
+[1] 8.558195
+[1] "sd:"
+[1] 36.90241
+[1] ""
+[1] "gesein"
+[1] "Person ohne gesundheitliche Einschrnkung"
+[1] "mean:"
+[1] 10.41617
+[1] "sd:"
+[1] 34.74458
+[1] "Person mit gesundheitlicher Einschrnkung"
+[1] "mean:"
+[1] 8.586714
+[1] "sd:"
+[1] 26.88342
+[1] "Erwachsener > 13 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 13.85543
+[1] "sd:"
+[1] 44.1025
+[1] "verweigert, wei nicht"
+[1] "mean:"
+[1] 7.436639
+[1] "sd:"
+[1] 13.48535
+[1] ""
+[1] "ov.seg"
+[1] "PNV-Stammkunden"
+[1] "mean:"
+[1] 13.54633
+[1] "sd:"
+[1] 37.41474
+[1] "PNV-Potenzial"
+[1] "mean:"
+[1] 10.89788
+[1] "sd:"
+[1] 34.4253
+[1] "Segment nicht zu bestimmen"
+[1] "mean:"
+[1] 11.81762
+[1] "sd:"
+[1] 40.87087
+[1] "IV-Stammkunden"
+[1] "mean:"
+[1] 11.16982
+[1] "sd:"
+[1] 34.35223
+[1] "PNV-Gelegenheitskunden"
+[1] "mean:"
+[1] 10.32916
+[1] "sd:"
+[1] 35.24955
+[1] "PNV-Captives"
+[1] "mean:"
+[1] 8.689477
+[1] "sd:"
+[1] 29.1838
+[1] "Wenig-Mobile"
+[1] "mean:"
+[1] 5.839529
+[1] "sd:"
+[1] 25.402
+[1] "Fahrradfahrer"
+[1] "mean:"
+[1] 6.570149
+[1] "sd:"
+[1] 25.56653
+[1] ""
+[1] "s03"
+[1] "regnerisch"
+[1] "mean:"
+[1] 10.70048
+[1] "sd:"
+[1] 34.16274
+[1] "sonnig"
+[1] "mean:"
+[1] 12.15873
+[1] "sd:"
+[1] 38.96907
+[1] "leicht bewlkt, heiter"
+[1] "mean:"
+[1] 10.80084
+[1] "sd:"
+[1] 34.74011
+[1] "Kind 10-13 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 8.409355
+[1] "sd:"
+[1] 34.2088
+[1] "Kind <10 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 7.986082
+[1] "sd:"
+[1] 34.83984
+[1] "stark bewlkt"
+[1] "mean:"
+[1] 10.53823
+[1] "sd:"
+[1] 33.03468
+[1] "wei nicht"
+[1] "mean:"
+[1] 12.66564
+[1] "sd:"
+[1] 44.6598
+[1] "verweigert"
+[1] "mean:"
+[1] 6.137778
+[1] "sd:"
+[1] 5.724687
+[1] "es hat geschneit"
+[1] "mean:"
+[1] 11.83193
+[1] "sd:"
+[1] 40.3537
+[1] ""
+[1] "s04"
+[1] "ja, stndig"
+[1] "mean:"
+[1] 11.09771
+[1] "sd:"
+[1] 34.08978
+[1] "nein, gar nicht"
+[1] "mean:"
+[1] 7.762788
+[1] "sd:"
+[1] 34.482
+[1] "Erwachsener > 13 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 13.85543
+[1] "sd:"
+[1] 44.1025
+[1] "ja, teilweise"
+[1] "mean:"
+[1] 9.385822
+[1] "sd:"
+[1] 32.64105
+[1] "Kind 10-13 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 8.409355
+[1] "sd:"
+[1] 34.2088
+[1] "Kind <10 J. (Proxy) mit Wegeprotokoll"
+[1] "mean:"
+[1] 7.986082
+[1] "sd:"
+[1] 34.83984
+[1] "Personen unter 15 J."
+[1] "mean:"
+[1] 6.871489
+[1] "sd:"
+[1] 20.74273
+[1] "wei nicht"
+[1] "mean:"
+[1] 12.45865
+[1] "sd:"
+[1] 30.56591
+[1] "Ki. 10-13 J. (Selbst) o. Wegeprot. (StTag <= 3 Tage/ Ausl.)"
+[1] "mean:"
+[1] 8.264159
+[1] "sd:"
+[1] 38.50553
+[1] "Kind 10-13 J. (Selbst) mit Wegeprotokoll"
+[1] "mean:"
+[1] 6.922977
+[1] "sd:"
+[1] 21.30798
+[1] "verweigert"
+[1] "mean:"
+[1] 9.024
+[1] "sd:"
+[1] 11.62836
+[1] ""
+[1] "s01"
+[1] "nein, kein normaler Tag"
+[1] "mean:"
+[1] 18.99422
+[1] "sd:"
+[1] 62.90895
+[1] "ja, normaler Tag"
+[1] "mean:"
+[1] 8.722235
+[1] "sd:"
+[1] 23.56098
+[1] "wei nicht"
+[1] "mean:"
+[1] 13.77304
+[1] "sd:"
+[1] 58.21054
+[1] "verweigert"
+[1] "mean:"
+[1] 5.836429
+[1] "sd:"
+[1] 8.809099
+[1] ""
+[1] "bland"
+[1] "Berlin"
+[1] "mean:"
+[1] 9.50971
+[1] "sd:"
+[1] 35.90179
+[1] "Sachsen"
+[1] "mean:"
+[1] 10.9671
+[1] "sd:"
+[1] 37.3826
+[1] "Bayern"
+[1] "mean:"
+[1] 11.0943
+[1] "sd:"
+[1] 34.81336
+[1] "Nordrhein-Westfalen"
+[1] "mean:"
+[1] 10.09288
+[1] "sd:"
+[1] 32.16253
+[1] "Niedersachsen"
+[1] "mean:"
+[1] 11.61927
+[1] "sd:"
+[1] 35.88153
+[1] "Baden-Wrttemberg"
+[1] "mean:"
+[1] 11.15122
+[1] "sd:"
+[1] 38.89012
+[1] "Schleswig-Holstein"
+[1] "mean:"
+[1] 11.68616
+[1] "sd:"
+[1] 40.46559
+[1] "Rheinland-Pfalz"
+[1] "mean:"
+[1] 11.09591
+[1] "sd:"
+[1] 34.77976
+[1] "Saarland"
+[1] "mean:"
+[1] 11.20386
+[1] "sd:"
+[1] 33.56217
+[1] "Mecklenburg-Vorpommern"
+[1] "mean:"
+[1] 12.90813
+[1] "sd:"
+[1] 40.11439
+[1] "Thringen"
+[1] "mean:"
+[1] 12.45173
+[1] "sd:"
+[1] 40.29638
+[1] "Bremen"
+[1] "mean:"
+[1] 10.62734
+[1] "sd:"
+[1] 44.83071
+[1] "Hessen"
+[1] "mean:"
+[1] 10.55874
+[1] "sd:"
+[1] 32.28559
+[1] "Brandenburg"
+[1] "mean:"
+[1] 14.12396
+[1] "sd:"
+[1] 46.88467
+[1] "Sachsen-Anhalt"
+[1] "mean:"
+[1] 11.13228
+[1] "sd:"
+[1] 43.05442
+[1] "Hamburg"
+[1] "mean:"
+[1] 8.192024
+[1] "sd:"
+[1] 26.56648
+[1] ""
+[1] "westost"
+[1] "Ost"
+[1] "mean:"
+[1] 11.61048
+[1] "sd:"
+[1] 40.25899
+[1] "West"
+[1] "mean:"
+[1] 10.80156
+[1] "sd:"
+[1] 35.16235
+[1] ""
+[1] "polgk"
+[1] "500.000 und mehr Einw."
+[1] "mean:"
+[1] 9.709031
+[1] "sd:"
+[1] 35.55592
+[1] "50.000 bis unter 100.000 Einw."
+[1] "mean:"
+[1] 10.04213
+[1] "sd:"
+[1] 34.23629
+[1] "unter 5.000 Einw."
+[1] "mean:"
+[1] 12.79959
+[1] "sd:"
+[1] 37.53916
+[1] "20.000 bis unter 50.000 Einw."
+[1] "mean:"
+[1] 10.70638
+[1] "sd:"
+[1] 38.48568
+[1] "5.000 bis unter 20.000 Einw."
+[1] "mean:"
+[1] 11.40878
+[1] "sd:"
+[1] 34.49762
+[1] "100.000 bis unter 500.000 Einw."
+[1] "mean:"
+[1] 10.20213
+[1] "sd:"
+[1] 37.01799
+[1] ""
+[1] "rtyp"
+[1] "Agglomerationsrume"
+[1] "mean:"
+[1] 10.83864
+[1] "sd:"
+[1] 36.88548
+[1] "Verstdterte Rume"
+[1] "mean:"
+[1] 10.84441
+[1] "sd:"
+[1] 35.26037
+[1] "Lndliche Rume"
+[1] "mean:"
+[1] 11.98424
+[1] "sd:"
+[1] 37.40445
+[1] ""
+[1] "rtypd7"
+[1] "Agglomerationsrume mit herausragenden Zentren"
+[1] "mean:"
+[1] 11.00958
+[1] "sd:"
+[1] 38.36282
+[1] "Verstdterte Rume hherer Dichte"
+[1] "mean:"
+[1] 10.86423
+[1] "sd:"
+[1] 34.49314
+[1] "Verstdterte Rume mittlerer Dichte"
+[1] "mean:"
+[1] 10.96805
+[1] "sd:"
+[1] 36.12714
+[1] "Hochverdichtete Agglomerationsrume"
+[1] "mean:"
+[1] 10.69161
+[1] "sd:"
+[1] 35.5655
+[1] "Lndliche Rume hherer Dichte"
+[1] "mean:"
+[1] 11.22323
+[1] "sd:"
+[1] 35.31481
+[1] "Verstdterte Rume mittlerer Dichte ohne groe Oberzentren"
+[1] "mean:"
+[1] 10.52151
+[1] "sd:"
+[1] 35.22325
+[1] "Lndliche Rume geringerer Dichte"
+[1] "mean:"
+[1] 13.32603
+[1] "sd:"
+[1] 40.79689
+[1] ""
+[1] "ktyp"
+[1] "Agglomerationsrume - Kernstdte"
+[1] "mean:"
+[1] 9.643848
+[1] "sd:"
+[1] 34.29328
+[1] "Verstdterte Rume - Verdichtete Kreise"
+[1] "mean:"
+[1] 10.79191
+[1] "sd:"
+[1] 34.3968
+[1] "Agglomerationsrume - Hochverdichtete Kreise"
+[1] "mean:"
+[1] 10.99619
+[1] "sd:"
+[1] 37.38975
+[1] "Agglomerationsrume - Lndliche Kreise"
+[1] "mean:"
+[1] 13.7743
+[1] "sd:"
+[1] 41.65451
+[1] "Lndliche Rume - Lndliche Kreise geringerer Dichte"
+[1] "mean:"
+[1] 11.8215
+[1] "sd:"
+[1] 36.58377
+[1] "Lndliche Rume - Lndliche Kreise hherer Dichte"
+[1] "mean:"
+[1] 12.06662
+[1] "sd:"
+[1] 37.81405
+[1] "Verstdterte Rume - Kernstdte"
+[1] "mean:"
+[1] 11.03919
+[1] "sd:"
+[1] 41.7749
+[1] "Verstdterte Rume - Lndliche Kreise"
+[1] "mean:"
+[1] 10.82439
+[1] "sd:"
+[1] 31.99407
+[1] "Agglomerationsrume - Verdichtete Kreise"
+[1] "mean:"
+[1] 12.36933
+[1] "sd:"
+[1] 39.85197
+[1] ""
+[1] "ktyp.zsg"
+[1] "Kernstdte"
+[1] "mean:"
+[1] 9.974006
+[1] "sd:"
+[1] 36.20787
+[1] "Verdichtete Kreise"
+[1] "mean:"
+[1] 11.17016
+[1] "sd:"
+[1] 36.62084
+[1] "Lndliche Kreise"
+[1] "mean:"
+[1] 11.75654
+[1] "sd:"
+[1] 36.02018
+[1] ""
+[1] "sgtyp"
+[1] "Kern- u. Grostdte (kreisf. Stdte u. Oberz. >=100.000 E.)"
+[1] "mean:"
+[1] 9.985182
+[1] "sd:"
+[1] 36.23429
+[1] "Mittelstdte (sonstige OZ/MZ (stdtisch od. gemischt gepr.))"
+[1] "mean:"
+[1] 10.6206
+[1] "sd:"
+[1] 36.46526
+[1] "Lndliche Gemeinden (sonstige Gemeinden)"
+[1] "mean:"
+[1] 12.53439
+[1] "sd:"
+[1] 37.06654
+[1] "Kleinstdte (sonstige MZ od. stdtisch geprgte Gemeinden)"
+[1] "mean:"
+[1] 10.52075
+[1] "sd:"
+[1] 34.67397
+[1] ""
+[1] "sgtypd"
+[1] "groe Kern- und Grostdte ( >= 500.000 Einw.)"
+[1] "mean:"
+[1] 9.677711
+[1] "sd:"
+[1] 35.39935
+[1] "grere Mittelstdte (>= 50.000 Einw.)"
+[1] "mean:"
+[1] 10.48533
+[1] "sd:"
+[1] 36.64475
+[1] "kleine lndliche Gemeinden (< 7.500 Einw.)"
+[1] "mean:"
+[1] 12.21378
+[1] "sd:"
+[1] 32.47656
+[1] "kleinere Mittelstdte (< 50.000 Einw.)"
+[1] "mean:"
+[1] 10.67683
+[1] "sd:"
+[1] 36.39073
+[1] "groe lndliche Gemeinden (>= 7.500 Einw.)"
+[1] "mean:"
+[1] 12.6591
+[1] "sd:"
+[1] 38.70487
+[1] "Kleinstdte"
+[1] "mean:"
+[1] 10.52075
+[1] "sd:"
+[1] 34.67397
+[1] "kleinere Kern- und Grostdte (< 500.000 Einw.)"
+[1] "mean:"
+[1] 10.32364
+[1] "sd:"
+[1] 37.12944
+> 
+> 
+> 
+> ## # create factors with value labels
+> ## mtcars$gear <- factor(mtcars$gear,levels=c(3,4,5),
+> ##    labels=c("3gears","4gears","5gears"))
+> ## mtcars$am <- factor(mtcars$am,levels=c(0,1),
+> ##    labels=c("Automatic","Manual"))
+> ## mtcars$cyl <- factor(mtcars$cyl,levels=c(4,6,8),
+> ##    labels=c("4cyl","6cyl","8cyl"))
+> 
+> ## # Kernel density plots for mpg
+> ## # grouped by number of gears (indicated by color)
+> ## qplot(mpg, data=mtcars, geom="density", fill=gear, alpha=I(.5),
+> ##    main="Distribution of Gas Milage", xlab="Miles Per Gallon",
+> ##    ylab="Density")
+> 
+> proc.time()
+   user  system elapsed 
+646.944  19.909 668.505 

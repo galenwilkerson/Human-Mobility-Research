@@ -1,0 +1,60 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> #rnorm(n, mean = 0, sd = 1)
+> x <- rnorm(10000, mean = 0, sd = 1)
+>                                         
+> p <- hist(x, breaks = 100, main="lin-lin hist normal (0,1)")
+> 
+> x.vals <- log(p$breaks[-1])
+Warning message:
+In log(p$breaks[-1]) : NaNs produced
+> y.vals <- log(p$density)
+> plot(x.vals, y.vals, xlim =c(-2,5), ylim = c(-10,0), main="log-log pdf normal")
+> 
+> p.cdf <- ecdf(x)
+> ccdf <- 1 - p.cdf(p$breaks[-1])
+> log.ccdf <- log(ccdf)
+> 
+> plot(x.vals, log.ccdf, type="s", xlim =c(-2,5), ylim = c(-10,0), main="log-log ccdf normal")
+> 
+> 
+> 
+> x <- rnorm(10000, mean = 0, sd = 10)
+>                                         
+> p <- hist(x, breaks = 100, main="lin-lin hist normal (0,10)")
+> 
+> x.vals <- log(p$breaks[-1])
+Warning message:
+In log(p$breaks[-1]) : NaNs produced
+> y.vals <- log(p$density)
+> plot(x.vals, y.vals,xlim =c(-2,5), ylim = c(-10,0), main="log-log pdf normal")
+> 
+> p.cdf <- ecdf(x)
+> ccdf <- 1 - p.cdf(p$breaks[-1])
+> log.ccdf <- log(ccdf)
+> 
+> plot(x.vals, log.ccdf, type="s", xlim =c(-2,5), ylim = c(-10,0), main="log-log ccdf normal")
+> 
+> proc.time()
+   user  system elapsed 
+  1.280   0.076   1.352 

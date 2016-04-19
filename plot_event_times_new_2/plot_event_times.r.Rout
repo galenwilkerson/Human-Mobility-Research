@@ -1,0 +1,388 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: i686-pc-linux-gnu (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> 
+> # load data
+> 
+> # subset by categorical variable(s)
+> 
+> # remove error/special values
+> 
+> # plot event density at different time scales over different time ranges
+> 
+> # examples:
+> # trips/day within subset of time period (time series)
+> # trips/day summed over all weeks within time period (histogram)
+> 
+> # trips/month within subset time range
+> # trips/month summed over all years within time period
+> 
+> 
+> 
+> ########################################################
+> 
+> rm(list = ls())
+> library(ggplot2)
+> library(scales)
+> 
+> 
+> ########################################################
+> 
+> 
+> # subset events by time period, return data frame within time period (inclusive)
+> # times are POSIXlt
+> subset.events.time.period <- function(events, time.column.name, start.time, end.time) {
++ 
++   print(time.column.name)
++   
++   subset.events <- subset(events, events[,time.column.name] >= start.time & events[,time.column.name] <= end.time)
++    
++   
++   return(subset.events)
++ }
+> 
+> 
+> # subset events by category, return list of subset data frames
+> subset.events.category <- function(events, subset.category, categories) {
++ 
++   subsets <- list()
++ 
++   i <- 1
++ 
++   for (cat in categories) {
++     
++     # get rows by category
++     category.events <- subset(events, events[,subset.category] == cat)
++     subsets[[i]] <- category.events
++     i <- i + 1
++   }
++ 
++    return(subsets)
++ }
+> 
+> 
+> # get frequency of events by time scale
+> # return data frame with timestamp and frequency columns
+> get.frequency.by.timescale <- function(events, time.stamp.column.name, timescale) {
++ 
++   event.table <- table(cut(events[,time.stamp.column.name], breaks = timescale))
++   event.frequency <- data.frame(event.table)
++   colnames(event.frequency) <- c("timestamp", "frequency")
++   
++   return(event.frequency)
++ }
+> 
+> 
+> 
+> # return data frame with original events and 'unclassed' timestamp information
+> get.unclassed.data.frame.with.timescale <- function(events, time.stamp.column.name) {
++ 
++   # break apart timestamp into components
++   df.unclassed <- data.frame(events, unclass(as.POSIXlt(events[,time.stamp.column.name])))
++  # h <- hist(df.unclassed[,timescale.name], plot = F)
++       
++   return(df.unclassed)
++ }
+> 
+> ############################################################################
+> 
+> # PLOT LONGER TIME SCALES
+> 
+> 
+> data.dir = "/home/username/Dropbox/Active_Projects/Mobility_Article/Data/"
+> figures.dir = "./Figures/"
+> 
+> load(paste(data.dir, "trips.Rdata", sep=""))
+> 
+> 
+> # get events within time range
+> start.time <- as.POSIXlt("2008-04-01 00:00:00 CEST")
+> end.time <- as.POSIXlt("2008-12-31 23:59:59 CEST")
+> #events.within.period <- subset.events.time.period(trips, time.column.name = "timestamp.event", start.time = start.time, end.time = end.time)
+> 
+> 
+> # get categories, remove 'bad' categories
+> all.categories <- as.character(unique(trips$hvm))
+> bad.category <- all.categories[length(all.categories)]
+> good.categories <- all.categories[-length(all.categories)]
+> 
+> #events.good.categories <- subset(events.within.period, hvm != bad.category)
+> events.good.categories <- subset(trips, hvm != bad.category)
+> 
+> timescales <- c("months", "weeks", "days")
+> timescale.intervals <- c(1, 2, 14)
+> 
+> # colors for modes
+> colors.set <- c("black", "orange", "red", "green", "blue", "purple")
+> 
+> 
+> for (timescale.index in 1:3) {
++ 
++   timescale <- timescales[timescale.index]
++   
++   #filen <- paste(figures.dir, "All days", timescale, ".pdf", sep="_")
++ 
++   events.good.categories$timestamp.event <- as.POSIXct(events.good.categories$timestamp.event)
++   table1 <- table(cut(events.good.categories$timestamp.event, breaks = timescale))
++   
++ #  plot(table1, type = "s", col = "black", xlab="Date", ylab="Number of Events",  main=paste("Events: (All modes)", timescale))
++ }
+> 
+> 
+> 
+> 
+> ##############################################################################
+> 
+> # NOW PLOT HISTOGRAMS OF SHORTER TIMESCALES
+> 
+> print("Plotting histograms")
+[1] "Plotting histograms"
+> 
+> # FOR EACH TIMESCALE (DAY OF WEEK, HOUR OF DAY, MINUTE OF DAY)
+> # PLOT HISTOGRAM OF EVENTS PER TIMESCALE
+> 
+> timescales <- c("wday", "hour", "min")
+> 
+> 
+> events.timeperiod <- c("all", "weekdays", "saturdays", "sundays")
+> 
+> events.all <- events.good.categories
+> events.weekdays <- subset(events.good.categories, )
+> events.saturday <- subset(events.good.categories, )
+> events.sunday <- subset(events.good.categories, )
+> 
+> events.list <- list(events.all, events.weekdays, events.saturday, events.sunday)
+> 
+> events.index <- 1
+> 
+> 
+> legend.labels <- c("bicycle", "auto. driver", "auto. passenger", "public trans.", "walk")
+> 
+> for (events in events.list) {
++ 
++   index <- 1
++ 
++   
++   timescale <- timescales[index]
++   filen <- paste(figures.dir, timescale, events.timeperiod[events.index], ".pdf", sep="_")
++ 
++   print(timescale)
++ 
++   unclassed.data.frame <- get.unclassed.data.frame.with.timescale(events, "timestamp.event")
++ 
++   #plot1 <-ggplot(NULL) +
++   # plot the data
++   # rescale the line based on data frame entry "line.size"
++   # rescale alpha value based on "line.alpha"
++  # geom_bar(data = df, aes(x=log10.trip.lengths, y=log10.ccdf, colour=trip.mode, group=trip.mode, size = line.size, alpha = line.alpha)) +
++ 
++    # geom_bar(data = unclassed.data.frame, aes(x=wday, colour=hvm, position="dodge"))
++     
++     
++    plot1 <- qplot(data=unclassed.data.frame, x=wday,  color=hvm, geom="bar", width = 2, fill=hvm, position="dodge", guide = F) + 
++      theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
++        theme_bw() +
++          theme(legend.position="bottom") +
++            
++           # scale axis text
++            theme(axis.text.x  = element_text(size=24)) + 
++              theme(axis.text.y  = element_text(size=24)) +
++ 
++              # color and labels of legend
++                ## scale_colour_manual(values=colors.set,
++                ##                     name="Mode",
++                ##                     breaks=good.categories,
++                ##                     labels=legend.labels) +
++                                      
++                                         # size of legend text and titles
++                                         #  theme(legend.key.size=unit(5,"cm")) + 
++                                      theme(legend.text=element_text(size=18)) +
++ # theme(legend.text=element_text(size=18, angle = -45)) +
++                                        theme(legend.title=element_text(size=18)) +
++ #+ theme(legend.text = element_text(size = 20, colour = "red", angle = 45))
++                                         # axis text size
++                                          theme(axis.title.x=element_text(size=24)) +
++                                            theme(axis.title.y=element_text(size=24)) +
++ 
++                                         # axis labels
++                                              xlab("weekday") +
++                                                ylab("count")# +
++                                                #  position_dodge(width = .5)
++ 
++   
++   plot1
++ 
++ #  ggsave(filen, height=8, width=14)
++ 
++ ggsave(filen, width = 240, height = 210, units = "mm")
++ 
++ 
++ ################
++ 
++   index <- index + 1
++ 
++   timescale <- timescales[index]
++   filen <- paste(figures.dir, timescale, events.timeperiod[events.index], ".pdf", sep="_")
++ 
++   print(timescale)
++ 
++ 
++   p <- qplot(data=unclassed.data.frame, x=hour, geom = "bar",  color=hvm, fill=hvm, position="dodge", binwidth = 1) + 
++     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
++       theme_bw()  +
++         theme(legend.position="bottom") +
++   # scale axis text
++            theme(axis.text.x  = element_text(size=24)) + 
++              theme(axis.text.y  = element_text(size=24)) +
++ 
++              # color and labels of legend
++                ## scale_colour_manual(values=colors.set,
++                ##                     name="Mode",
++                ##                     breaks=good.categories,
++                ##                     labels=legend.labels) +
++                                      
++                                         # size of legend text and titles
++                                         #  theme(legend.key.size=unit(5,"cm")) + 
++                                      theme(legend.text=element_text(size=18)) +
++                                        theme(legend.title=element_text(size=18)) +
++ 
++                                         # axis text size
++                                          theme(axis.title.x=element_text(size=24)) +
++                                            theme(axis.title.y=element_text(size=24)) +
++ 
++                                         # axis labels
++                                              xlab("hour") +
++                                                ylab("count")# +
++ p
++   
++ #  ggsave(filen, height=8, width=14)
++ ggsave(filen, width = 240, height = 210, units = "mm")
++ 
++ 
++ ################
++ 
++ 
++   index <- index + 1
++ 
++ 
++   timescale <- timescales[index]
++   filen <- paste(figures.dir, timescale, events.timeperiod[events.index], ".pdf", sep="_")
++ 
++   print(timescale)
++ 
++ 
++   p <- qplot(data=unclassed.data.frame, x=min, geom = "bar",  color=hvm, fill=hvm, position="dodge", binwidth = 1) + 
++     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
++       theme_bw() +
++         theme(legend.position="bottom") +
++   # scale axis text
++            theme(axis.text.x  = element_text(size=24)) + 
++              theme(axis.text.y  = element_text(size=24)) +
++ 
++              # color and labels of legend
++                ## scale_colour_manual(values=colors.set,
++                ##                     name="Mode",
++                ##                     breaks=good.categories,
++                ##                     labels=legend.labels) +
++                                      
++                                         # size of legend text and titles
++                                         #  theme(legend.key.size=unit(5,"cm")) + 
++                                      theme(legend.text=element_text(size=18)) +
++                                        theme(legend.title=element_text(size=18)) +
++ 
++                                         # axis text size
++                                          theme(axis.title.x=element_text(size=24)) +
++                                            theme(axis.title.y=element_text(size=24)) +
++ 
++                                         # axis labels
++                                              xlab("minute") +
++                                                ylab("count")# +
++ 
++ p
++   
++                                         #  ggsave(filen, height=8, width=14)
++ ggsave(filen, width = 240, height = 210, units = "mm")
++ 
++   ################
++ 
++ 
++   ## index <- index + 1
++ 
++ 
++   ## timescale <- timescales[index]
++   ## filen <- paste(figures.dir, timescale, events.timeperiod[events.index], ".pdf", sep="_")
++ 
++   ## print(timescale)
++   
++   ## p <- qplot(data=unclassed.data.frame, x=min, geom = "bar",  color=hvm, fill=hvm, position="dodge", binwidth = 1) + 
++   ##   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
++   ##     theme_bw() +
++   ##       theme(legend.position="bottom") +
++   ## # scale axis text
++   ##          theme(axis.text.x  = element_text(size=24)) + 
++   ##            theme(axis.text.y  = element_text(size=24)) +
++ 
++   ##            # color and labels of legend
++   ##              ## scale_colour_manual(values=colors.set,
++   ##              ##                     name="Mode",
++   ##              ##                     breaks=good.categories,
++   ##              ##                     labels=legend.labels) +
++                                      
++   ##                                       # size of legend text and titles
++   ##                                       #  theme(legend.key.size=unit(5,"cm")) + 
++   ##                                    theme(legend.text=element_text(size=18, angle = 45)) +
++   ##                                      theme(legend.title=element_text(size=18, angle = 45)) +
++ 
++   ##                                       # axis text size
++   ##                                        theme(axis.title.x=element_text(size=24)) +
++   ##                                          theme(axis.title.y=element_text(size=24)) +
++ 
++   ##                                       # axis labels
++   ##                                            xlab("weekday") +
++   ##                                              ylab("count")# +
++   ## ggsave(filen, height=8, width=14)
++ 
++ 
++   events.index <- events.index + 1
++ }
+[1] "wday"
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+[1] "hour"
+[1] "min"
+[1] "wday"
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+[1] "hour"
+[1] "min"
+[1] "wday"
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+[1] "hour"
+[1] "min"
+[1] "wday"
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+[1] "hour"
+[1] "min"
+>     
+> rm(list = ls())
+> 
+> proc.time()
+   user  system elapsed 
+ 57.079  55.603 151.658 

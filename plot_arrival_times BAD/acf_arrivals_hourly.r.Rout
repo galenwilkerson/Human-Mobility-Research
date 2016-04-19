@@ -1,0 +1,162 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # load data
+> 
+> 
+> # calculate arrivals per day
+> 
+> ##########################################################################
+> 
+> rm(list = ls())
+> 
+> load("./tripdata.Rdata")
+> 
+> trip.modes <- as.character(unique(trips$mode))
+> 
+> #remove last element (no response for 'mode')
+> trip.modes <- trip.modes[-length(trip.modes)]
+> 
+> ####################################  monthly
+> 
+> breaks.interval <- "hours"
+> 
+> date.of.interest <- as.POSIXlt("2008-08-16")
+> start.time.interval <- as.POSIXlt(paste(date.of.interest, "00:00:00"))
+> end.time.interval <- as.POSIXlt(paste(date.of.interest, "23:59:59"))
+> 
+> index = 1
+> colors <- c(2:(length(trip.modes)+1))
+> 
+> dev.new(width=14, height=7)
+dev.new(): using pdf(file="Rplots1.pdf")
+> 
+> 
+> trip.mode <- "All modes"
+> 
+>  #subset data by mode
+> mode.trips <- subset(trips,  timestamp.arrival <= end.time.interval & timestamp.arrival >= start.time.interval)
+>   
+>   # change timestamp to date.time
+>   mode.trips$timestamp.arrival <- as.POSIXlt(mode.trips$timestamp.arrival)
+> 
+>   # sort by timestamp
+>   mode.trips.ordered <- mode.trips[order(as.POSIXlt(mode.trips$timestamp.arrival)),]
+> 
+>   # bin by time interval
+>   my.table <- table(cut(mode.trips.ordered$timestamp.arrival, breaks = breaks.interval))
+> 
+>   my.df <- data.frame(my.table)
+> 
+>   print(trip.mode)
+[1] "All modes"
+>   print(length(my.table))
+[1] 24
+> 
+> acf(my.table, main = paste(trip.mode, breaks.interval))
+> 
+> ####################
+> 
+> index = 1
+> colors <- c(2:(length(trip.modes)+1))
+> 
+> dev.new(width=14, height=7)
+dev.new(): using pdf(file="Rplots2.pdf")
+> 
+> 
+> trip.mode <- trip.modes[1]
+> 
+>  #subset data by mode
+> #  mode.trips <- subset(trips, timestamp.arrival <= end.time.interval & timestamp.arrival >= start.time.interval)
+>   mode.trips <- subset(trips, mode == trip.mode & timestamp.arrival <= end.time.interval & timestamp.arrival >= start.time.interval)
+>   
+>   # change timestamp to date.time
+>   mode.trips$timestamp.arrival <- as.POSIXlt(mode.trips$timestamp.arrival)
+> 
+>   # sort by timestamp
+>   mode.trips.ordered <- mode.trips[order(as.POSIXlt(mode.trips$timestamp.arrival)),]
+> 
+>   # bin by time interval
+>   my.table <- table(cut(mode.trips.ordered$timestamp.arrival, breaks = breaks.interval))
+> 
+>   my.df <- data.frame(my.table)
+> 
+>   print(trip.mode)
+[1] "MIV (Fahrer)"
+>   print(length(my.table))
+[1] 21
+> 
+> acf(my.table, main = paste(trip.mode, breaks.interval))
+>      
+> #  plot(my.table, type = "s", col = colors[index], xlab="Date", ylab="Number of Arrivals",  main=paste("Arrivals:", breaks.interval))
+> 
+>   index <- index + 1
+> 
+> 
+> 
+> trip.modes.abbrev <- trip.modes[-1]
+> 
+> for (trip.mode in trip.modes.abbrev) {
++ 
++ #trip.mode <- trip.modes[5]
++ 
++   #subset data by mode and day
++   
++   mode.trips <- subset(trips, mode == trip.mode & timestamp.arrival <= end.time.interval & timestamp.arrival >= start.time.interval)
++   
++   # change timestamp to date.time
++   mode.trips$timestamp.arrival <- as.POSIXlt(mode.trips$timestamp.arrival)
++ 
++   # sort by timestamp
++   mode.trips.ordered <- mode.trips[order(as.POSIXlt(mode.trips$timestamp.arrival)),]
++ 
++   # bin by day
++   my.table <- table(cut(mode.trips.ordered$timestamp.arrival, breaks = breaks.interval))
++ 
++   print(trip.mode)
++   print(length(my.table))
++ 
++   #lines(my.table, type = "s", col = colors[index])
++   acf(my.table, main = paste(trip.mode, breaks.interval))
++ 
++   index <- index + 1
++ }
+[1] "zu Fu"
+[1] 23
+[1] "MIV (Mitfahrer)"
+[1] 21
+[1] "PV"
+[1] 19
+[1] "Fahrrad"
+[1] 15
+> 
+> 
+> #legend("topleft",  legend = trip.modes, pch = 1, col = colors)
+> 
+> 
+> 
+> 
+> rm(list = ls())
+> 
+> proc.time()
+   user  system elapsed 
+  3.828   0.152   4.290 

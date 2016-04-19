@@ -1,0 +1,200 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # get to know the data
+> 
+> # load data, plot some statistics
+> 
+> 
+> rm(list = ls())
+> 
+> #######################
+> 
+> library(ggplot2)
+> 
+> #######################
+> 
+> data.dir <- "umn_foursquare_datasets/"
+> figures.dir <- "figures/"
+> data.names <- c("checkins","ratings","socialgraph","users","venues")
+> 
+> #######################
+> index <- 1
+> #filename <- paste(data.dir,data.names[index],".RData", sep="")
+> #filename
+> #load(filename)
+> 
+> my.data <- read.csv(paste(data.dir,data.names[index],".head.dat", sep=""), sep="|")
+> my.data <- my.data[-1,]
+> 
+> 
+> qplot(id, data = my.data, geom = "bar")
+Warning message:
+position_stack requires constant width: output may be incorrect 
+> ggsave(file=paste(figures.dir, "id_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+Warning message:
+position_stack requires constant width: output may be incorrect 
+> 
+> qplot(user_id, data = my.data, geom = "bar")
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+> ggsave(file=paste(figures.dir, "user_id_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+> 
+> qplot(venue_id, data = my.data, geom = "bar")
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+> ggsave(file=paste(figures.dir, "venue_id_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+> 
+> qplot(x = latitude, y = longitude, data = my.data)
+Warning message:
+Removed 3959 rows containing missing values (geom_point). 
+> ggsave(file=paste(figures.dir, "lat_lon_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+Warning message:
+Removed 3959 rows containing missing values (geom_point). 
+> 
+> qplot(created_at, data = my.data, geom = "bar")
+Warning message:
+position_stack requires constant width: output may be incorrect 
+> ggsave(file=paste(figures.dir, "created_at_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+Warning message:
+position_stack requires constant width: output may be incorrect 
+> 
+> #######################
+> 
+> index <- 2
+> #filename <- paste(data.dir,data.names[index],".RData", sep="")
+> #filename
+> #load(filename)
+> my.data <- read.csv(paste(data.dir,data.names[index],".head.dat", sep=""), sep="|")
+> my.data <- my.data[-1,]
+> 
+> qplot(user_id, data = my.data, geom = "bar")
+Warning message:
+position_stack requires constant width: output may be incorrect 
+> ggsave(file=paste(figures.dir, "user_id_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+Warning message:
+position_stack requires constant width: output may be incorrect 
+> 
+> qplot(venue_id, data = my.data, geom = "bar")
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+> ggsave(file=paste(figures.dir, "venue_id_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+> 
+> qplot(rating, data = my.data, geom = "bar")
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+> ggsave(file=paste(figures.dir, "rating_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+> 
+> #######################
+> 
+> index <- 3
+> #filename <- paste(data.dir,data.names[index],".RData", sep="")
+> #filename
+> #load(filename)
+> my.data <- read.csv(paste(data.dir,data.names[index],".head.dat", sep=""), sep="|")
+> my.data <- my.data[-1,]
+> 
+> qplot(first_user_id, data = my.data, geom = "bar")
+Warning message:
+position_stack requires constant width: output may be incorrect 
+> ggsave(file=paste(figures.dir, "first_user_id_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+Warning message:
+position_stack requires constant width: output may be incorrect 
+> 
+> qplot(second_user_id, data = my.data, geom = "bar")
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+> ggsave(file=paste(figures.dir, "second_user_id_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+> 
+> qplot(x = first_user_id, y = second_user_id, data = my.data)
+> ggsave(file=paste(figures.dir, "location_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+> 
+> #######################
+> 
+> index <- 4
+> #filename <- paste(data.dir,data.names[index],".RData", sep="")
+> #filename
+> #load(filename)
+> my.data <- read.csv(paste(data.dir,data.names[index],".head.dat", sep=""), sep="|")
+> my.data <- my.data[-1,]
+> 
+> 
+> qplot(id, data = my.data, geom = "bar")
+Warning message:
+position_stack requires constant width: output may be incorrect 
+> ggsave(file=paste(figures.dir, "id_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+Warning message:
+position_stack requires constant width: output may be incorrect 
+> 
+> qplot(x = latitude, y=longitude, data = my.data)
+Warning message:
+Removed 18 rows containing missing values (geom_point). 
+> ggsave(file=paste(figures.dir, "location_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+Warning message:
+Removed 18 rows containing missing values (geom_point). 
+> 
+> #######################
+> 
+> index <- 5
+> #filename <- paste(data.dir,data.names[index],".RData", sep="")
+> #filename
+> #load(filename)
+> my.data <- read.csv(paste(data.dir,data.names[index],".head.dat", sep=""), sep="|")
+> my.data <- my.data[-1,]
+> 
+> qplot(id, data = my.data, geom = "bar")
+Warning message:
+position_stack requires constant width: output may be incorrect 
+> ggsave(file=paste(figures.dir, "id_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+Warning message:
+position_stack requires constant width: output may be incorrect 
+> 
+> qplot(x = latitude, y=longitude, data = my.data)
+Warning message:
+Removed 49 rows containing missing values (geom_point). 
+> ggsave(file=paste(figures.dir, "location_", data.names[index], ".pdf", sep=""))
+Saving 7 x 7 in image
+Warning message:
+Removed 49 rows containing missing values (geom_point). 
+> 
+> #######################
+> 
+> 
+> rm(list = ls())
+> 
+> proc.time()
+    user   system  elapsed 
+1837.974    1.364 1850.670 

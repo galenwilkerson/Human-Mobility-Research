@@ -1,0 +1,41 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> #rbinom(n, size, prob)
+>                                         
+> x <- rbinom(10000, 20, 0.5)
+>                                         
+> p <- hist(x, breaks = 100, main="lin-lin hist binomial")
+> 
+> x.vals <- log(p$breaks[-1])
+> y.vals <- log(p$density)
+> plot(x.vals, y.vals, main="log-log pdf binomial")
+> 
+> p.cdf <- ecdf(x)
+> ccdf <- 1 - p.cdf(p$breaks[-1])
+> log.ccdf <- log(ccdf)
+> 
+> plot(x.vals, log.ccdf, type="s", main="log-log ccdf binomial")
+> 
+> proc.time()
+   user  system elapsed 
+  1.176   0.064   1.256 

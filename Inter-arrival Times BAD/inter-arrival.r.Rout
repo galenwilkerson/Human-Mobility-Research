@@ -1,0 +1,155 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # load data
+> 
+> # sort by arrival times
+> 
+> # calculate inter-arrival times
+> 
+> # plot histogram
+> 
+> #####################################################
+> rm(list = ls())
+> 
+> load("./tripdata.Rdata")
+> 
+> trips.ordered <- trips[order(as.POSIXlt(trips$timestamp.arrival)),]
+> 
+> # INTER-ARRIVAL TIMES
+> inter.arrival.times <- as.numeric(diff(as.POSIXlt(trips.ordered$timestamp.arrival)))
+> 
+> ################## LIN LIN HISTOGRAM #################
+> 
+> 
+> 
+> h <- hist(inter.arrival.times, breaks = 1000, plot = F)
+> 
+> ################## LOG LOG CCDF ######################
+> 
+> inter.arrival.time.intervals <- h$breaks[-1]
+> cdf <- ecdf(inter.arrival.times)
+> CDF <- cdf(inter.arrival.time.intervals)
+> CCDF <- 1 - CDF
+> 
+> #log10.cdf <- log10(CDF)
+> log10.ccdf <- log10(CCDF)
+> log10.inter.arrival.times <- log10(inter.arrival.time.intervals)
+> 
+> color.index <- 1
+> plot(log10.inter.arrival.times, log10.ccdf, type = "s", main = "log-log CCDF Inter-Arrival Times", col = color.index)
+> 
+> 
+> 
+> 
+> ################### FOR EACH MODE ################                                       
+> 
+> trip.modes <- unique(trips$mode)
+> 
+> # remove last
+> trip.modes <- trip.modes[-length(trip.modes)]
+> 
+> color.index <- 2
+> for (trip.mode in trip.modes) {
++ 
++   print(trip.mode)
++   
++   # get subset
++   mode.trips <- subset(trips.ordered, mode == trip.mode)
++   print(dim(mode.trips))
++ 
++ 
++ 
++ # INTER-ARRIVAL TIMES
++ inter.arrival.times <- as.numeric(diff(as.POSIXlt(mode.trips$timestamp.arrival)))
++ 
++ ################## LIN LIN HISTOGRAM #################
++ 
++ 
++ 
++ h <- hist(inter.arrival.times, breaks = 1000, plot = F)
++ 
++ ################## LOG LOG CCDF ######################
++ 
++ inter.arrival.time.intervals <- h$breaks[-1]
++ cdf <- ecdf(inter.arrival.times)
++ CDF <- cdf(inter.arrival.time.intervals)
++ CCDF <- 1 - CDF
++ 
++ log10.ccdf <- log10(CCDF)
++ log10.inter.arrival.times <- log10(inter.arrival.time.intervals)
++ 
++ lines(log10.inter.arrival.times, log10.ccdf, type = "s", main = "log-log CCDF Inter-Arrival Times", col = color.index)
++ 
++ color.index <- color.index + 1
++  
++ }
+[1] "MIV (Fahrer)"
+[1] 75497     4
+[1] "zu Fu"
+[1] 44300     4
+[1] "MIV (Mitfahrer)"
+[1] 29861     4
+[1] "PV"
+[1] 15473     4
+[1] "Fahrrad"
+[1] 19018     4
+> 
+> 
+> legend("bottomleft", legend = c("all modes", as.character(trip.modes)), pch = 1, col=c(1,2,3,4,5,6))
+> 
+> 
+> #################### FIT DATA ##########################################3
+> 
+> 
+> trips.ordered <- trips[order(as.POSIXlt(trips$timestamp.arrival)),]
+> 
+> # INTER-ARRIVAL TIMES
+> inter.arrival.times <- as.numeric(diff(as.POSIXlt(trips.ordered$timestamp.arrival)))
+> 
+> ################## LIN LIN HISTOGRAM #################
+> 
+> 
+> 
+> h <- hist(inter.arrival.times, breaks = 1000, plot = F)
+> 
+> ################## LOG LOG CCDF ######################
+> 
+> x <- h$breaks[-1]
+> 
+> y <- h$counts
+> 
+> temp <- data.frame(y, x)
+> 
+> 
+> # plot data
+> plot(temp$x, temp$y, log="xy", xlab = "Arrival Time", ylab = "Frequency", main="LOG-LOG Hist Arrival Times")
+Warning message:
+In xy.coords(x, y, xlabel, ylabel, log) :
+  896 y values <= 0 omitted from logarithmic plot
+> 
+> # fit non-linear model
+> mod <- nls(y ~ lambda * exp(lambda * x), data = temp, start = list(lambda = 0))
+Error in numericDeriv(form[[3L]], names(ind), env) : 
+  Missing value or an infinity produced when evaluating the model
+Calls: nls ... <Anonymous> -> assign -> assign -> getRHS -> numericDeriv
+Execution halted
