@@ -6,7 +6,10 @@ Previous research using Big Data (twitter and related social media) was not able
 
 http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6849329&tag=1
 
-Wilkerson, Galen, Ramin Khalili, and Stefan Schmid. 
+Wilkerson, Galen, Ramin Khalili, and Stefan Schmid.
+
 "Urban mobility scaling: Lessons from ‘little data’." 
+
 Computer Communications Workshops (INFOCOM WKSHPS), 
+
 2014 IEEE Conference on. IEEE, 2014.
