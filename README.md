@@ -1,4 +1,4 @@
-# Human-Mobility-Research - Research on complex systems of human mobility
+# Human-Mobility-Research - Complex systems of human mobility
 
 This was a research project to understand the scaling (exponent) of human mobility patterns, especially in cities.
 
