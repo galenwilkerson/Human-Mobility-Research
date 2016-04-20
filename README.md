@@ -1,8 +1,8 @@
 # Human Mobility Research - Complex systems of human mobility
 
-This was a research project to understand the scaling (exponent) of human mobility patterns, especially in cities.
+This was a research project to understand the scaling exponent of human mobility trip length distributions, especially in cities.
 
-Previous research using Big Data (twitter and related social media) was not able to discuss urban scale (usually much greater than the city scale of ~ 10km) mobility patterns.
+Previous research using big data approaches with social media was not able to address urban scale mobility patterns. Our research dramatically expanded on the scale of prior work to trip lengths of 10km and below.
 
 Understanding this data involved a great deal of visualization and categorical visualization, as well as familiarity with methods and results of other related publications.
 
@@ -10,7 +10,6 @@ The original data was Mobility in Germany, 2008.  We investigated many many data
 
 Some highlights were those seen in the final paper:
 - trip length distribution by trip purpose, transportation mode, time of day, day of week
-- time series
 - histograms of number of trips by time of day and day of week
 - rescaled trip length distribution, normalized by maximum trip length per mode
 
@@ -20,15 +19,13 @@ Interesting initial results:
 - Rescaled trips by maximum length seem to indicate that fossil-fuel modes are more heavy-tailed than human-powered modes.
 - Trip length seems highly correlated with purpose, time of day, and day of week.
 
-
 Many other areas were investigated briefly:
+- time series
 - carpooling
 - various fitting methods (symbolic regression)
 - comparison with foursquare data
 - clustering using PCA
 - wavelet transforms
-
-
 
 Publication:
 
